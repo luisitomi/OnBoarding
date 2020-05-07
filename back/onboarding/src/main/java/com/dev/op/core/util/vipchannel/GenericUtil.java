@@ -1,4 +1,4 @@
-package com.dev.op.core.util;
+package com.dev.op.core.util.vipchannel;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

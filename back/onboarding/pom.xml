@@ -13,7 +13,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>onboarding</name>
-	<description>Onboarding Vipchannel</description>
+	<description>Onboarding</description>
 
 	<properties>
 		<java.version>1.8</java.version>

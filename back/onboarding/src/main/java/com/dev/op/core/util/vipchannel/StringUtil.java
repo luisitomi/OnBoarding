@@ -1,4 +1,4 @@
-package com.dev.op.core.util;
+package com.dev.op.core.util.vipchannel;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
