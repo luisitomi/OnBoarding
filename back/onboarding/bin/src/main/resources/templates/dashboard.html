@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es" class="fixed sidebar-left-collapsed" xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="fragments/headinc :: head"></head>
+	<body>
+		<section class="body">
+			<!-- start: header -->
+				<header th:replace="fragments/header :: header"></header>
+			<!-- end: header -->
+			<div class="inner-wrapper">
+				<!-- start: sidebar -->
+				
+				<aside th:replace="fragments/sidebar :: sidebar"></aside>
+				<!-- end: sidebar -->
+				<section role="main" class="content-body">
+					<header class="page-header">
+						<h2>Inicio</h2>
+						<div class="right-wrapper pull-right">
+							<ol class="breadcrumbs">
+								<li>
+									<a href="/dashboard">
+										<i class="fa fa-home"></i>
+									</a>
+								</li>
+								<li><span>Inicio</span></li>
+							</ol>
+						</div>
+					</header>
+					<!-- start: page -->
+					<div class="row">
+						<div class="col-md-6 col-lg-12 col-xl-6">
+							<div class="row" id="submodulo datos inicio" style="display:none">
+								<div class="col-md-12 col-lg-6 col-xl-6">
+									<section class="panel panel-featured-left panel-featured-primary">
+										<div class="panel-body">
+											<div class="widget-summary">
+												<div class="widget-summary-col widget-summary-col-icon">
+													<div class="summary-icon bg-primary">
+														<i class="fa fa-users"></i>
+													</div>
+												</div>
+												<input style="display:none" id="canje" name="canje" value="0"></input>
+												<input style="display:none" id="canjes" name="canjes" value="0"></input>
+												<input style="display:none" id="canjess" name="canjess" value="0"></input>
+												<div class="widget-summary-col">
+													<div class="summary">
+														<h4 class="title">Total Usuarios</h4>
+														<div class="info">
+															<strong class="amount" id="totalRegistrosUsuarios"></strong>
+														</div>
+													</div>
+													<div class="summary-footer">
+														<a class="text-muted text-uppercase" th:href="@{/usuario/view}">(VER TODOS)</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</section>
+								</div>
+								<div class="col-md-12 col-lg-6 col-xl-6">
+									<section class="panel panel-featured-left panel-featured-secondary">
+										<div class="panel-body">
+											<div class="widget-summary">
+												<div class="widget-summary-col widget-summary-col-icon">
+													<div class="summary-icon bg-secondary">
+														<i class="fa fa-users"></i>
+													</div>
+												</div>
+												<div class="widget-summary-col">
+													<div class="summary">
+														<h4 class="title">Total Personas</h4>
+														<div class="info">
+															<strong class="amount" id="totalRegistrosPersonas"></strong>
+														</div>
+													</div>
+													<div class="summary-footer">
+														<a class="text-muted text-uppercase" th:href="@{/persona/view}">(VER TODOS)</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</section>
+								</div>
+								<div class="col-md-12 col-lg-6 col-xl-6">
+									<section class="panel panel-featured-left panel-featured-tertiary">
+										<div class="panel-body">
+											<div class="widget-summary">
+												<div class="widget-summary-col widget-summary-col-icon">
+													<div class="summary-icon bg-tertiary">
+														<i class="fa fa-suitcase"></i>
+													</div>
+												</div>
+												<div class="widget-summary-col">
+													<div class="summary">
+														<h4 class="title">Total Empleados</h4>
+														<div class="info">
+															<strong class="amount" id="totalRegistroEmpleados"></strong>
+														</div>
+													</div>
+													<div class="summary-footer">
+														<a class="text-muted text-uppercase" th:href="@{/empleado/view}">(VER TODOS)</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</section>
+								</div>
+								<div class="col-md-12 col-lg-6 col-xl-6">
+									<section class="panel panel-featured-left panel-featured-quartenary">
+										<div class="panel-body">
+											<div class="widget-summary">
+												<div class="widget-summary-col widget-summary-col-icon">
+													<div class="summary-icon bg-quartenary">
+														<i class="fa fa-tags"></i>
+													</div>
+												</div>
+												<div class="widget-summary-col">
+													<div class="summary">
+														<h4 class="title">Total Clientes</h4>
+														<div class="info">
+															<strong class="amount" id="totalRegistrosCliente"></strong>
+														</div>
+													</div>
+													<div class="summary-footer">
+														<a class="text-muted text-uppercase" th:href="@{/persona/view}">(VER TODOS)</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</section>
+								</div>		
+							</div>
+						</div>
+					</div>
+					<!-- end: page -->
+				</section>
+			</div>
+		</section>
+		<th:block th:replace="fragments/script :: script"></th:block>
+		<script type="text/javascript" th:src="@{/assets/javascripts/app/dashboard.js}"></script>
+		<script type="text/javascript" th:src="@{/assets/javascripts/app/notifications.js}"></script>
+	</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es" class="fixed sidebar-left-collapsed" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/headinc :: head"></head>
+<body>
+	<section class="body">
+		<!-- start: header -->
+		<header th:replace="fragments/header :: header"></header>
+		<!-- end: header -->
+		<div class="inner-wrapper">
+			<!-- start: sidebar -->
+			<aside th:replace="fragments/sidebar :: sidebar"></aside>
+			<!-- end: sidebar -->
+			<section role="main" class="content-body">
+				<div>
+					<div class="page-header">
+						<h2>
+							<a th:href="@{/dashboard}">
+								<i class="fa fa-home"></i>
+							</a>
+						</h2>
+						<ol class="breadcrumbs">
+							<li class="active">
+								<span>Modulo Reclamo</span>
+							</li>
+						</ol>
+					</div>
+					<!-- start: page -->
+					
+				    <div class="row" id="mostrarListadoClientesAtencion">
+				   		 <div class="col-md-3 col-lg-3">
+					        <button type="button" id="buttonregresaratencion" class="btn btn-block btn-sm btn-primary"><i class="fa fa-arrow-circle-left"></i> Atencion</button>
+					    </div>
+						<div class="col-md-12 col-lg-12">
+							<section class="panel panel-featured-left panel-featured-primary">
+								<header class="panel-heading">
+									<h2 class="panel-title">Reclamo</h2>
+								</header>
+								<div class="panel-body">
+									<section class="panel panel-featured panel-featured-primary panel-primary">
+										<header class="panel-heading">
+											<h2 class="panel-title">Listado de Reclamo</h2>
+										</header>
+										<div class="panel-body">
+											<table class="table table-hover table-striped table-condensed mb-none" id="tablaReclamo" width="100%">
+												<thead class="text-center">
+													<tr>
+														<th>#</th>
+														<th>Cliente</th>
+														<th>Direccion</th>
+														<th>Descripcion Reclamo</th>
+														<th>Fecha</th>
+														<th>Hora</th>
+														<th>Acciones</th>
+													</tr>
+												</thead>
+											</table>
+										</div>
+									</section>
+								</div>
+							</section>
+						</div>
+					</div>
+					<div class="modal fade" id="modalFormTecnicoagregar" tabindex="-1" role="dialog" aria-labelledby="myModalLabelHerramienta" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<form role="form" method="get">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+										<h4 class="modal-title" id="myModalLabelHerramienta">Asignar Tecnico Encargado</h4>
+									</div>
+									<div class="modal-body">
+										<div class="row">
+											<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+												<label for="codigore">Codigo</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-minus-square-o"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="codigore">
+												</div>
+											</div>
+											<div class="col-md-10 col-lg-10 form-group">
+												<label for="personaencargada">Responsable</label>
+													<div class="input-group mb-md">
+														<span class="input-group-addon">
+															<i class="fa fa-pencil-square-o"></i>
+														</span>
+															<select class="form-control populate" id="personaencargada"></select>
+													</div>
+				   							</div>
+				   							<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+												<label for="desc">Descripcion Por Relevo</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-minus-square-o"></i>
+													</span>
+													<textarea class="form-control" rows="3" id="desc"></textarea>
+												</div>
+											</div>
+										</div>
+										<div class="modal-footer">
+												<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+												<button type="submit" id="asignartecnico" class="btn btn-primary">Guardar</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<!-- end: page -->
+					<input style="display:none" id="canje" name="canje" value="0"></input>
+					<input style="display:none" id="canjes" name="canjes" value="0"></input>
+					<input style="display:none" id="canjess" name="canjess" value="0"></input>
+				</div>
+			</section>
+		</div>
+	</section>
+	<th:block th:replace="fragments/script :: script"></th:block>
+	<script type="text/javascript" th:src="@{/assets/javascripts/app/reclamo.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/javascripts/app/notifications.js}"></script>
+</body>
+</html>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="es" class="fixed sidebar-left-collapsed" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/headinc :: head"></head>
+<body>
+	<section class="body">
+		<!-- start: header -->
+		<header th:replace="fragments/header :: header"></header>
+		<!-- end: header -->
+		<div class="inner-wrapper">
+			<!-- start: sidebar -->
+			<aside th:replace="fragments/sidebar :: sidebar"></aside>
+			<!-- end: sidebar -->
+			<section role="main" class="content-body">
+				<div>
+					<div class="page-header">
+						<h2>
+							<a th:href="@{/dashboard}">
+								<i class="fa fa-home"></i>
+							</a>
+						</h2>
+						<ol class="breadcrumbs">
+							<li class="active">
+								<span>Administracion</span>
+							</li>
+						</ol>
+					</div>
+					<!-- start: page -->
+					<div class="row" id="mostrarListadoClientesPago">
+						<div class="col-md-12 col-lg-12">
+							<section class="panel panel-featured panel-featured-primary panel-primary">
+								<header class="panel-heading">
+									<h2 class="panel-title">Listado de Clientes</h2>
+								</header>
+								<div class="panel-body">
+									<table class="table table-hover table-striped table-condensed mb-none tabla" id="tablaClientesPago" width="100%">
+										<thead class="text-center">
+											<tr>
+												<th style="width:110px">DNI-RUC</th>
+												<th style="width:200px">Cliente</th>
+												<th style="width:200px">Nombre Comercial</th>
+												<th style="width:200px">Direccion Actual</th>
+												<th style="width:180px">Referencia</th>
+												<th style="width:140px">Pago</th>
+											</tr>
+										</thead>
+									</table>
+								</div>
+							</section>
+						</div>
+					</div>
+					<div class="row" id="mostrarFormGenerarPago">
+						<div class="col-md-12 col-lg-12">
+							<section class="panel panel-featured panel-featured-primary">
+								<header class="panel-heading">
+									<h2 class="panel-title">Realizar Pago</h2>
+								</header>
+								<div class="panel-body">
+									<form role="form" method="post">
+										<div class="row">
+											<div class="col-md-8 col-lg-8">
+												<section class="panel panel-featured panel-featured-primary">
+													<header class="panel-heading">
+														<h2 class="panel-title">Datos Cliente</h2>
+													</header>
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-6 col-sm-6 form-group">
+																<label for="documentoPersonaClientePago">DNI/RUC</label>
+																<div class="input-group mb-md">
+																	<span class="input-group-addon">
+																		<i class="fa fa-credit-card"></i>
+																	</span>
+																	<input type="text" class="form-control input-sm" id="documentoPersonaClientePago" placeholder="Numero Documento">
+																</div>
+															</div>
+															<div class="col-md-6 col-sm-6 form-group">
+																<label for="clientePago">Cliente</label>
+																<div class="input-group mb-md">
+																	<span class="input-group-addon">
+																		<i class="fa fa-user"></i>
+																	</span>
+																	<input type="text" class="form-control input-sm" id="clientePago" placeholder="Cliente">
+																</div>
+															</div>
+															<div class="col-md-6 col-sm-6 form-group">
+																<label for="nombreComercialPago">Nombre Comercial</label>
+																<div class="input-group mb-md">
+																	<span class="input-group-addon">
+																		<i class="fa fa-bookmark"></i>
+																	</span>
+																	<input type="text" class="form-control input-sm" id="nombreComercialPago" placeholder="Nombre Comercial">
+																</div>
+															</div>
+															<div class="col-md-6 col-sm-6 form-group">
+																<label for="direccionClientePago">Direccion</label>
+																<div class="input-group mb-md">
+																	<span class="input-group-addon">
+																		<i class="fa fa-home"></i>
+																	</span>
+																	<input type="text" class="form-control input-sm" id="direccionClientePago" placeholder="Direccion">
+																</div>
+															</div>
+															<div class="col-md-6 col-sm-6 form-group">
+																<label for="clienteReferenciaDireccionPago">Referencia</label>
+																<div class="input-group mb-md">
+																	<span class="input-group-addon">
+																		<i class="fa fa-home"></i>
+																	</span>
+																	<input type="text" class="form-control input-sm" id="clienteReferenciaDireccionPago" placeholder="Referencia">
+																</div>
+															</div>
+															<div class="col-md-6 col-sm-6 form-group">
+																<label for="clienteFechaInstalacionPago">Fecha Instalacion</label>
+																<div class="input-group mb-md">
+																	<span class="input-group-addon">
+																		<i class="fa fa-calendar"></i>
+																	</span>
+																	<input type="text" class="form-control input-sm" id="clienteFechaInstalacionPago">
+																</div>
+															</div>
+															<div class="col-md-6 col-sm-6 form-group">
+																<label for="clienteGestorResponsablePago">Gestor Responsable</label>
+																<div class="input-group mb-md">
+																	<span class="input-group-addon">
+																		<i class="fa fa-user"></i>
+																	</span>
+																	<input type="text" class="form-control input-sm" id="clienteGestorResponsablePago">
+																</div>
+															</div>
+															<div class="col-md-6 col-sm-6 form-group">
+																<label for="clienteTelefonoGestorPago">Telefono Gestor</label>
+																<div class="input-group mb-md">
+																	<span class="input-group-addon">
+																		<i class="fa fa-phone"></i>
+																	</span>
+																	<input type="text" class="form-control input-sm" id="clienteTelefonoGestorPago">
+																</div>
+															</div>
+														</div>
+													</div>
+												</section>
+											</div>
+											<div class="col-md-4 col-lg-4">
+												<section class="panel panel-featured panel-featured-primary">
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-12 col-sm-12 form-group">
+																<label for="datoactualdeuda">Mes Actual Deuda</label>
+																<div class="input-group mb-md">
+																	<span class="input-group-addon">
+																		<i class="fa fa-credit-card"></i>
+																	</span>
+																	<input type="text" class="form-control input-sm" id="datoactualdeuda" disabled="" placeholder="Valor del mes actual de deuda">
+																</div>
+															</div>
+															<div class="col-md-12 col-sm-12 form-group">
+																<label for="codigoComprobante">Comprobante</label>
+																<div class="input-group mb-md">
+																	<span class="input-group-addon">
+																		<i class="fa fa-pencil-square-o"></i>
+																	</span>
+																	<select class="form-control populate" id="codigoComprobante"></select>
+																</div>
+															</div>
+															<div class="col-md-12 col-sm-12 form-group">
+																<label for="cantidadPago">Monto a Pagar</label>
+																<div class="input-group mb-md">
+																	<span class="input-group-addon">
+																		<i class="fa fa-money"></i>
+																	</span>
+																	<input type="number" step="any" class="form-control input-sm" id="cantidadPago" placeholder="0.00">
+																</div>
+															</div>
+															<div class="col-md-12 col-sm-12 form-group">
+																<label for="documentoPersonaPago">DNI Pagador</label>
+																<div class="input-group mb-md">
+																	<span class="input-group-addon">
+																		<i class="fa fa-credit-card"></i>
+																	</span>
+																	<input type="text" class="form-control input-sm" id="documentoPersonaPago" placeholder="Numero Documento">
+																</div>
+															</div>
+															<div class="col-md-12 col-sm-12 form-group">
+																<button type="button" id="verDeudaCliente" data-toggle="modal" class="btn btn-sm btn-success btn-block"><i class="fa fa-money" documentoPersonaCliente></i> Ver Deuda Cliente</button>
+																<button type="button" id="verPagoCliente" data-toggle="modal" class="btn btn-sm btn-info btn-block"><i class="fa fa-money" documentoPersonaCliente></i> Ver Pagos del Cliente</button>
+																
+															</div>
+														</div>
+													</div>
+												</section>
+											</div>
+											<div class="col-md-12 form-group">
+												<button type="submit" id="realizarPagoCliente" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> Realizar Pago</button>
+												<button type="button" id="cancelarAccion" class="btn btn-sm btn-danger"><i class="fa fa-arrow-circle-left"></i> Cancelar</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</section>
+						</div>
+					</div>
+					<div class="modal fade" id="modalVerDeudaCliente" tabindex="-1" role="dialog" aria-labelledby="myModalLabelDeudaCliente" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+									<h4 class="modal-title" id="myModalLabelDeudaCliente"></h4>
+								</div>
+								<div class="modal-body">
+									<div class="table-responsive">
+										<table class="table table-hover table-striped table-condensed mb-none" id="tablaDeudaCliente" width="100%">
+											<thead class="text-center">
+												<tr>
+													<th>Mes</th>
+													<th>A&ntilde;o</th>
+													<th>Servicio</th>
+													<th>Monto</th>
+													<th>Descuento</th>
+												</tr>
+											</thead>
+											<tbody id="contenidoDeudasCliente">
+											</tbody>
+										</table>
+									</div>			
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal fade" id="modalVerPagoCliente" tabindex="-1" role="dialog" aria-labelledby="myModalLabelPagoCliente" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+									<h4 class="modal-title" id="myModalLabelPagoCliente"></h4>
+								</div>
+								<div class="modal-body">
+									<div class="table-responsive">
+										<table class="table table-hover table-striped table-condensed mb-none" id="tablaPagoClienteDetalle" width="100%">
+											<thead class="text-center">
+												<tr>
+													<th>Pago</th>
+													<th>Descuento</th>
+													<th>Cancelo</th>
+													<th>Fecha</th>
+													<th>Mes</th>
+													<th>Caja</th>
+												</tr>
+											</thead>
+										</table>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal fade" id="modalGenerarDescuentoMes" tabindex="-1" role="dialog" aria-labelledby="myModalLabelPagoCliente" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+									<h4 class="modal-title" id="myModalLabelDstosClienteDescuento"></h4>
+								</div>
+								<div class="modal-body">
+									
+									<form role="form" method="post">
+										<div class="row">
+											<div class="col-md-12 col-lg-12">
+												<section class="panel panel-featured panel-featured-primary">
+													<header class="panel-heading">
+														<h2 class="panel-title">Mes Actual de Deuda</h2>
+													</header>
+															<div class="col-md-6 col-sm-6 form-group">
+																<label for="documentoPersonaClienteDescuento">DNI/RUC</label>
+																<div class="input-group mb-md">
+																	<span class="input-group-addon">
+																		<i class="fa fa-credit-card"></i>
+																	</span>
+																	<input type="text" class="form-control input-sm" id="documentoPersonaClienteDescuento" disabled="disabled" placeholder="Numero Documento">
+																</div>
+															</div>
+															<div class="col-md-6 col-sm-6 form-group">
+																<label for="ClienteDescuentoMT">Monto Total</label>
+																<div class="input-group mb-md">
+																	<span class="input-group-addon">
+																		<i class="fa fa-money"></i>
+																	</span>
+																	<input type="number" step="any" disabled="disabled" class="form-control input-sm" id="ClienteDescuentoMT" placeholder="0.00">
+																</div>
+															</div>
+															<div class="col-md-6 col-sm-6 form-group">
+																<label for="ClienteDescuentoMesPago">Mes de Deuda</label>
+																<div class="input-group mb-md">
+																	<span class="input-group-addon">
+																		<i class="fa fa-money"></i>
+																	</span>
+																	<input type="text" disabled="disabled" class="form-control input-sm" id="ClienteDescuentoMesPago" placeholder="0">
+																</div>
+															</div>
+															<div class="col-md-6 col-sm-6 form-group">
+																<label for="ClienteDescuento">Monto a Descontar</label>
+																<div class="input-group mb-md">
+																	<span class="input-group-addon">
+																		<i class="fa fa-money"></i>
+																	</span>
+																	<input type="number" step="any" class="form-control input-sm" id="ClienteDescuento" placeholder="0.00">
+																</div>
+															</div>
+															<div class="col-md-12 col-sm-12 form-group">
+																<label for="ClienteDescuentoMotivo">Motivo a Descontar</label>
+																<div class="input-group mb-md">
+																	<span class="input-group-addon">
+																		<i class="fa fa-minus-square-o"></i>
+																	</span>
+																	<textarea class="form-control" rows="3" id="ClienteDescuentoMotivo" placeholder="motivo a descontar"></textarea>
+																</div>
+															</div>
+												</section>
+											</div>
+											<div class="col-md-12 form-group">
+												<button type="submit" id="generarDescuentoClienteSave" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> Realizar Descuento</button>
+											</div>
+										</div>
+									</form>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal fade" tabindex="-1" id="modalPagosPorDia" role="dialog" aria-labelledby="myModalLabelPagosPorDia" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<form role="form" method="post" id="formPagosPorDia">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+										<h4 class="modal-title" id="myModalLabelPagosPorDia">Busqueda de Pagos Por Fecha de Pago</h4>
+									</div>
+									<div class="modal-body">
+										<div class="row">
+											<div class="col-md-12 form-group">
+												<label for="fechaPagoPorDia">Fecha Busqueda</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+													</span>
+													<input type="date" class="form-control input-sm" id="fechaPagoPorDia">
+												</div>
+											</div>											
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" id="cancelarAccionBuscarPagosPorDia" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+										<button type="submit" id="buscarPagosPorFecha" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="modal fade" tabindex="-1" id="modalPagosPorRangoFecha" role="dialog" aria-labelledby="myModalLabelPagosPorRangoFecha" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<form role="form" method="post" id="formPagosPorRangoFecha">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+										<h4 class="modal-title" id="myModalLabelPagosPorRangoFecha">Busqueda de Pagos Por Rango de Fecha</h4>
+									</div>
+									<div class="modal-body">
+										<div class="row">
+											<div class="col-md-6 col-lg-6 form-group">
+												<label for="fechaInicialBusqueda">Fecha Inicial</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+													</span>
+													<input type="date" class="form-control input-sm" id="fechaInicialBusqueda">
+												</div>
+											</div>
+											<div class="col-md-6 col-lg-6 form-group">
+												<label for="fechaFinBusqueda">Fecha Final</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+													</span>
+													<input type="date" class="form-control input-sm" id="fechaFinBusqueda">
+												</div>
+											</div>											
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" id="cancelarAccionBuscarRangoPorFecha" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+										<button type="submit" id="buscarPagosPorRangoFecha" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="modal fade" tabindex="-1" id="modalReporteDiasDeudas" role="dialog" aria-labelledby="myModalLabelReporteDiasDeudas" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<form role="form" method="post" id="formPagosPorDia">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+										<h4 class="modal-title" id="myModalLabelReporteDiasDeudas">Reporte de Dias de Deudas</h4>
+									</div>
+									<div class="modal-body">
+										<div class="row">
+											<div class="col-md-12 form-group">
+												<label for="fechaPagoPorDia">Dias de Deudas</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-book"></i>
+													</span>
+													<select  class="form-control populate" id="diasDeudas">
+														<option value="">Seleccione una Opcion</option>
+														<option value="HASTA 1 MES">HASTA 1 MES</option>
+														<option value="HASTA 2 MESES">HASTA 2 MESES</option>
+														<option value="3 A MAS MESES">3 A MAS MESES</option>
+														<option value="DEUDA TOTAL">DEUDA TOTAL</option>
+													</select>
+												</div>
+											</div>											
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" id="cancelarAccionBuscarDiasDeudas" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+										<button type="submit" id="buscarDiasDeudas" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<!-- end: page -->
+					<input style="display:none" id="canje" name="canje" value="0"></input>
+					<input style="display:none" id="canjes" name="canjes" value="0"></input>
+					<input style="display:none" id="canjess" name="canjess" value="0"></input>
+				</div>
+			</section>
+		</div>
+	</section>
+	<th:block th:replace="fragments/script :: script"></th:block>
+	<script type="text/javascript" th:src="@{/assets/javascripts/app/administracionpagos.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/javascripts/app/notifications.js}"></script>
+</body>
+</html>

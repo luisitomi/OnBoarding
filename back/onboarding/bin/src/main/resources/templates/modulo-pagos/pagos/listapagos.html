@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es" class="fixed sidebar-left-collapsed" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/headinc :: head"></head>
+<body>
+	<section class="body">
+		<!-- start: header -->
+		<header th:replace="fragments/header :: header"></header>
+		<!-- end: header -->
+		<div class="inner-wrapper">
+			<!-- start: sidebar -->
+			<aside th:replace="fragments/sidebar :: sidebar"></aside>
+			<!-- end: sidebar -->
+			<section role="main" class="content-body">
+				<div>
+					<div class="page-header">
+						<h2>
+							<a th:href="@{/dashboard}">
+								<i class="fa fa-home"></i>
+							</a>
+						</h2>
+						<ol class="breadcrumbs">
+							<li class="active">
+								<span>Modulo Pagos</span>
+							</li>
+						</ol>
+					</div>
+					<!-- start: page -->
+					<div class="row">
+						<div class="col-md-4 col-lg-4 mb-xs">
+							<button type="button" id="buttonVolverRegistroPago" class="btn btn-block btn-sm btn-primary"><i class="fa fa-arrow-circle-o-left"></i> Volver a Pagos</button>
+						</div>
+						<div class="col-md-12 col-lg-12">
+							<section class="panel panel-featured panel-featured-primary panel-primary">
+								<header class="panel-heading">
+									<h2 class="panel-title">Listado de Pagos Realizados</h2>
+								</header>
+								<div class="panel-body">
+									<table class="table table-hover table-striped table-condensed mb-none" id="tablaPagosRealizadosGeneral" width="100%">
+										<thead class="text-center">
+											<tr>
+												<th style="width:120px;">Codigo Pago</th>
+												<th style="width:50px;">Descuento</th>
+												<th style="width:50px;">Importe</th>
+												<th>Mes</th>
+												<th>A&ntilde;o</th>
+												<th style="width:200px;">Cliente</th>
+												<th style="width:200px;">Direccion</th>
+												<th>Fecha Pago</th>
+												<th>Acciones</th>
+												<th>Generar Recibo</th>
+											</tr>
+										</thead>
+									</table>
+								</div>
+							</section>
+						</div>
+					</div>
+					<div class="modal fade" id="modalFormRevalidarPago" tabindex="-1" role="dialog" aria-labelledby="myModalLabelRevalidarPago" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<form role="form" method="post">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+										<h4 class="modal-title" id="myModalLabelRevalidarPago">Revalidar Pago</h4>
+									</div>
+									<div class="modal-body">
+										<div class="row">
+											<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+												<label for="codigoPagoRevalidar">Codigo Pago</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-credit-card"></i>
+													</span>
+													<input type="text" class="form-control input-sm" disabled="disabled" id="codigoPagoRevalidar">
+												</div>
+											</div>
+											<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+												<label for="codigoComprobanteRevalidar">Comprobante</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-pencil-square-o"></i>
+													</span>
+													<select class="form-control populate" id="codigoComprobanteRevalidar"></select>
+												</div>
+											</div>
+											<div class="col-md-6 col-sm-6 form-group">
+												<label for="cantidadPagoRevalidar">Monto a Pagar</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-money"></i>
+													</span>
+													<input type="number" step="any" class="form-control input-sm" id="cantidadPagoRevalidar" placeholder="0.00">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+										<button type="submit" id="guardarPagoRevalidado" class="btn btn-primary"><i class="fa fa-check"></i> Guardar</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					
+					<!-- end: page -->
+					<input style="display:none" id="canje" name="canje" value="0"></input>
+					<input style="display:none" id="canjes" name="canjes" value="0"></input>
+					<input style="display:none" id="canjess" name="canjess" value="0"></input>
+				</div>
+			</section>
+		</div>
+	</section>
+	<th:block th:replace="fragments/script :: script"></th:block>
+	<script type="text/javascript" th:src="@{/assets/javascripts/app/listapagos.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/javascripts/app/notifications.js}"></script>
+</body>
+</html>

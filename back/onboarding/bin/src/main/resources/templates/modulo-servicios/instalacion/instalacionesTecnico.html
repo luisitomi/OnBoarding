@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es" class="fixed sidebar-left-collapsed" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/headinc :: head"></head>
+<body>
+	<section class="body">
+		<!-- start: header -->
+		<header th:replace="fragments/header :: header"></header>
+		<!-- end: header -->
+		<div class="inner-wrapper">
+			<!-- start: sidebar -->
+			<aside th:replace="fragments/sidebar :: sidebar"></aside>
+			<!-- end: sidebar -->
+			<section role="main" class="content-body">
+				<div>
+					<div class="page-header">
+						<h2>
+							<a th:href="@{/dashboard}"><i class="fa fa-home"></i></a>
+						</h2>
+						<ol class="breadcrumbs">
+							<li class="active">
+								<span>Informe Instalacion</span>
+							</li>
+						</ol>
+					</div>
+					<!-- start: page -->
+					<div class="row">
+						<div class="col-md-12 col-lg-12">
+							<section class="panel panel-featured panel-featured-primary panel-primary">
+								<header class="panel-heading">
+									<h2 class="panel-title">Instalaciones Realizadas</h2>
+								</header>
+								<div class="panel-body">
+									<table class="table table-hover table-striped table-condensed mb-none" id="tablaInstalacionesRealizadas" width="100%">
+										<thead>
+											<tr>
+												<th class="text-center">Codigo Cuenta</th>
+												<th class="text-center">Nro. Documento</th>
+												<th class="text-center">Cliente</th>
+												<th class="text-center">Tecnico</th>
+												<th class="text-center">Generar Hoja Liquidacion</th>
+											</tr>
+										</thead>
+									</table>
+								</div>
+							</section>
+						</div>
+					</div>
+					<!-- end: page -->
+					<input style="display:none" id="canje" name="canje" value="0"></input>
+					<input style="display:none" id="canjes" name="canjes" value="0"></input>
+					<input style="display:none" id="canjess" name="canjess" value="0"></input>
+				</div>
+			</section>
+		</div>
+	</section>
+	<th:block th:replace="fragments/script :: script"></th:block>
+	<script type="text/javascript" th:src="@{/assets/javascripts/app/notifications.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/javascripts/app/instalacionesTecnico.js}"></script>
+</body>
+</html>

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es" class="fixed sidebar-left-collapsed" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/headinc :: head"></head>
+<body>
+	<section class="body">
+		<!-- start: header -->
+		<header th:replace="fragments/header :: header"></header>
+		<!-- end: header -->
+		<div class="inner-wrapper">
+			<!-- start: sidebar -->
+			<aside th:replace="fragments/sidebar :: sidebar"></aside>
+			<!-- end: sidebar -->
+			<section role="main" class="content-body">
+				<div>
+					<div class="page-header">
+						<h2>
+							<a th:href="@{/dashboard}">
+								<i class="fa fa-home"></i>
+							</a>
+						</h2>
+						<ol class="breadcrumbs">
+							<li class="active">
+								<span>Modulo de Atencion</span>
+							</li>
+						</ol>
+					</div>
+					<div class="row" id="listadoherramientas">
+					 	<div class="col-md-3 col-lg-3 mb-xs">
+							<button type="button" data-toggle="modal" id="btnAgregarHerramienta" class="mb-xs btn-sm btn-block btn btn-primary"><i class="fa fa-plus-circle"></i> Agregar Herramienta</button>
+						</div>
+						<div class="col-md-3 col-lg-3 mb-xs">
+					        <button type="button" id="buttonHerramientas" class="btn btn-block btn-sm btn-warning"><i class="fa fa-arrow-circle-left"></i> Atencion</button>
+					    </div>
+						<div class="col-md-12 col-lg-12">
+							<section class="panel panel-featured panel-featured-primary panel-primary">
+								<header class="panel-heading">
+									<h2 class="panel-title">Listado de Herramientas</h2>
+								</header>
+								<div class="panel-body">
+									<table class="table table-hover table-striped table-condensed mb-none" id="tablaHerramientas" width="100%">
+									<thead class="text-center">
+										<tr>
+											<th>#</th>
+											<th>Tipo Herramienta</th>
+											<th>Fecha Inicio</th>
+											<th>Fecha Fin</th>
+											<th>Agregar Pregunta</th>
+											<th>Listado de Preguntas</th>
+											<th>Acciones</th>
+										</tr>
+									</thead>
+									</table>
+								</div>
+							</section>
+						</div>
+					</div>
+					<div class="row" id="agregarpreguntasherramienta">
+						<div class="col-md-12 col-lg-12">
+							<section class="panel panel-featured panel-featured-primary panel-primary">
+								<header class="panel-heading">
+									<h2 class="panel-title">Agregar Preguntas</h2>
+								</header>
+								<form role="form" method ="post">
+									<div class="panel-body">
+										<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+											<label for="numeroherra">Numero Heramienta</label>
+											<div class="input-group mb-md">
+												<span class="input-group-addon">
+													<i class="fa fa-lock"></i>
+												</span>
+													<input type="text" class="form-control input-sm" id="numeroherra">
+											</div>
+										</div>
+										<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+												<label for="nombreherra">Nombre Herramienta</label>
+											<div class="input-group mb-md">
+												<span class="input-group-addon">
+													<i class="fa fa-wrench"></i>
+												</span>
+													<input type="text" class="form-control input-sm" id="nombreherra">
+											</div>
+										</div>
+										<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+											<label for="pregunta">Pregunta</label>
+											<div class="input-group mb-md">
+												<span class="input-group-addon">
+													<i class="fa fa-question"></i>
+												</span>
+													<textarea class="form-control" rows="2" autofocus id="pregunta"></textarea>
+											</div>
+										</div>
+									</div>
+									<div class="panel-body form-group">
+										<button type="button" id="guardardetalleHerramienta" class="btn btn-primary">Guardar</button>
+										<button type="button" id= "cancelarAcccion" class="btn btn-danger">Cancelar</button>
+									</div>
+								</form>
+							</section>
+						</div>
+					</div>
+					<div class="modal fade" id="modalFormAgregarHerramienta" tabindex="-1" role="dialog" aria-labelledby="myModalLabelHerramienta" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<form role="form" method="post">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+										<h4 class="modal-title" id="myModalLabelHerramienta">Nueva Herramienta</h4>
+									</div>
+									<div class="modal-body">
+										<div class="row">
+											<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+												<label for="fechainicio">Fecha Inicio</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+													</span>
+													<input type="date" class="form-control input-sm" id="fechainicio">
+												</div>
+											</div>
+											<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+												<label for="fechafin">Fecha Fin</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+													</span>
+													<input type="date" class="form-control input-sm" id="fechafin">
+												</div>
+											</div>			
+											<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+												<label for="tipoherramienta">Tipo Herramienta</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-tag"></i>
+													</span>
+													<select  class="form-control populate" id="tipoherramienta">
+														<option value="">Seleccione una Opcion</option>
+														<option value="1">ENCUESTA</option>
+														<option value="2">CUESTIONARIO</option>
+													</select>
+												</div>
+											</div>
+											<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+												<label for="cantidad">Cantidad</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-plus"></i>
+													</span>
+													<input type="number" class="form-control input-sm" id="cantidad">
+												</div>
+											</div>
+											<div class="col-md-12 col-sm-12 col-xs-12 form-group">
+												<label for="observacion">Descripcion</label>
+												<textarea class="form-control" rows="3" id="observacion"></textarea>
+											</div>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+										<button type="submit" id="guardarHerramienta" class="btn btn-primary">Guardar</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="modal fade" id="modalFormListaPregunta" tabindex="-1" role="dialog" aria-labelledby="myModalLabelHerramienta" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<form role="form" method="get">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+										<h4 class="modal-title" id="myModalLabelHerramienta">Detalle de la Herramienta</h4>
+									</div>
+									<div class="modal-body">
+										<div class="row">
+											<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+												<label for="codigo">Codigo</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-minus-square-o"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="codigo">
+												</div>
+											</div>
+											<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+												<label for="nombreh">Nombre Herramienta</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-minus-square-o"></i>
+													</span>
+													<input type="text" class="form-control input-sm" disabled="disabled" id="nombreh">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row" id="">
+										<div class="col-md-12 col-lg-12">
+											<section class="panel panel-featured panel-featured-primary panel-primary">
+												<header class="panel-heading">
+													<h2 class="panel-title">Listado de Preguntas</h2>
+												</header>
+											</section>
+											<div class="panel-body">
+												<table class="table table-hover table-striped table-condensed mb-none" id="tablalistardetallepregunta" width="100%">
+													<thead class="text-center">
+														<tr>
+															<th>#</th>
+															<th>Pregunta</th>
+															<th>Acciones</th>
+														</tr>
+													</thead>
+												</table>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="modal fade" id="modalFormEditarHerramienta" tabindex="-1" role="dialog" aria-labelledby="myModalLabelHerramienta" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<form role="form" method="post">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+										<h4 class="modal-title" id="myModalLabelHerramienta">Editar Herramienta</h4>
+									</div>
+									<div class="modal-body">
+										<div class="row">
+											<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+												<label for="codigoedi">Codigo</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-minus-square-o"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="codigoedi">
+												</div>
+											</div>
+											<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+												<label for="nombrehedi">Nombre de Herramienta</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-minus-square-o"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="nombrehedi">
+												</div>
+											</div>
+											<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+												<label for="fechi">Fecha de Inicio</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+													</span>
+													<input type="date" class="form-control input-sm" id="fechi">
+												</div>
+											</div>
+											<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+												<label for="fechf">Fecha de Termino</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+													</span>
+													<input type="date" class="form-control input-sm" id="fechf">
+												</div>
+											</div>
+											<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+												<label for="cantidade">Cantidad</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-plus"></i>
+													</span>
+													<input type="number" class="form-control input-sm" id="cantidade">
+												</div>
+											</div>
+											<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+												<label for="codigotipoherre">Tipo Herramienta</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-plus"></i>
+													</span>
+													<input type="number" disabled="disabled" class="form-control input-sm" id="codigotipoherre">
+												</div>
+											</div>
+											<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+												<label for="feche">Fecha de Emision</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+													</span>
+													<input type="date" disabled="disabled" class="form-control input-sm" id="feche">
+												</div>
+											</div>
+											<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+													<button type="submit" id="guardareditarherra" class="btn btn-primary">Guardar</button>
+												</div>
+											</div>
+											<div class="col-md-6 col-sm-6 col-xs-6 form-group" style="visibility:hidden">
+												<label for="secuenciale">Secuencial</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-plus"></i>
+													</span>
+													<input type="number" disabled="disabled" class="form-control input-sm" id="secuenciale">
+												</div>
+											</div>
+											<div class="col-md-6 col-sm-6 col-xs-6 form-group" style="visibility:hidden">
+												<label for="codigoUusarioe">Código Usuario</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-plus"></i>
+													</span>
+													<input type="number" disabled="disabled" class="form-control input-sm" id="codigoUusarioe">
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="modal fade" id="modalFormEditarPregunta" tabindex="-1" role="dialog" aria-labelledby="myModalLabelHerramienta" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<form role="form" method="post">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+										<h4 class="modal-title" id="myModalLabelHerramienta">Editar Pregunta</h4>
+									</div>
+									<div class="modal-body">
+										<div class="row">
+											<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+												<label for="codigoedidet">Codigo</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-minus-square-o"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="codigoedidet">
+												</div>
+											</div>
+											<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+												<label for="preguntaedidet">Pregunta</label>
+												<div class="input-group mb-md">
+													<span class="input-group-addon">
+														<i class="fa fa-minus-square-o"></i>
+													</span>
+													<input type="text" class="form-control input-sm" id="preguntaedidet">
+												</div>
+											</div>
+											<div class="col-md-6 col-sm-6 col-xs-6 form-group">
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+													<button type="submit" id="editarpregunt" class="btn btn-primary">Guardar</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<input style="display:none" id="canje" name="canje" value="0"></input>
+					<input style="display:none" id="canjes" name="canjes" value="0"></input>
+					<input style="display:none" id="canjess" name="canjess" value="0"></input>
+			   	</div>
+	   		</section>
+		</div>
+	</section>
+	<th:block th:replace="fragments/script :: script"></th:block>
+	<script type="text/javascript" th:src="@{/assets/javascripts/app/herramienta.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/javascripts/app/notifications.js}"></script>
+</body>
+</html>
