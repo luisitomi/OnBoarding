@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.dev.op.core.dto.vipchannel.getDirectionByIdModel;
+import com.dev.op.core.dto.vipchannel.getListMangerModel;
+import com.dev.op.core.dto.vipchannel.getListVoucherModel;
 import com.dev.op.core.dto.vipchannel.getManagerByIdModel;
 import com.dev.op.core.dto.vipchannel.getPayServiceDetailModel;
 import com.dev.op.core.dto.vipchannel.getPersonByDocumentModel;
@@ -157,6 +159,46 @@ public class CobranzaFacadeImpl implements CobranzaFacade {
 			}
 			else {
 				return getPayServiceDetail;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getListMangerModel> getListManger() {
+		List<getListMangerModel> getListManger = new ArrayList<getListMangerModel>();
+		
+		try {
+			
+			getListManger = cobranzaService.getListManger();
+			if(GenericUtil.isEmpty(getListManger)) {
+				return null;
+			}
+			else {
+				return getListManger;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getListVoucherModel> getListVoucher() {
+		List<getListVoucherModel> getListVoucher = new ArrayList<getListVoucherModel>();
+		
+		try {
+			
+			getListVoucher = cobranzaService.getListVoucher();
+			if(GenericUtil.isEmpty(getListVoucher)) {
+				return null;
+			}
+			else {
+				return getListVoucher;
 			}
 		}
 		catch(Exception e) {

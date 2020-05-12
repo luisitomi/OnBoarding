@@ -16,6 +16,7 @@ public class getPayServiceDetailMapper implements RowMapper<getPayServiceDetailM
 		getPayServiceDetail.setId(rs.getInt("id"));
 		getPayServiceDetail.setService(rs.getString("service"));
 		getPayServiceDetail.setAmount(rs.getString("amount"));
+		getPayServiceDetail.setStatus(rs.getString("status"));
 		return getPayServiceDetail;
 	}
 }

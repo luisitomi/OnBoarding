@@ -3,6 +3,8 @@ package com.dev.op.core.service.vipchannel;
 import java.util.List;
 
 import com.dev.op.core.dto.vipchannel.getDirectionByIdModel;
+import com.dev.op.core.dto.vipchannel.getListMangerModel;
+import com.dev.op.core.dto.vipchannel.getListVoucherModel;
 import com.dev.op.core.dto.vipchannel.getManagerByIdModel;
 import com.dev.op.core.dto.vipchannel.getPayServiceDetailModel;
 import com.dev.op.core.dto.vipchannel.getPersonByDocumentModel;
@@ -18,4 +20,6 @@ public interface CobranzaService {
 	List<getManagerByIdModel> getManagerById(String document,String code);
 	List<getVoucherByIdModel> getVoucherById(String document,String code);
 	List<getPayServiceDetailModel> getPayServiceDetail(String document,String code);
+	List<getListMangerModel> getListManger();
+	List<getListVoucherModel> getListVoucher();
 }

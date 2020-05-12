@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dev.op.core.dto.vipchannel.getDirectionByIdModel;
+import com.dev.op.core.dto.vipchannel.getListMangerModel;
+import com.dev.op.core.dto.vipchannel.getListVoucherModel;
 import com.dev.op.core.dto.vipchannel.getManagerByIdModel;
 import com.dev.op.core.dto.vipchannel.getPayServiceDetailModel;
 import com.dev.op.core.dto.vipchannel.getPersonByDocumentModel;
@@ -16,6 +18,8 @@ import com.dev.op.core.dto.vipchannel.getPersonByIdModel;
 import com.dev.op.core.dto.vipchannel.getReferenceByIdModel;
 import com.dev.op.core.dto.vipchannel.getVoucherByIdModel;
 import com.dev.op.core.repository.vipchannel.jdbc.getDirectionByIdJdbcRepository;
+import com.dev.op.core.repository.vipchannel.jdbc.getListMangerJdbcRepository;
+import com.dev.op.core.repository.vipchannel.jdbc.getListVoucherJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getManagerByIdJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getPayServiceDetailJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getPersonByDocumentJdbcRepository;
@@ -52,6 +56,14 @@ public class CobranzaServiceImpl implements CobranzaService {
 	@Autowired
 	@Qualifier("getVoucherByIdJdbcRepository")
 	private getVoucherByIdJdbcRepository getVoucherByIdJdbcRepository;
+	
+	@Autowired
+	@Qualifier("getListMangerJdbcRepository")
+	private getListMangerJdbcRepository getListMangerJdbcRepository;
+	
+	@Autowired
+	@Qualifier("getListVoucherJdbcRepository")
+	private getListVoucherJdbcRepository getListVoucherJdbcRepository;
 	
 	@Autowired
 	@Qualifier("getPayServiceDetailJdbcRepository")
@@ -190,6 +202,46 @@ public class CobranzaServiceImpl implements CobranzaService {
 			}
 			else {
 				return getPayServiceDetail;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getListMangerModel> getListManger() {
+		List<getListMangerModel> getListManger = new ArrayList<getListMangerModel>();
+		
+		try {
+			
+			getListManger = getListMangerJdbcRepository.getListManger();
+			if(GenericUtil.isCollectionEmpty(getListManger)) {
+				return null;
+			}
+			else {
+				return getListManger;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getListVoucherModel> getListVoucher() {
+		List<getListVoucherModel> getListVoucher = new ArrayList<getListVoucherModel>();
+		
+		try {
+			
+			getListVoucher = getListVoucherJdbcRepository.getListVoucher();
+			if(GenericUtil.isCollectionEmpty(getListVoucher)) {
+				return null;
+			}
+			else {
+				return getListVoucher;
 			}
 		}
 		catch(Exception e) {

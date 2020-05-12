@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.op.core.dto.vipchannel.getDirectionByIdModel;
+import com.dev.op.core.dto.vipchannel.getListMangerModel;
+import com.dev.op.core.dto.vipchannel.getListVoucherModel;
 import com.dev.op.core.dto.vipchannel.getManagerByIdModel;
 import com.dev.op.core.dto.vipchannel.getPayServiceDetailModel;
 import com.dev.op.core.dto.vipchannel.getPersonByDocumentModel;
@@ -150,6 +152,40 @@ public class CobranzaRestController {
 		}
 		catch(Exception e) {
 			return new ResponseEntity<List<getPayServiceDetailModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/getListManger")
+	public ResponseEntity<List<getListMangerModel>> getListManger() {
+		
+		try{
+			List<getListMangerModel> getListManger = cobranzaFacade.getListManger();
+			if(!GenericUtil.isCollectionEmpty(getListManger)) {
+				return new ResponseEntity<List<getListMangerModel>>(getListManger, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<getListMangerModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<List<getListMangerModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/getListVoucher")
+	public ResponseEntity<List<getListVoucherModel>> getListVoucher() {
+		
+		try{
+			List<getListVoucherModel> getListVoucher = cobranzaFacade.getListVoucher();
+			if(!GenericUtil.isCollectionEmpty(getListVoucher)) {
+				return new ResponseEntity<List<getListVoucherModel>>(getListVoucher, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<getListVoucherModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<List<getListVoucherModel>>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	

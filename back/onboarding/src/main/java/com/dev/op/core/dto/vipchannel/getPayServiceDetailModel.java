@@ -14,7 +14,9 @@ public class getPayServiceDetailModel implements Serializable {
 	private String service;
 	
 	private String amount;
-
+	
+	private String status;
+	
 	public getPayServiceDetailModel() {
 		
 	}
@@ -41,6 +43,14 @@ public class getPayServiceDetailModel implements Serializable {
 
 	public void setAmount(String amount) {
 		this.amount = amount;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 }
