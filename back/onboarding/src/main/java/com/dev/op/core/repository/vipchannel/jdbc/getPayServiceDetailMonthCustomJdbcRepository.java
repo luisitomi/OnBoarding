@@ -14,12 +14,12 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
-import com.dev.op.core.dto.vipchannel.getPayServiceDetailModel;
-import com.dev.op.core.mapper.vipchannel.getPayServiceDetailMapper;
+import com.dev.op.core.dto.vipchannel.getPayServiceDetailMonthModel;
+import com.dev.op.core.mapper.vipchannel.getPayServiceDetailMonthMapper;
 import com.dev.op.core.util.vipchannel.Constantes;
 
-@Repository("getPayServiceDetailJdbcRepository")
-public class getPayServiceDetailCustomJdbcRepository implements getPayServiceDetailJdbcRepository {
+@Repository("getPayServiceDetailMonthJdbcRepository")
+public class getPayServiceDetailMonthCustomJdbcRepository implements getPayServiceDetailMonthJdbcRepository {
 
 	private SimpleJdbcCall simpleJdbcCall;
 	
@@ -31,16 +31,16 @@ public class getPayServiceDetailCustomJdbcRepository implements getPayServiceDet
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<getPayServiceDetailModel> getPayServiceDetail(String document,String code, String user) {
-		List<getPayServiceDetailModel> getPayServiceDetail = new ArrayList<getPayServiceDetailModel>();
+	public List<getPayServiceDetailMonthModel> getPayServiceDetailMonth(String document,String code, String user) {
+		List<getPayServiceDetailMonthModel> getPayServiceDetailMonth = new ArrayList<getPayServiceDetailMonthModel>();
 		
 		try {
 			
-			simpleJdbcCall.withProcedureName(Constantes.GETPAYSERVICEDETAIL);
+			simpleJdbcCall.withProcedureName(Constantes.GETPAYSERVICEDETAILMONTH);
 			simpleJdbcCall.declareParameters(new SqlParameter("document", Types.VARCHAR),
 											 new SqlParameter("code", Types.VARCHAR),
 											 new SqlParameter("user", Types.VARCHAR));
-			simpleJdbcCall.returningResultSet("getPayServiceDetail", new getPayServiceDetailMapper());
+			simpleJdbcCall.returningResultSet("getPayServiceDetailMonth", new getPayServiceDetailMonthMapper());
 			
 			MapSqlParameterSource inParams = new MapSqlParameterSource();
 			inParams.addValue("document", document);
@@ -48,8 +48,8 @@ public class getPayServiceDetailCustomJdbcRepository implements getPayServiceDet
 			inParams.addValue("user", user);
 			
 			Map<String, Object> result = simpleJdbcCall.execute(inParams);
-			getPayServiceDetail = (List<getPayServiceDetailModel>) result.get("getPayServiceDetail");
-			return getPayServiceDetail;
+			getPayServiceDetailMonth = (List<getPayServiceDetailMonthModel>) result.get("getPayServiceDetailMonth");
+			return getPayServiceDetailMonth;
 		}
 		catch(Exception e) {
 			e.printStackTrace();

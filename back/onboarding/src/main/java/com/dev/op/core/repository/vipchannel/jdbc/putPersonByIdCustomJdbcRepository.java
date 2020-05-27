@@ -14,12 +14,12 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
-import com.dev.op.core.dto.vipchannel.getPayServiceDetailModel;
-import com.dev.op.core.mapper.vipchannel.getPayServiceDetailMapper;
+import com.dev.op.core.dto.ResponseModel;
+import com.dev.op.core.mapper.vipchannel.putPersonByIdMapper;
 import com.dev.op.core.util.vipchannel.Constantes;
 
-@Repository("getPayServiceDetailJdbcRepository")
-public class getPayServiceDetailCustomJdbcRepository implements getPayServiceDetailJdbcRepository {
+@Repository("putPersonByIdJdbcRepository")
+public class putPersonByIdCustomJdbcRepository implements putPersonByIdJdbcRepository {
 
 	private SimpleJdbcCall simpleJdbcCall;
 	
@@ -31,25 +31,29 @@ public class getPayServiceDetailCustomJdbcRepository implements getPayServiceDet
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<getPayServiceDetailModel> getPayServiceDetail(String document,String code, String user) {
-		List<getPayServiceDetailModel> getPayServiceDetail = new ArrayList<getPayServiceDetailModel>();
-		
+	public List<ResponseModel> putPersonById(String document,String name,String last,String second,String client) {
+		List<ResponseModel> putPersonById = new ArrayList<ResponseModel>();
+
 		try {
 			
-			simpleJdbcCall.withProcedureName(Constantes.GETPAYSERVICEDETAIL);
+			simpleJdbcCall.withProcedureName(Constantes.PUTPERSONBYID);
 			simpleJdbcCall.declareParameters(new SqlParameter("document", Types.VARCHAR),
-											 new SqlParameter("code", Types.VARCHAR),
-											 new SqlParameter("user", Types.VARCHAR));
-			simpleJdbcCall.returningResultSet("getPayServiceDetail", new getPayServiceDetailMapper());
+											 new SqlParameter("name", Types.VARCHAR),
+											 new SqlParameter("last", Types.VARCHAR),
+											 new SqlParameter("second", Types.VARCHAR),
+											 new SqlParameter("client", Types.VARCHAR));
+			simpleJdbcCall.returningResultSet("putPersonById", new putPersonByIdMapper());
 			
 			MapSqlParameterSource inParams = new MapSqlParameterSource();
 			inParams.addValue("document", document);
-			inParams.addValue("code", code);
-			inParams.addValue("user", user);
+			inParams.addValue("name", name);
+			inParams.addValue("last", last);
+			inParams.addValue("second", second);
+			inParams.addValue("client", client);
 			
 			Map<String, Object> result = simpleJdbcCall.execute(inParams);
-			getPayServiceDetail = (List<getPayServiceDetailModel>) result.get("getPayServiceDetail");
-			return getPayServiceDetail;
+			putPersonById = (List<ResponseModel>) result.get("putPersonById");
+			return putPersonById;
 		}
 		catch(Exception e) {
 			e.printStackTrace();

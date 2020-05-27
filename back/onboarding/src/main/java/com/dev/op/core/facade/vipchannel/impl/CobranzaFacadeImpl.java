@@ -1,17 +1,24 @@
 package com.dev.op.core.facade.vipchannel.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import com.dev.op.core.dto.ResponseModel;
 import com.dev.op.core.dto.vipchannel.getDirectionByIdModel;
 import com.dev.op.core.dto.vipchannel.getListMangerModel;
+import com.dev.op.core.dto.vipchannel.getListPayModel;
 import com.dev.op.core.dto.vipchannel.getListVoucherModel;
+import com.dev.op.core.dto.vipchannel.getListlienteByManagerModel;
+import com.dev.op.core.dto.vipchannel.getManagaerCountModel;
 import com.dev.op.core.dto.vipchannel.getManagerByIdModel;
 import com.dev.op.core.dto.vipchannel.getPayServiceDetailModel;
+import com.dev.op.core.dto.vipchannel.getPayServiceDetailMonthModel;
 import com.dev.op.core.dto.vipchannel.getPersonByDocumentModel;
 import com.dev.op.core.dto.vipchannel.getPersonByIdModel;
 import com.dev.op.core.dto.vipchannel.getReferenceByIdModel;
@@ -148,12 +155,12 @@ public class CobranzaFacadeImpl implements CobranzaFacade {
 	}
 
 	@Override
-	public List<getPayServiceDetailModel> getPayServiceDetail(String document, String code) {
+	public List<getPayServiceDetailModel> getPayServiceDetail(String document, String code, String user) {
 		List<getPayServiceDetailModel> getPayServiceDetail = new ArrayList<getPayServiceDetailModel>();
 		
 		try {
 			
-			getPayServiceDetail = cobranzaService.getPayServiceDetail(document, code);
+			getPayServiceDetail = cobranzaService.getPayServiceDetail(document, code, user);
 			if(GenericUtil.isEmpty(getPayServiceDetail)) {
 				return null;
 			}
@@ -199,6 +206,268 @@ public class CobranzaFacadeImpl implements CobranzaFacade {
 			}
 			else {
 				return getListVoucher;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getManagaerCountModel> getManagaerCount(String con) {
+		List<getManagaerCountModel> getManagaerCount = new ArrayList<getManagaerCountModel>();
+		
+		try {
+			
+			getManagaerCount = cobranzaService.getManagaerCount(con);
+			if(GenericUtil.isEmpty(getManagaerCount)) {
+				return null;
+			}
+			else {
+				return getManagaerCount;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getListlienteByManagerModel> getListlienteByManager(String manager) {
+		List<getListlienteByManagerModel> getListlienteByManager = new ArrayList<getListlienteByManagerModel>();
+		
+		try {
+			
+			getListlienteByManager = cobranzaService.getListlienteByManager(manager);
+			if(GenericUtil.isEmpty(getListlienteByManager)) {
+				return null;
+			}
+			else {
+				return getListlienteByManager;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getListPayModel> getListPay(String user, String explicite) {
+		List<getListPayModel> getListPay = new ArrayList<getListPayModel>();
+		
+		try {
+			
+			getListPay = cobranzaService.getListPay(user, explicite);
+			if(GenericUtil.isEmpty(getListPay)) {
+				return null;
+			}
+			else {
+				return getListPay;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getPayServiceDetailMonthModel> getPayServiceDetailMonth(String document, String code, String user) {
+		List<getPayServiceDetailMonthModel> getPayServiceDetailMonth = new ArrayList<getPayServiceDetailMonthModel>();
+		
+		try {
+			
+			getPayServiceDetailMonth = cobranzaService.getPayServiceDetailMonth(document, code, user);
+			if(GenericUtil.isEmpty(getPayServiceDetailMonth)) {
+				return null;
+			}
+			else {
+				return getPayServiceDetailMonth;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ResponseModel> patchManagerById(String document, String code, Integer code_manager) {
+		List<ResponseModel> patchManagerById = new ArrayList<ResponseModel>();
+		
+		try {
+			
+			patchManagerById = cobranzaService.patchManagerById(document, code, code_manager);
+			if(GenericUtil.isEmpty(patchManagerById)) {
+				return null;
+			}
+			else {
+				return patchManagerById;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ResponseModel> patchVoucherById(String document, String code, Integer voucher, Integer service) {
+		List<ResponseModel> patchVoucherById = new ArrayList<ResponseModel>();
+		
+		try {
+			
+			patchVoucherById = cobranzaService.patchVoucherById(document, code, voucher, service);
+			if(GenericUtil.isEmpty(patchVoucherById)) {
+				return null;
+			}
+			else {
+				return patchVoucherById;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ResponseModel> putDirectionById(String document, String code, String number, Integer zone) {
+		List<ResponseModel> putDirectionById = new ArrayList<ResponseModel>();
+		
+		try {
+			
+			putDirectionById = cobranzaService.putDirectionById(document, code, number, zone);
+			if(GenericUtil.isEmpty(putDirectionById)) {
+				return null;
+			}
+			else {
+				return putDirectionById;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ResponseModel> putPersonById(String document, String name, String last, String second, String client) {
+		List<ResponseModel> putPersonById = new ArrayList<ResponseModel>();
+		
+		try {
+			
+			putPersonById = cobranzaService.putPersonById(document, name, last, second, client);
+			if(GenericUtil.isEmpty(putPersonById)) {
+				return null;
+			}
+			else {
+				return putPersonById;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ResponseModel> putReferenceById(String document, String code, String description) {
+		List<ResponseModel> putReferenceById = new ArrayList<ResponseModel>();
+		
+		try {
+			
+			putReferenceById = cobranzaService.putReferenceById(document, code, description);
+			if(GenericUtil.isEmpty(putReferenceById)) {
+				return null;
+			}
+			else {
+				return putReferenceById;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ResponseModel> deletePayService(String code) {
+		List<ResponseModel> deletePayService = new ArrayList<ResponseModel>();
+		
+		try {
+			
+			deletePayService = cobranzaService.deletePayService(code);
+			if(GenericUtil.isEmpty(deletePayService)) {
+				return null;
+			}
+			else {
+				return deletePayService;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ResponseModel> deleteDetailCount(String document, String code, Integer status) {
+		List<ResponseModel> deleteDetailCount = new ArrayList<ResponseModel>();
+		
+		try {
+			
+			deleteDetailCount = cobranzaService.deleteDetailCount(document, code, status);
+			if(GenericUtil.isEmpty(deleteDetailCount)) {
+				return null;
+			}
+			else {
+				return deleteDetailCount;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ResponseModel> postChangeAmount(String document, String code, Integer service, BigDecimal amount,
+			Date dateformat, Integer user) {
+		List<ResponseModel> postChangeAmount = new ArrayList<ResponseModel>();
+		
+		try {
+			
+			postChangeAmount = cobranzaService.postChangeAmount(document, code, service, amount, dateformat, user);
+			if(GenericUtil.isEmpty(postChangeAmount)) {
+				return null;
+			}
+			else {
+				return postChangeAmount;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ResponseModel> postPayService(String document, String code, BigDecimal amount, Integer user,
+			Integer manager) {
+		List<ResponseModel> postPayService = new ArrayList<ResponseModel>();
+		
+		try {
+			
+			postPayService = cobranzaService.postPayService(document, code, amount, user, manager);
+			if(GenericUtil.isEmpty(postPayService)) {
+				return null;
+			}
+			else {
+				return postPayService;
 			}
 		}
 		catch(Exception e) {

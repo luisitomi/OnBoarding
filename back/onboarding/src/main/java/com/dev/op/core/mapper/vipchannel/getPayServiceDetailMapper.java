@@ -13,7 +13,6 @@ public class getPayServiceDetailMapper implements RowMapper<getPayServiceDetailM
 	public getPayServiceDetailModel mapRow(ResultSet rs, int rowNum) throws SQLException {
 		
 		getPayServiceDetailModel getPayServiceDetail = new getPayServiceDetailModel();
-		getPayServiceDetail.setId(rs.getInt("id"));
 		getPayServiceDetail.setService(rs.getString("service"));
 		getPayServiceDetail.setAmount(rs.getString("amount"));
 		getPayServiceDetail.setStatus(rs.getString("status"));

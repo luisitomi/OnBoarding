@@ -14,12 +14,12 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
-import com.dev.op.core.dto.vipchannel.getPayServiceDetailModel;
-import com.dev.op.core.mapper.vipchannel.getPayServiceDetailMapper;
+import com.dev.op.core.dto.ResponseModel;
+import com.dev.op.core.mapper.vipchannel.patchVoucherByIdMapper;
 import com.dev.op.core.util.vipchannel.Constantes;
 
-@Repository("getPayServiceDetailJdbcRepository")
-public class getPayServiceDetailCustomJdbcRepository implements getPayServiceDetailJdbcRepository {
+@Repository("patchVoucherByIdJdbcRepository")
+public class patchVoucherByIdCustomJdbcRepository implements patchVoucherByIdJdbcRepository {
 
 	private SimpleJdbcCall simpleJdbcCall;
 	
@@ -31,25 +31,27 @@ public class getPayServiceDetailCustomJdbcRepository implements getPayServiceDet
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<getPayServiceDetailModel> getPayServiceDetail(String document,String code, String user) {
-		List<getPayServiceDetailModel> getPayServiceDetail = new ArrayList<getPayServiceDetailModel>();
-		
+	public List<ResponseModel> patchVoucherById(String document,String code,Integer voucher,Integer service) {
+		List<ResponseModel> patchVoucherById = new ArrayList<ResponseModel>();
+
 		try {
 			
-			simpleJdbcCall.withProcedureName(Constantes.GETPAYSERVICEDETAIL);
+			simpleJdbcCall.withProcedureName(Constantes.PATCHVOUCHERBYID);
 			simpleJdbcCall.declareParameters(new SqlParameter("document", Types.VARCHAR),
 											 new SqlParameter("code", Types.VARCHAR),
-											 new SqlParameter("user", Types.VARCHAR));
-			simpleJdbcCall.returningResultSet("getPayServiceDetail", new getPayServiceDetailMapper());
+											 new SqlParameter("voucher", Types.INTEGER),
+											 new SqlParameter("service", Types.INTEGER));
+			simpleJdbcCall.returningResultSet("patchVoucherById", new patchVoucherByIdMapper());
 			
 			MapSqlParameterSource inParams = new MapSqlParameterSource();
 			inParams.addValue("document", document);
 			inParams.addValue("code", code);
-			inParams.addValue("user", user);
+			inParams.addValue("voucher", voucher);
+			inParams.addValue("service", service);
 			
 			Map<String, Object> result = simpleJdbcCall.execute(inParams);
-			getPayServiceDetail = (List<getPayServiceDetailModel>) result.get("getPayServiceDetail");
-			return getPayServiceDetail;
+			patchVoucherById = (List<ResponseModel>) result.get("patchVoucherById");
+			return patchVoucherById;
 		}
 		catch(Exception e) {
 			e.printStackTrace();

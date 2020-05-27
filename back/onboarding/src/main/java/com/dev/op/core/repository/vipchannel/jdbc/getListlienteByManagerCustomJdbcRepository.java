@@ -14,12 +14,12 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
-import com.dev.op.core.dto.vipchannel.getPayServiceDetailModel;
-import com.dev.op.core.mapper.vipchannel.getPayServiceDetailMapper;
+import com.dev.op.core.dto.vipchannel.getListlienteByManagerModel;
+import com.dev.op.core.mapper.vipchannel.getListlienteByManagerMapper;
 import com.dev.op.core.util.vipchannel.Constantes;
 
-@Repository("getPayServiceDetailJdbcRepository")
-public class getPayServiceDetailCustomJdbcRepository implements getPayServiceDetailJdbcRepository {
+@Repository("getListlienteByManagerJdbcRepository")
+public class getListlienteByManagerCustomJdbcRepository implements getListlienteByManagerJdbcRepository {
 
 	private SimpleJdbcCall simpleJdbcCall;
 	
@@ -31,25 +31,23 @@ public class getPayServiceDetailCustomJdbcRepository implements getPayServiceDet
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<getPayServiceDetailModel> getPayServiceDetail(String document,String code, String user) {
-		List<getPayServiceDetailModel> getPayServiceDetail = new ArrayList<getPayServiceDetailModel>();
+	public List<getListlienteByManagerModel> getListlienteByManager(String manager) {
+		List<getListlienteByManagerModel> getListlienteByManager = new ArrayList<getListlienteByManagerModel>();
 		
 		try {
 			
-			simpleJdbcCall.withProcedureName(Constantes.GETPAYSERVICEDETAIL);
-			simpleJdbcCall.declareParameters(new SqlParameter("document", Types.VARCHAR),
+			simpleJdbcCall.withProcedureName(Constantes.GETLISTCLIENTEBYMANAGER);
+			simpleJdbcCall.declareParameters(new SqlParameter("manager", Types.VARCHAR),
 											 new SqlParameter("code", Types.VARCHAR),
 											 new SqlParameter("user", Types.VARCHAR));
-			simpleJdbcCall.returningResultSet("getPayServiceDetail", new getPayServiceDetailMapper());
+			simpleJdbcCall.returningResultSet("getListlienteByManager", new getListlienteByManagerMapper());
 			
 			MapSqlParameterSource inParams = new MapSqlParameterSource();
-			inParams.addValue("document", document);
-			inParams.addValue("code", code);
-			inParams.addValue("user", user);
+			inParams.addValue("manager", manager);
 			
 			Map<String, Object> result = simpleJdbcCall.execute(inParams);
-			getPayServiceDetail = (List<getPayServiceDetailModel>) result.get("getPayServiceDetail");
-			return getPayServiceDetail;
+			getListlienteByManager = (List<getListlienteByManagerModel>) result.get("getListlienteByManager");
+			return getListlienteByManager;
 		}
 		catch(Exception e) {
 			e.printStackTrace();

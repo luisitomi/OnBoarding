@@ -14,12 +14,12 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
-import com.dev.op.core.dto.vipchannel.getPayServiceDetailModel;
-import com.dev.op.core.mapper.vipchannel.getPayServiceDetailMapper;
+import com.dev.op.core.dto.vipchannel.getListPayModel;
+import com.dev.op.core.mapper.vipchannel.getListPayMapper;
 import com.dev.op.core.util.vipchannel.Constantes;
 
-@Repository("getPayServiceDetailJdbcRepository")
-public class getPayServiceDetailCustomJdbcRepository implements getPayServiceDetailJdbcRepository {
+@Repository("getListPayJdbcRepository")
+public class getListPayCustomJdbcRepository implements getListPayJdbcRepository {
 
 	private SimpleJdbcCall simpleJdbcCall;
 	
@@ -31,25 +31,23 @@ public class getPayServiceDetailCustomJdbcRepository implements getPayServiceDet
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<getPayServiceDetailModel> getPayServiceDetail(String document,String code, String user) {
-		List<getPayServiceDetailModel> getPayServiceDetail = new ArrayList<getPayServiceDetailModel>();
+	public List<getListPayModel> getListPay(String user,String explicite) {
+		List<getListPayModel> getListPay = new ArrayList<getListPayModel>();
 		
 		try {
 			
-			simpleJdbcCall.withProcedureName(Constantes.GETPAYSERVICEDETAIL);
-			simpleJdbcCall.declareParameters(new SqlParameter("document", Types.VARCHAR),
-											 new SqlParameter("code", Types.VARCHAR),
-											 new SqlParameter("user", Types.VARCHAR));
-			simpleJdbcCall.returningResultSet("getPayServiceDetail", new getPayServiceDetailMapper());
+			simpleJdbcCall.withProcedureName(Constantes.GETLISTPAY);
+			simpleJdbcCall.declareParameters(new SqlParameter("user", Types.VARCHAR),
+											 new SqlParameter("explicite", Types.VARCHAR));
+			simpleJdbcCall.returningResultSet("getListPay", new getListPayMapper());
 			
 			MapSqlParameterSource inParams = new MapSqlParameterSource();
-			inParams.addValue("document", document);
-			inParams.addValue("code", code);
 			inParams.addValue("user", user);
+			inParams.addValue("explicite", explicite);
 			
 			Map<String, Object> result = simpleJdbcCall.execute(inParams);
-			getPayServiceDetail = (List<getPayServiceDetailModel>) result.get("getPayServiceDetail");
-			return getPayServiceDetail;
+			getListPay = (List<getListPayModel>) result.get("getListPay");
+			return getListPay;
 		}
 		catch(Exception e) {
 			e.printStackTrace();

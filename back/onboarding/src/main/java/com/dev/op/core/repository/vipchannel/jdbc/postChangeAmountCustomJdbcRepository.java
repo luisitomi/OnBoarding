@@ -1,7 +1,9 @@
 package com.dev.op.core.repository.vipchannel.jdbc;
 
+import java.math.BigDecimal;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -14,12 +16,12 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
-import com.dev.op.core.dto.vipchannel.getPayServiceDetailModel;
-import com.dev.op.core.mapper.vipchannel.getPayServiceDetailMapper;
+import com.dev.op.core.dto.ResponseModel;
+import com.dev.op.core.mapper.vipchannel.postChangeAmountMapper;
 import com.dev.op.core.util.vipchannel.Constantes;
 
-@Repository("getPayServiceDetailJdbcRepository")
-public class getPayServiceDetailCustomJdbcRepository implements getPayServiceDetailJdbcRepository {
+@Repository("postChangeAmountJdbcRepository")
+public class postChangeAmountCustomJdbcRepository implements postChangeAmountJdbcRepository {
 
 	private SimpleJdbcCall simpleJdbcCall;
 	
@@ -31,25 +33,31 @@ public class getPayServiceDetailCustomJdbcRepository implements getPayServiceDet
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<getPayServiceDetailModel> getPayServiceDetail(String document,String code, String user) {
-		List<getPayServiceDetailModel> getPayServiceDetail = new ArrayList<getPayServiceDetailModel>();
-		
+	public List<ResponseModel> postChangeAmount(String document,String code,Integer service,BigDecimal amount,Date dateformat,Integer user) {
+		List<ResponseModel> postChangeAmount = new ArrayList<ResponseModel>();
+
 		try {
 			
-			simpleJdbcCall.withProcedureName(Constantes.GETPAYSERVICEDETAIL);
+			simpleJdbcCall.withProcedureName(Constantes.POSTCHANGEAMOUNT);
 			simpleJdbcCall.declareParameters(new SqlParameter("document", Types.VARCHAR),
 											 new SqlParameter("code", Types.VARCHAR),
-											 new SqlParameter("user", Types.VARCHAR));
-			simpleJdbcCall.returningResultSet("getPayServiceDetail", new getPayServiceDetailMapper());
+											 new SqlParameter("service", Types.INTEGER),
+											 new SqlParameter("amount", Types.DECIMAL),
+											 new SqlParameter("dateformat", Types.DATE),
+											 new SqlParameter("user", Types.INTEGER));
+			simpleJdbcCall.returningResultSet("postChangeAmount", new postChangeAmountMapper());
 			
 			MapSqlParameterSource inParams = new MapSqlParameterSource();
 			inParams.addValue("document", document);
 			inParams.addValue("code", code);
+			inParams.addValue("service", service);
+			inParams.addValue("amount", amount);
+			inParams.addValue("dateformat", dateformat);
 			inParams.addValue("user", user);
 			
 			Map<String, Object> result = simpleJdbcCall.execute(inParams);
-			getPayServiceDetail = (List<getPayServiceDetailModel>) result.get("getPayServiceDetail");
-			return getPayServiceDetail;
+			postChangeAmount = (List<ResponseModel>) result.get("postChangeAmount");
+			return postChangeAmount;
 		}
 		catch(Exception e) {
 			e.printStackTrace();

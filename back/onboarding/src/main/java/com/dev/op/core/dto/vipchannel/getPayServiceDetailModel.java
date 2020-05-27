@@ -5,11 +5,9 @@ import java.io.Serializable;
 public class getPayServiceDetailModel implements Serializable {
 
 	/**
-	 * call getPayServiceDetail(:document,:code);
+	 * call getPayServiceDetail(:document,:code,:user);
 	 */
 	private static final long serialVersionUID = 7440851506308938680L;
-
-	private Integer id;
 	
 	private String service;
 	
@@ -19,14 +17,6 @@ public class getPayServiceDetailModel implements Serializable {
 	
 	public getPayServiceDetailModel() {
 		
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getService() {

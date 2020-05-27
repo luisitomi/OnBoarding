@@ -5,5 +5,5 @@ import java.util.List;
 import com.dev.op.core.dto.vipchannel.getPayServiceDetailModel;
 
 public interface getPayServiceDetailJdbcRepository {
-	List<getPayServiceDetailModel> getPayServiceDetail(String document,String code);
+	List<getPayServiceDetailModel> getPayServiceDetail(String document,String code, String user);
 }

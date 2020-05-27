@@ -14,12 +14,12 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
-import com.dev.op.core.dto.vipchannel.getPayServiceDetailModel;
-import com.dev.op.core.mapper.vipchannel.getPayServiceDetailMapper;
+import com.dev.op.core.dto.ResponseModel;
+import com.dev.op.core.mapper.vipchannel.putDirectionByIdMapper;
 import com.dev.op.core.util.vipchannel.Constantes;
 
-@Repository("getPayServiceDetailJdbcRepository")
-public class getPayServiceDetailCustomJdbcRepository implements getPayServiceDetailJdbcRepository {
+@Repository("putDirectionByIdJdbcRepository")
+public class putDirectionByIdCustomJdbcRepository implements putDirectionByIdJdbcRepository {
 
 	private SimpleJdbcCall simpleJdbcCall;
 	
@@ -31,25 +31,27 @@ public class getPayServiceDetailCustomJdbcRepository implements getPayServiceDet
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<getPayServiceDetailModel> getPayServiceDetail(String document,String code, String user) {
-		List<getPayServiceDetailModel> getPayServiceDetail = new ArrayList<getPayServiceDetailModel>();
-		
+	public List<ResponseModel> putDirectionById(String document,String code,String number,Integer zone) {
+		List<ResponseModel> putDirectionById = new ArrayList<ResponseModel>();
+
 		try {
 			
-			simpleJdbcCall.withProcedureName(Constantes.GETPAYSERVICEDETAIL);
+			simpleJdbcCall.withProcedureName(Constantes.PUTDIRECTIONBYID);
 			simpleJdbcCall.declareParameters(new SqlParameter("document", Types.VARCHAR),
 											 new SqlParameter("code", Types.VARCHAR),
-											 new SqlParameter("user", Types.VARCHAR));
-			simpleJdbcCall.returningResultSet("getPayServiceDetail", new getPayServiceDetailMapper());
+											 new SqlParameter("number", Types.VARCHAR),
+											 new SqlParameter("zone", Types.INTEGER));
+			simpleJdbcCall.returningResultSet("putDirectionById", new putDirectionByIdMapper());
 			
 			MapSqlParameterSource inParams = new MapSqlParameterSource();
 			inParams.addValue("document", document);
 			inParams.addValue("code", code);
-			inParams.addValue("user", user);
+			inParams.addValue("number", number);
+			inParams.addValue("zone", zone);
 			
 			Map<String, Object> result = simpleJdbcCall.execute(inParams);
-			getPayServiceDetail = (List<getPayServiceDetailModel>) result.get("getPayServiceDetail");
-			return getPayServiceDetail;
+			putDirectionById = (List<ResponseModel>) result.get("putDirectionById");
+			return putDirectionById;
 		}
 		catch(Exception e) {
 			e.printStackTrace();
