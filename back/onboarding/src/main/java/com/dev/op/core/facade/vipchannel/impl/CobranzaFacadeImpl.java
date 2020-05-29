@@ -14,10 +14,15 @@ import com.dev.op.core.dto.vipchannel.getDirectionByIdModel;
 import com.dev.op.core.dto.vipchannel.getListMangerModel;
 import com.dev.op.core.dto.vipchannel.getListPayModel;
 import com.dev.op.core.dto.vipchannel.getListPayOneModel;
+import com.dev.op.core.dto.vipchannel.getListPayThreeModel;
+import com.dev.op.core.dto.vipchannel.getListPayTwoModel;
 import com.dev.op.core.dto.vipchannel.getListVoucherModel;
 import com.dev.op.core.dto.vipchannel.getListlienteByManagerModel;
 import com.dev.op.core.dto.vipchannel.getManagaerCountModel;
 import com.dev.op.core.dto.vipchannel.getManagerByIdModel;
+import com.dev.op.core.dto.vipchannel.getManagerSumationModel;
+import com.dev.op.core.dto.vipchannel.getPayServiceDetailDeleteModel;
+import com.dev.op.core.dto.vipchannel.getPayServiceDetailDeleteMonthModel;
 import com.dev.op.core.dto.vipchannel.getPayServiceDetailModel;
 import com.dev.op.core.dto.vipchannel.getPayServiceDetailMonthModel;
 import com.dev.op.core.dto.vipchannel.getPersonByDocumentModel;
@@ -489,6 +494,127 @@ public class CobranzaFacadeImpl implements CobranzaFacade {
 			}
 			else {
 				return getListPayOne;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getListPayTwoModel> getListPayTwo() {
+		List<getListPayTwoModel> getListPayTwo = new ArrayList<getListPayTwoModel>();
+		
+		try {
+			
+			getListPayTwo = cobranzaService.getListPayTwo();
+			if(GenericUtil.isEmpty(getListPayTwo)) {
+				return null;
+			}
+			else {
+				return getListPayTwo;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getListPayThreeModel> getListPayThree() {
+		List<getListPayThreeModel> getListPayThree = new ArrayList<getListPayThreeModel>();
+		
+		try {
+			
+			getListPayThree = cobranzaService.getListPayThree();
+			if(GenericUtil.isEmpty(getListPayThree)) {
+				return null;
+			}
+			else {
+				return getListPayThree;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getPayServiceDetailDeleteModel> getPayServiceDetailDelete(String document, String code) {
+		List<getPayServiceDetailDeleteModel> getPayServiceDetailDelete = new ArrayList<getPayServiceDetailDeleteModel>();
+		
+		try {
+			
+			getPayServiceDetailDelete = cobranzaService.getPayServiceDetailDelete(document, code);
+			if(GenericUtil.isEmpty(getPayServiceDetailDelete)) {
+				return null;
+			}
+			else {
+				return getPayServiceDetailDelete;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getPayServiceDetailDeleteMonthModel> getPayServiceDetailDeleteMonth(String document, String code) {
+		List<getPayServiceDetailDeleteMonthModel> getPayServiceDetailDeleteMonth = new ArrayList<getPayServiceDetailDeleteMonthModel>();
+		
+		try {
+			
+			getPayServiceDetailDeleteMonth = cobranzaService.getPayServiceDetailDeleteMonth(document, code);
+			if(GenericUtil.isEmpty(getPayServiceDetailDeleteMonth)) {
+				return null;
+			}
+			else {
+				return getPayServiceDetailDeleteMonth;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ResponseModel> postPayServiceDetailDelete(String document, String code, BigDecimal amount,
+			Integer user) {
+		List<ResponseModel> postPayServiceDetailDelete = new ArrayList<ResponseModel>();
+		
+		try {
+			
+			postPayServiceDetailDelete = cobranzaService.postPayServiceDetailDelete(document, code, amount, user);
+			if(GenericUtil.isEmpty(postPayServiceDetailDelete)) {
+				return null;
+			}
+			else {
+				return postPayServiceDetailDelete;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getManagerSumationModel> getManagerSumation() {
+		List<getManagerSumationModel> getManagerSumation = new ArrayList<getManagerSumationModel>();
+		
+		try {
+			
+			getManagerSumation = cobranzaService.getManagerSumation();
+			if(GenericUtil.isEmpty(getManagerSumation)) {
+				return null;
+			}
+			else {
+				return getManagerSumation;
 			}
 		}
 		catch(Exception e) {

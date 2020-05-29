@@ -1,41 +1,41 @@
 package com.dev.op.core.rest.vipchannel;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpHeaders;
+
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.op.core.dto.ResponseModel;
+
 import com.dev.op.core.dto.vipchannel.getDirectionByIdModel;
 import com.dev.op.core.dto.vipchannel.getListMangerModel;
 import com.dev.op.core.dto.vipchannel.getListPayModel;
-import com.dev.op.core.dto.vipchannel.getListPayOneModel;
 import com.dev.op.core.dto.vipchannel.getListVoucherModel;
 import com.dev.op.core.dto.vipchannel.getListlienteByManagerModel;
 import com.dev.op.core.dto.vipchannel.getManagaerCountModel;
 import com.dev.op.core.dto.vipchannel.getManagerByIdModel;
+import com.dev.op.core.dto.vipchannel.getPayServiceDetailDeleteModel;
+import com.dev.op.core.dto.vipchannel.getPayServiceDetailDeleteMonthModel;
 import com.dev.op.core.dto.vipchannel.getPayServiceDetailModel;
 import com.dev.op.core.dto.vipchannel.getPayServiceDetailMonthModel;
 import com.dev.op.core.dto.vipchannel.getPersonByDocumentModel;
 import com.dev.op.core.dto.vipchannel.getPersonByIdModel;
 import com.dev.op.core.dto.vipchannel.getReferenceByIdModel;
 import com.dev.op.core.dto.vipchannel.getVoucherByIdModel;
+
 import com.dev.op.core.facade.vipchannel.CobranzaFacade;
+
 import com.dev.op.core.util.vipchannel.GenericUtil;
-import com.dev.op.core.view.vipchannel.pdf.PdfGenerator;
 
 @RestController
 @RequestMapping("/api/v1/cobranza")
@@ -169,6 +169,24 @@ public class CobranzaRestController {
 		}
 	}
 	
+	@GetMapping("/getPayServiceDetailDelete/{document}/{code}")
+	public ResponseEntity<List<getPayServiceDetailDeleteModel>> getPayServiceDetailDelete(@PathVariable(value="document") String document,
+			@PathVariable(value="code") String code) {
+		
+		try{
+			List<getPayServiceDetailDeleteModel> getPayServiceDetailDelete = cobranzaFacade.getPayServiceDetailDelete(document, code);
+			if(!GenericUtil.isCollectionEmpty(getPayServiceDetailDelete)) {
+				return new ResponseEntity<List<getPayServiceDetailDeleteModel>>(getPayServiceDetailDelete, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<getPayServiceDetailDeleteModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<List<getPayServiceDetailDeleteModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 	@GetMapping("/getListManger")
 	public ResponseEntity<List<getListMangerModel>> getListManger() {
 		
@@ -218,6 +236,24 @@ public class CobranzaRestController {
 		}
 		catch(Exception e) {
 			return new ResponseEntity<List<getPayServiceDetailMonthModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/getPayServiceDetailDeleteMonth/{document}/{code}")
+	public ResponseEntity<List<getPayServiceDetailDeleteMonthModel>> getPayServiceDetailDeleteMonth(@PathVariable(value="document") String document,
+			@PathVariable(value="code") String code) {
+		
+		try{
+			List<getPayServiceDetailDeleteMonthModel> getPayServiceDetailDeleteMonth = cobranzaFacade.getPayServiceDetailDeleteMonth(document, code);
+			if(!GenericUtil.isCollectionEmpty(getPayServiceDetailDeleteMonth)) {
+				return new ResponseEntity<List<getPayServiceDetailDeleteMonthModel>>(getPayServiceDetailDeleteMonth, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<getPayServiceDetailDeleteMonthModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<List<getPayServiceDetailDeleteMonthModel>>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	
@@ -458,24 +494,24 @@ public class CobranzaRestController {
 		}
 	}
 	
-	@GetMapping(value = "/planilla", produces = MediaType.APPLICATION_PDF_VALUE)
-	public ResponseEntity<InputStreamResource> planillaview() throws IOException {
-		try {
-			
-			List<getListPayOneModel> diasDeudas = cobranzaFacade.getListPayOne();
-				
-				ByteArrayInputStream bis = PdfGenerator.pdfPayOne(diasDeudas);
-				
-				HttpHeaders headers = new HttpHeaders();
-				headers.add("Content-Disposition", "inline; filename=planilla.pdf");
-				
-				return ResponseEntity.ok()
-						.headers(headers)
-						.contentType(MediaType.APPLICATION_PDF)
-						.body(new InputStreamResource(bis));
+	@GetMapping("/postPayServiceDetailDelete/{document}/{code}/{amount}/{user}")
+	public ResponseEntity<List<ResponseModel>> postPayServiceDetailDelete(
+			@PathVariable(value="document") String document,
+			@PathVariable(value="code") String code,
+			@PathVariable(value="amount") BigDecimal amount,
+			@PathVariable(value="user") Integer user) {
+		
+		try{
+			List<ResponseModel> postPayServiceDetailDelete = cobranzaFacade.postPayServiceDetailDelete(document, code, amount, user);
+			if(!GenericUtil.isCollectionEmpty(postPayServiceDetailDelete)) {
+				return new ResponseEntity<List<ResponseModel>>(postPayServiceDetailDelete, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<ResponseModel>>(HttpStatus.NO_CONTENT);
+			}
 		}
-		catch(Exception e) {
-				return new ResponseEntity<InputStreamResource>(HttpStatus.BAD_REQUEST);
+		catch(Exception e) {	
+			return new ResponseEntity<List<ResponseModel>>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	

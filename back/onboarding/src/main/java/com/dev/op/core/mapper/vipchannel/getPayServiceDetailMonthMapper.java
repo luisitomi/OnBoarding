@@ -5,17 +5,17 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.dev.op.core.dto.vipchannel.getPayServiceDetailMonthModel;
+import com.dev.op.core.dto.vipchannel.getPayServiceDetailDeleteMonthModel;
 
-public class getPayServiceDetailMonthMapper implements RowMapper<getPayServiceDetailMonthModel> {
+public class getPayServiceDetailMonthMapper implements RowMapper<getPayServiceDetailDeleteMonthModel> {
 	
 	@Override
-	public getPayServiceDetailMonthModel mapRow(ResultSet rs, int rowNum) throws SQLException {
+	public getPayServiceDetailDeleteMonthModel mapRow(ResultSet rs, int rowNum) throws SQLException {
 		
-		getPayServiceDetailMonthModel getPayServiceDetailMonth = new getPayServiceDetailMonthModel();
-		getPayServiceDetailMonth.setInformation(rs.getString("information"));
-		getPayServiceDetailMonth.setService(rs.getString("service"));
-		getPayServiceDetailMonth.setAmount(rs.getBigDecimal("amount"));
-		return getPayServiceDetailMonth;
+		getPayServiceDetailDeleteMonthModel getPayServiceDetailDeleteMonth = new getPayServiceDetailDeleteMonthModel();
+		getPayServiceDetailDeleteMonth.setInformation(rs.getString("information"));
+		getPayServiceDetailDeleteMonth.setService(rs.getString("service"));
+		getPayServiceDetailDeleteMonth.setAmount(rs.getBigDecimal("amount"));
+		return getPayServiceDetailDeleteMonth;
 	}
 }
