@@ -8,6 +8,7 @@ import com.dev.op.core.dto.ResponseModel;
 import com.dev.op.core.dto.vipchannel.getDirectionByIdModel;
 import com.dev.op.core.dto.vipchannel.getListMangerModel;
 import com.dev.op.core.dto.vipchannel.getListPayModel;
+import com.dev.op.core.dto.vipchannel.getListPayOneModel;
 import com.dev.op.core.dto.vipchannel.getListVoucherModel;
 import com.dev.op.core.dto.vipchannel.getListlienteByManagerModel;
 import com.dev.op.core.dto.vipchannel.getManagaerCountModel;
@@ -32,6 +33,7 @@ public interface CobranzaService {
 	List<getManagaerCountModel> getManagaerCount(String con);
 	List<getListlienteByManagerModel> getListlienteByManager(String manager);
 	List<getListPayModel> getListPay(String user,String explicite);
+	List<getListPayOneModel> getListPayOne();
 	List<getPayServiceDetailMonthModel> getPayServiceDetailMonth(String document,String code, String user);
 	List<ResponseModel> patchManagerById(String document,String code,Integer code_manager);
 	List<ResponseModel> patchVoucherById(String document,String code,Integer voucher,Integer service);

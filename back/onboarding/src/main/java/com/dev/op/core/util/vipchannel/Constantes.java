@@ -13,6 +13,7 @@ public class Constantes {
 	public static final String GETLISTVOUCHER = "getListVoucher";
 	public static final String GETPAYSERVICEDETAILMONTH = "getPayServiceDetailMonth";
 	public static final String GETLISTPAY = "getListPay";
+	public static final String GETLISTPAYONE = "getListPayOne";
 	public static final String GETLISTCLIENTEBYMANAGER = "getListlienteByManager";
 	public static final String GETMANAGERCOUNT = "getManagaerCount";
 	public static final String PATCHMANAGERBYID = "patchManagerById";

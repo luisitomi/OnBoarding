@@ -13,6 +13,7 @@ import com.dev.op.core.dto.ResponseModel;
 import com.dev.op.core.dto.vipchannel.getDirectionByIdModel;
 import com.dev.op.core.dto.vipchannel.getListMangerModel;
 import com.dev.op.core.dto.vipchannel.getListPayModel;
+import com.dev.op.core.dto.vipchannel.getListPayOneModel;
 import com.dev.op.core.dto.vipchannel.getListVoucherModel;
 import com.dev.op.core.dto.vipchannel.getListlienteByManagerModel;
 import com.dev.op.core.dto.vipchannel.getManagaerCountModel;
@@ -468,6 +469,26 @@ public class CobranzaFacadeImpl implements CobranzaFacade {
 			}
 			else {
 				return postPayService;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getListPayOneModel> getListPayOne() {
+		List<getListPayOneModel> getListPayOne = new ArrayList<getListPayOneModel>();
+		
+		try {
+			
+			getListPayOne = cobranzaService.getListPayOne();
+			if(GenericUtil.isEmpty(getListPayOne)) {
+				return null;
+			}
+			else {
+				return getListPayOne;
 			}
 		}
 		catch(Exception e) {

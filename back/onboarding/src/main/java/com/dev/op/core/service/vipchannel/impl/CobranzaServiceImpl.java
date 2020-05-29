@@ -14,6 +14,7 @@ import com.dev.op.core.dto.ResponseModel;
 import com.dev.op.core.dto.vipchannel.getDirectionByIdModel;
 import com.dev.op.core.dto.vipchannel.getListMangerModel;
 import com.dev.op.core.dto.vipchannel.getListPayModel;
+import com.dev.op.core.dto.vipchannel.getListPayOneModel;
 import com.dev.op.core.dto.vipchannel.getListVoucherModel;
 import com.dev.op.core.dto.vipchannel.getListlienteByManagerModel;
 import com.dev.op.core.dto.vipchannel.getManagaerCountModel;
@@ -37,6 +38,7 @@ import com.dev.op.core.repository.vipchannel.jdbc.getPersonByIdJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getReferenceByIdJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getVoucherByIdJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getListPayJdbcRepository;
+import com.dev.op.core.repository.vipchannel.jdbc.getListPayOneJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getListlienteByManagerJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getManagaerCountJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.patchManagerByIdJdbcRepository;
@@ -92,6 +94,10 @@ public class CobranzaServiceImpl implements CobranzaService {
 	@Autowired
 	@Qualifier("getListPayJdbcRepository")
 	private getListPayJdbcRepository getListPayJdbcRepository;
+	
+	@Autowired
+	@Qualifier("getListPayOneJdbcRepository")
+	private getListPayOneJdbcRepository getListPayOneJdbcRepository;
 	
 	@Autowired
 	@Qualifier("getListlienteByManagerJdbcRepository")
@@ -576,6 +582,26 @@ public class CobranzaServiceImpl implements CobranzaService {
 			}
 			else {
 				return postPayService;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getListPayOneModel> getListPayOne() {
+		List<getListPayOneModel> getListPayOne = new ArrayList<getListPayOneModel>();
+		
+		try {
+			
+			getListPayOne = getListPayOneJdbcRepository.getListPayOne();
+			if(GenericUtil.isCollectionEmpty(getListPayOne)) {
+				return null;
+			}
+			else {
+				return getListPayOne;
 			}
 		}
 		catch(Exception e) {

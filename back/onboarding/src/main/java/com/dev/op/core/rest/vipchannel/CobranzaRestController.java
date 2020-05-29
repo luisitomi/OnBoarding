@@ -1,12 +1,17 @@
 package com.dev.op.core.rest.vipchannel;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +22,7 @@ import com.dev.op.core.dto.ResponseModel;
 import com.dev.op.core.dto.vipchannel.getDirectionByIdModel;
 import com.dev.op.core.dto.vipchannel.getListMangerModel;
 import com.dev.op.core.dto.vipchannel.getListPayModel;
+import com.dev.op.core.dto.vipchannel.getListPayOneModel;
 import com.dev.op.core.dto.vipchannel.getListVoucherModel;
 import com.dev.op.core.dto.vipchannel.getListlienteByManagerModel;
 import com.dev.op.core.dto.vipchannel.getManagaerCountModel;
@@ -29,6 +35,7 @@ import com.dev.op.core.dto.vipchannel.getReferenceByIdModel;
 import com.dev.op.core.dto.vipchannel.getVoucherByIdModel;
 import com.dev.op.core.facade.vipchannel.CobranzaFacade;
 import com.dev.op.core.util.vipchannel.GenericUtil;
+import com.dev.op.core.view.vipchannel.pdf.PdfGenerator;
 
 @RestController
 @RequestMapping("/api/v1/cobranza")
@@ -446,8 +453,29 @@ public class CobranzaRestController {
 				return new ResponseEntity<List<ResponseModel>>(HttpStatus.NO_CONTENT);
 			}
 		}
-		catch(Exception e) {
+		catch(Exception e) {	
 			return new ResponseEntity<List<ResponseModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping(value = "/planilla", produces = MediaType.APPLICATION_PDF_VALUE)
+	public ResponseEntity<InputStreamResource> planillaview() throws IOException {
+		try {
+			
+			List<getListPayOneModel> diasDeudas = cobranzaFacade.getListPayOne();
+				
+				ByteArrayInputStream bis = PdfGenerator.pdfPayOne(diasDeudas);
+				
+				HttpHeaders headers = new HttpHeaders();
+				headers.add("Content-Disposition", "inline; filename=planilla.pdf");
+				
+				return ResponseEntity.ok()
+						.headers(headers)
+						.contentType(MediaType.APPLICATION_PDF)
+						.body(new InputStreamResource(bis));
+		}
+		catch(Exception e) {
+				return new ResponseEntity<InputStreamResource>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	
