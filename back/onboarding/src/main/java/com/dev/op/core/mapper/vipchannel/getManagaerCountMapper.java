@@ -13,8 +13,8 @@ public class getManagaerCountMapper implements RowMapper<getManagaerCountModel> 
 	public getManagaerCountModel mapRow(ResultSet rs, int rowNum) throws SQLException {
 		
 		getManagaerCountModel getManagaerCount = new getManagaerCountModel();
-		getManagaerCount.setManager(rs.getString("manager"));
-		getManagaerCount.setAmount(rs.getBigDecimal("amount"));
+		getManagaerCount.setManager(rs.getString("nombre"));
+		getManagaerCount.setAmount(rs.getBigDecimal("monto"));
 		return getManagaerCount;
 	}
 }

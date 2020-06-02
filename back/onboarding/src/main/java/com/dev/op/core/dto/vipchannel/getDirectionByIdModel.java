@@ -14,6 +14,8 @@ public class getDirectionByIdModel implements Serializable {
 	private String name;
 	
 	private String number;
+	
+	private Integer id;
 
 	public getDirectionByIdModel() {
 		
@@ -41,6 +43,14 @@ public class getDirectionByIdModel implements Serializable {
 
 	public void setNumber(String number) {
 		this.number = number;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	
 }

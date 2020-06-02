@@ -31,7 +31,7 @@ public class getListPayCustomJdbcRepository implements getListPayJdbcRepository 
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<getListPayModel> getListPay(String user,String explicite) {
+	public List<getListPayModel> getListPay(Integer user,String explicite) {
 		List<getListPayModel> getListPay = new ArrayList<getListPayModel>();
 		
 		try {

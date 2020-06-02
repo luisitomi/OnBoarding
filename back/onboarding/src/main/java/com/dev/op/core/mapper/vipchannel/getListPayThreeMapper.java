@@ -16,7 +16,7 @@ public class getListPayThreeMapper implements RowMapper<getListPayThreeModel> {
 		getListPayThree.setId(rs.getString("id"));
 		getListPayThree.setCode(rs.getString("code"));
 		getListPayThree.setClient(rs.getString("client"));
-		getListPayThree.setAmountThree(rs.getString("amount"));
+		getListPayThree.setAmountOne(rs.getString("amount"));
 		getListPayThree.setAmountTwo(rs.getString("amounttwo"));
 		getListPayThree.setAmountThree(rs.getString("amountthree"));
 		getListPayThree.setSumation(rs.getString("sumation"));

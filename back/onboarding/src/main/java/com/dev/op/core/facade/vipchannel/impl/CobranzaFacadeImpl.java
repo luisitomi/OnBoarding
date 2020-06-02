@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.dev.op.core.dto.ResponseModel;
 import com.dev.op.core.dto.vipchannel.getDirectionByIdModel;
+import com.dev.op.core.dto.vipchannel.getListDirectionModel;
 import com.dev.op.core.dto.vipchannel.getListMangerModel;
 import com.dev.op.core.dto.vipchannel.getListPayModel;
 import com.dev.op.core.dto.vipchannel.getListPayOneModel;
@@ -23,6 +24,8 @@ import com.dev.op.core.dto.vipchannel.getManagerByIdModel;
 import com.dev.op.core.dto.vipchannel.getManagerSumationModel;
 import com.dev.op.core.dto.vipchannel.getPayServiceDetailDeleteModel;
 import com.dev.op.core.dto.vipchannel.getPayServiceDetailDeleteMonthModel;
+import com.dev.op.core.dto.vipchannel.getPayServiceDetailExitModel;
+import com.dev.op.core.dto.vipchannel.getPayServiceDetailExitMonthModel;
 import com.dev.op.core.dto.vipchannel.getPayServiceDetailModel;
 import com.dev.op.core.dto.vipchannel.getPayServiceDetailMonthModel;
 import com.dev.op.core.dto.vipchannel.getPersonByDocumentModel;
@@ -261,7 +264,7 @@ public class CobranzaFacadeImpl implements CobranzaFacade {
 	}
 
 	@Override
-	public List<getListPayModel> getListPay(String user, String explicite) {
+	public List<getListPayModel> getListPay(Integer user, String explicite) {
 		List<getListPayModel> getListPay = new ArrayList<getListPayModel>();
 		
 		try {
@@ -615,6 +618,67 @@ public class CobranzaFacadeImpl implements CobranzaFacade {
 			}
 			else {
 				return getManagerSumation;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getListDirectionModel> getListDirection() {
+		List<getListDirectionModel> getListDirection = new ArrayList<getListDirectionModel>();
+		
+		try {
+			
+			getListDirection = cobranzaService.getListDirection();
+			if(GenericUtil.isEmpty(getListDirection)) {
+				return null;
+			}
+			else {
+				return getListDirection;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getPayServiceDetailExitModel> getPayServiceDetailExit(String document, String code, String user) {
+		List<getPayServiceDetailExitModel> getPayServiceDetailExit = new ArrayList<getPayServiceDetailExitModel>();
+		
+		try {
+			
+			getPayServiceDetailExit = cobranzaService.getPayServiceDetailExit(document, code, user);
+			if(GenericUtil.isEmpty(getPayServiceDetailExit)) {
+				return null;
+			}
+			else {
+				return getPayServiceDetailExit;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getPayServiceDetailExitMonthModel> getPayServiceDetailExitMonth(String document, String code,
+			String user) {
+		List<getPayServiceDetailExitMonthModel> getPayServiceDetailExitMonth = new ArrayList<getPayServiceDetailExitMonthModel>();
+		
+		try {
+			
+			getPayServiceDetailExitMonth = cobranzaService.getPayServiceDetailExitMonth(document, code, user);
+			if(GenericUtil.isEmpty(getPayServiceDetailExitMonth)) {
+				return null;
+			}
+			else {
+				return getPayServiceDetailExitMonth;
 			}
 		}
 		catch(Exception e) {

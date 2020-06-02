@@ -13,8 +13,8 @@ public class getManagerSumationMapper implements RowMapper<getManagerSumationMod
 	public getManagerSumationModel mapRow(ResultSet rs, int rowNum) throws SQLException {
 		
 		getManagerSumationModel getManagerSumation = new getManagerSumationModel();
-		getManagerSumation.setManager(rs.getString("manager"));
-		getManagerSumation.setAmount(rs.getBigDecimal("amount"));
+		getManagerSumation.setManager(rs.getString("nombre"));
+		getManagerSumation.setAmount(rs.getString("monto"));
 		return getManagerSumation;
 	}
 }

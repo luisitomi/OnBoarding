@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  serviceTokenEndPoint: "http://localhost:8050/api/v1",
 };

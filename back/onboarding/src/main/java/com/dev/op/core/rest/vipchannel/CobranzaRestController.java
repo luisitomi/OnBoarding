@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dev.op.core.dto.ResponseModel;
 
 import com.dev.op.core.dto.vipchannel.getDirectionByIdModel;
+import com.dev.op.core.dto.vipchannel.getListDirectionModel;
 import com.dev.op.core.dto.vipchannel.getListMangerModel;
 import com.dev.op.core.dto.vipchannel.getListPayModel;
 import com.dev.op.core.dto.vipchannel.getListVoucherModel;
@@ -26,6 +27,8 @@ import com.dev.op.core.dto.vipchannel.getManagaerCountModel;
 import com.dev.op.core.dto.vipchannel.getManagerByIdModel;
 import com.dev.op.core.dto.vipchannel.getPayServiceDetailDeleteModel;
 import com.dev.op.core.dto.vipchannel.getPayServiceDetailDeleteMonthModel;
+import com.dev.op.core.dto.vipchannel.getPayServiceDetailExitModel;
+import com.dev.op.core.dto.vipchannel.getPayServiceDetailExitMonthModel;
 import com.dev.op.core.dto.vipchannel.getPayServiceDetailModel;
 import com.dev.op.core.dto.vipchannel.getPayServiceDetailMonthModel;
 import com.dev.op.core.dto.vipchannel.getPersonByDocumentModel;
@@ -169,6 +172,24 @@ public class CobranzaRestController {
 		}
 	}
 	
+	@GetMapping("/getPayServiceDetailExit/{document}/{code}/{user}")
+	public ResponseEntity<List<getPayServiceDetailExitModel>> getPayServiceDetailExit(@PathVariable(value="document") String document,
+			@PathVariable(value="code") String code,@PathVariable(value="user") String user) {
+		
+		try{
+			List<getPayServiceDetailExitModel> getPayServiceDetailExit = cobranzaFacade.getPayServiceDetailExit(document, code, user);
+			if(!GenericUtil.isCollectionEmpty(getPayServiceDetailExit)) {
+				return new ResponseEntity<List<getPayServiceDetailExitModel>>(getPayServiceDetailExit, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<getPayServiceDetailExitModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<List<getPayServiceDetailExitModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 	@GetMapping("/getPayServiceDetailDelete/{document}/{code}")
 	public ResponseEntity<List<getPayServiceDetailDeleteModel>> getPayServiceDetailDelete(@PathVariable(value="document") String document,
 			@PathVariable(value="code") String code) {
@@ -201,6 +222,23 @@ public class CobranzaRestController {
 		}
 		catch(Exception e) {
 			return new ResponseEntity<List<getListMangerModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/getListDirection")
+	public ResponseEntity<List<getListDirectionModel>> getListDirection() {
+		
+		try{
+			List<getListDirectionModel> getListDirection = cobranzaFacade.getListDirection();
+			if(!GenericUtil.isCollectionEmpty(getListDirection)) {
+				return new ResponseEntity<List<getListDirectionModel>>(getListDirection, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<getListDirectionModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<List<getListDirectionModel>>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	
@@ -239,6 +277,24 @@ public class CobranzaRestController {
 		}
 	}
 	
+	@GetMapping("/getPayServiceDetailExitMonth/{document}/{code}/{user}")
+	public ResponseEntity<List<getPayServiceDetailExitMonthModel>> getPayServiceDetailExitMonth(@PathVariable(value="document") String document,
+			@PathVariable(value="code") String code,@PathVariable(value="user") String user) {
+		
+		try{
+			List<getPayServiceDetailExitMonthModel> getPayServiceDetailExitMonth = cobranzaFacade.getPayServiceDetailExitMonth(document, code, user);
+			if(!GenericUtil.isCollectionEmpty(getPayServiceDetailExitMonth)) {
+				return new ResponseEntity<List<getPayServiceDetailExitMonthModel>>(getPayServiceDetailExitMonth, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<getPayServiceDetailExitMonthModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<List<getPayServiceDetailExitMonthModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 	@GetMapping("/getPayServiceDetailDeleteMonth/{document}/{code}")
 	public ResponseEntity<List<getPayServiceDetailDeleteMonthModel>> getPayServiceDetailDeleteMonth(@PathVariable(value="document") String document,
 			@PathVariable(value="code") String code) {
@@ -258,7 +314,7 @@ public class CobranzaRestController {
 	}
 	
 	@GetMapping("/getListPay/{user}/{explicite}")
-	public ResponseEntity<List<getListPayModel>> getListPay(@PathVariable(value="user") String user,
+	public ResponseEntity<List<getListPayModel>> getListPay(@PathVariable(value="user") Integer user,
 			@PathVariable(value="explicite") String explicite) {
 		
 		try{
@@ -391,7 +447,7 @@ public class CobranzaRestController {
 		}
 	}
 	
-	@GetMapping("/putPersonById/{document}/{code}/{description}")
+	@GetMapping("/putReferenceById/{document}/{code}/{description}")
 	public ResponseEntity<List<ResponseModel>> putReferenceById(
 			@PathVariable(value="document") String document,
 			@PathVariable(value="code") String code,

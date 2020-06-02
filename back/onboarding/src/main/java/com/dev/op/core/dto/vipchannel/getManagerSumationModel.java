@@ -1,7 +1,6 @@
 package com.dev.op.core.dto.vipchannel;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 public class getManagerSumationModel implements Serializable {
 
@@ -12,7 +11,7 @@ public class getManagerSumationModel implements Serializable {
 	
 	private String manager;
 	
-	private BigDecimal amount;
+	private String amount;
 	
 	public getManagerSumationModel() {
 		
@@ -26,11 +25,11 @@ public class getManagerSumationModel implements Serializable {
 		this.manager = manager;
 	}
 
-	public BigDecimal getAmount() {
+	public String getAmount() {
 		return amount;
 	}
 
-	public void setAmount(BigDecimal amount) {
+	public void setAmount(String amount) {
 		this.amount = amount;
 	}
 		

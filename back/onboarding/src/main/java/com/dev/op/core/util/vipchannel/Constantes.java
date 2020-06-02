@@ -9,10 +9,12 @@ public class Constantes {
 	public static final String GETMANAGERBYID = "getManagerById";
 	public static final String GETVOUCHERBYID = "getVoucherById";
 	public static final String GETPAYSERVICEDETAIL = "getPayServiceDetail";
+	public static final String GETPAYSERVICEDETAILEXIT = "getPayServiceDetailExit";
 	public static final String GETPAYSERVICEDETAILDELETE = "getPayServiceDetailDelete";
 	public static final String GETLISTMANAGER = "getListManger";
 	public static final String GETLISTVOUCHER = "getListVoucher";
 	public static final String GETPAYSERVICEDETAILMONTH = "getPayServiceDetailMonth";
+	public static final String GETPAYSERVICEDETAILEXITMONTH = "getPayServiceDetailExitMonth";
 	public static final String GETPAYSERVICEDETAILDELETEMONTH = "getPayServiceDetailDeleteMonth";
 	public static final String GETLISTPAY = "getListPay";
 	public static final String GETLISTPAYONE = "getListPayOne";
@@ -21,6 +23,7 @@ public class Constantes {
 	public static final String GETLISTCLIENTEBYMANAGER = "getListlienteByManager";
 	public static final String GETMANAGERCOUNT = "getManagaerCount";
 	public static final String GETMANAGERSUMATION = "getManagerSumation";
+	public static final String GETLISTDIRECTION = "getListDirection";
 	public static final String PATCHMANAGERBYID = "patchManagerById";
 	public static final String PATCHVOUCHERBYID = "patchVoucherById";
 	public static final String PUTPERSONBYID = "putPersonById";

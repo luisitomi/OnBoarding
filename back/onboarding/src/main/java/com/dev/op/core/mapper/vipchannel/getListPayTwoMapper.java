@@ -16,7 +16,7 @@ public class getListPayTwoMapper implements RowMapper<getListPayTwoModel> {
 		getListPayTwo.setId(rs.getString("id"));
 		getListPayTwo.setCode(rs.getString("code"));
 		getListPayTwo.setClient(rs.getString("client"));
-		getListPayTwo.setAmountTwo(rs.getString("amount"));
+		getListPayTwo.setAmountOne(rs.getString("amount"));
 		getListPayTwo.setAmountTwo(rs.getString("amounttwo"));
 		getListPayTwo.setAmountThree(rs.getString("amountthree"));
 		getListPayTwo.setSumation(rs.getString("sumation"));

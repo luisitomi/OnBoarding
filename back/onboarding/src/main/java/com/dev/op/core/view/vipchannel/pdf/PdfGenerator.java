@@ -91,13 +91,13 @@ public class PdfGenerator {
 				hcell.disableBorderSide(Rectangle.BOX);
 				table.addCell(hcell);
 				
-				hcell = new PdfPCell(new Phrase(planillas.getAmountOne(),fant));
+				hcell = new PdfPCell(new Phrase(planillas.getAmountOne().toString(),fant));
 				hcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				hcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				hcell.disableBorderSide(Rectangle.BOX);
 				table.addCell(hcell);
 				
-				hcell = new PdfPCell(new Phrase(planillas.getAmountTwo(),fant));
+				hcell = new PdfPCell(new Phrase(planillas.getAmountTwo().toString(),fant));
 				hcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				hcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				hcell.disableBorderSide(Rectangle.BOX);
@@ -109,7 +109,7 @@ public class PdfGenerator {
 				hcell.disableBorderSide(Rectangle.BOX);
 				table.addCell(hcell);
 				
-				hcell = new PdfPCell(new Phrase(planillas.getSumation(),fant));
+				hcell = new PdfPCell(new Phrase(planillas.getSumation().toString(),fant));
 				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				hcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				hcell.disableBorderSide(Rectangle.BOX);
@@ -399,7 +399,7 @@ public class PdfGenerator {
 		
 		try {
 			
-			String imageUrl = "file:///C:/Users/Luis/Desktop/OnBoarding/back/onboarding/src/main/resources/img/sumation.jpg";
+			String imageUrl = "file:///C:/Users/Luis/Desktop/OnBoarding/back/onboarding/src/main/resources/img/sumatoria.jpg";
 						
 			Image img = Image.getInstance(new URL(imageUrl));
 			img.disableBorderSide(Rectangle.BOX);
@@ -416,12 +416,12 @@ public class PdfGenerator {
 		    PdfContentByte under; 
 		    PdfContentByte over; 
 		    
-		    Font fant = FontFactory.getFont(FontFactory.HELVETICA, 5);
+		    Font fant = FontFactory.getFont(FontFactory.HELVETICA, 8);
 			fant.setColor(BaseColor.BLACK);
 			
 		    PdfPTable table = new PdfPTable(7);
 			table.setWidthPercentage(100);
-			table.setWidths(new float[] {1f, 1f,4f,1f, 1f,1f, 1f});
+			table.setWidths(new float[] {1f, 1f,3f,1f, 1f,1f, 1f});
 			
 			PdfPCell hcell;
 			
@@ -449,7 +449,7 @@ public class PdfGenerator {
 				hcell.disableBorderSide(Rectangle.BOX);
 				table.addCell(hcell);
 				
-				hcell = new PdfPCell(new Phrase(sumations.getAmount().toString(),fant));
+				hcell = new PdfPCell(new Phrase(sumations.getAmount(),fant));
 				hcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				hcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				hcell.disableBorderSide(Rectangle.BOX);

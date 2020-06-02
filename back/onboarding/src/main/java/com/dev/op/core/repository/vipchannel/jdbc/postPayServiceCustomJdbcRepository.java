@@ -42,7 +42,7 @@ public class postPayServiceCustomJdbcRepository implements postPayServiceJdbcRep
 											 new SqlParameter("code", Types.VARCHAR),
 											 new SqlParameter("amount", Types.DECIMAL),
 											 new SqlParameter("user", Types.INTEGER),
-											 new SqlParameter("manager", Types.INTEGER));
+											 new SqlParameter("managerId", Types.INTEGER));
 			simpleJdbcCall.returningResultSet("postPayService", new postPayServiceMapper());
 			
 			MapSqlParameterSource inParams = new MapSqlParameterSource();
@@ -50,7 +50,7 @@ public class postPayServiceCustomJdbcRepository implements postPayServiceJdbcRep
 			inParams.addValue("code", code);
 			inParams.addValue("amount", amount);
 			inParams.addValue("user", user);
-			inParams.addValue("manager", manager);
+			inParams.addValue("managerId", manager);
 			
 			Map<String, Object> result = simpleJdbcCall.execute(inParams);
 			postPayService = (List<ResponseModel>) result.get("postPayService");

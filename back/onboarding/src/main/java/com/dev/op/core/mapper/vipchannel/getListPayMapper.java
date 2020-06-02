@@ -16,10 +16,10 @@ public class getListPayMapper implements RowMapper<getListPayModel> {
 		getListPay.setId(rs.getString("id"));
 		getListPay.setCode(rs.getString("code"));
 		getListPay.setClient(rs.getString("client"));
-		getListPay.setAmountOne(rs.getBigDecimal("amount_month"));
-		getListPay.setAmountTwo(rs.getBigDecimal("amount_two"));
-		getListPay.setAmountThree(rs.getBigDecimal("amount_three"));
-		getListPay.setSumation(rs.getBigDecimal("summation"));
+		getListPay.setAmountOne(rs.getString("amount_month"));
+		getListPay.setAmountTwo(rs.getString("amount_two"));
+		getListPay.setAmountThree(rs.getString("amount_three"));
+		getListPay.setSumation(rs.getString("summation"));
 		return getListPay;
 	}
 }

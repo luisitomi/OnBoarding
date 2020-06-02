@@ -1,7 +1,6 @@
 package com.dev.op.core.dto.vipchannel;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 public class getListPayModel implements Serializable {
 
@@ -16,13 +15,13 @@ public class getListPayModel implements Serializable {
 	
 	private String client;
 	
-	private BigDecimal amountOne;
+	private String amountOne;
 	
-	private BigDecimal amountTwo;
+	private String amountTwo;
 	
-	private BigDecimal amountThree;
+	private String amountThree;
 	
-	private BigDecimal sumation;
+	private String sumation;
 	
 	public getListPayModel() {
 		
@@ -52,35 +51,35 @@ public class getListPayModel implements Serializable {
 		this.client = client;
 	}
 
-	public BigDecimal getAmountOne() {
+	public String getAmountOne() {
 		return amountOne;
 	}
 
-	public void setAmountOne(BigDecimal amountOne) {
+	public void setAmountOne(String amountOne) {
 		this.amountOne = amountOne;
 	}
 
-	public BigDecimal getAmountTwo() {
+	public String getAmountTwo() {
 		return amountTwo;
 	}
 
-	public void setAmountTwo(BigDecimal amountTwo) {
+	public void setAmountTwo(String amountTwo) {
 		this.amountTwo = amountTwo;
 	}
 
-	public BigDecimal getAmountThree() {
+	public String getAmountThree() {
 		return amountThree;
 	}
 
-	public void setAmountThree(BigDecimal amountThree) {
+	public void setAmountThree(String amountThree) {
 		this.amountThree = amountThree;
 	}
 
-	public BigDecimal getSumation() {
+	public String getSumation() {
 		return sumation;
 	}
 
-	public void setSumation(BigDecimal sumation) {
+	public void setSumation(String sumation) {
 		this.sumation = sumation;
 	}
 	

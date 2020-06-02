@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dev.op.core.dto.ResponseModel;
 import com.dev.op.core.dto.vipchannel.getDirectionByIdModel;
+import com.dev.op.core.dto.vipchannel.getListDirectionModel;
 import com.dev.op.core.dto.vipchannel.getListMangerModel;
 import com.dev.op.core.dto.vipchannel.getListPayModel;
 import com.dev.op.core.dto.vipchannel.getListPayOneModel;
@@ -24,6 +25,8 @@ import com.dev.op.core.dto.vipchannel.getManagerByIdModel;
 import com.dev.op.core.dto.vipchannel.getManagerSumationModel;
 import com.dev.op.core.dto.vipchannel.getPayServiceDetailDeleteModel;
 import com.dev.op.core.dto.vipchannel.getPayServiceDetailDeleteMonthModel;
+import com.dev.op.core.dto.vipchannel.getPayServiceDetailExitModel;
+import com.dev.op.core.dto.vipchannel.getPayServiceDetailExitMonthModel;
 import com.dev.op.core.dto.vipchannel.getPayServiceDetailModel;
 import com.dev.op.core.dto.vipchannel.getPayServiceDetailMonthModel;
 import com.dev.op.core.dto.vipchannel.getPersonByDocumentModel;
@@ -33,6 +36,7 @@ import com.dev.op.core.dto.vipchannel.getVoucherByIdModel;
 import com.dev.op.core.repository.vipchannel.jdbc.deleteDetailCountJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.deletePayServiceJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getDirectionByIdJdbcRepository;
+import com.dev.op.core.repository.vipchannel.jdbc.getListDirectionJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getListMangerJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getListVoucherJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getManagerByIdJdbcRepository;
@@ -41,6 +45,8 @@ import com.dev.op.core.repository.vipchannel.jdbc.getPayServiceDetailJdbcReposit
 import com.dev.op.core.repository.vipchannel.jdbc.getPayServiceDetailDeleteJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getPayServiceDetailMonthJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getPayServiceDetailDeleteMonthJdbcRepository;
+import com.dev.op.core.repository.vipchannel.jdbc.getPayServiceDetailExitJdbcRepository;
+import com.dev.op.core.repository.vipchannel.jdbc.getPayServiceDetailExitMonthJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getPersonByDocumentJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getPersonByIdJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getReferenceByIdJdbcRepository;
@@ -91,6 +97,10 @@ public class CobranzaServiceImpl implements CobranzaService {
 	private getVoucherByIdJdbcRepository getVoucherByIdJdbcRepository;
 	
 	@Autowired
+	@Qualifier("getListDirectionJdbcRepository")
+	private getListDirectionJdbcRepository getListDirectionJdbcRepository;
+	
+	@Autowired
 	@Qualifier("getListMangerJdbcRepository")
 	private getListMangerJdbcRepository getListMangerJdbcRepository;
 	
@@ -101,6 +111,10 @@ public class CobranzaServiceImpl implements CobranzaService {
 	@Autowired
 	@Qualifier("getPayServiceDetailMonthJdbcRepository")
 	private getPayServiceDetailMonthJdbcRepository getPayServiceDetailMonthJdbcRepository;
+	
+	@Autowired
+	@Qualifier("getPayServiceDetailExitJdbcRepository")
+	private getPayServiceDetailExitJdbcRepository getPayServiceDetailExitJdbcRepository;
 	
 	@Autowired
 	@Qualifier("getPayServiceDetailDeleteMonthJdbcRepository")
@@ -181,6 +195,10 @@ public class CobranzaServiceImpl implements CobranzaService {
 	@Autowired
 	@Qualifier("postPayServiceDetailDeleteJdbcRepository")
 	private postPayServiceDetailDeleteJdbcRepository postPayServiceDetailDeleteJdbcRepository;
+	
+	@Autowired
+	@Qualifier("getPayServiceDetailExitMonthJdbcRepository")
+	private getPayServiceDetailExitMonthJdbcRepository getPayServiceDetailExitMonthJdbcRepository;
 	
 	@Override
 	public List<getPersonByDocumentModel> getPersonByDocument(String search) {
@@ -403,7 +421,7 @@ public class CobranzaServiceImpl implements CobranzaService {
 	}
 
 	@Override
-	public List<getListPayModel> getListPay(String user, String explicite) {
+	public List<getListPayModel> getListPay(Integer user, String explicite) {
 		List<getListPayModel> getListPay = new ArrayList<getListPayModel>();
 		
 		try {
@@ -757,6 +775,67 @@ public class CobranzaServiceImpl implements CobranzaService {
 			}
 			else {
 				return getManagerSumation;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getListDirectionModel> getListDirection() {
+		List<getListDirectionModel> getListDirection = new ArrayList<getListDirectionModel>();
+		
+		try {
+			
+			getListDirection = getListDirectionJdbcRepository.getListDirection();
+			if(GenericUtil.isCollectionEmpty(getListDirection)) {
+				return null;
+			}
+			else {
+				return getListDirection;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getPayServiceDetailExitModel> getPayServiceDetailExit(String document, String code, String user) {
+		List<getPayServiceDetailExitModel> getPayServiceDetailExit = new ArrayList<getPayServiceDetailExitModel>();
+		
+		try {
+			
+			getPayServiceDetailExit = getPayServiceDetailExitJdbcRepository.getPayServiceDetailExit(document, code, user);
+			if(GenericUtil.isCollectionEmpty(getPayServiceDetailExit)) {
+				return null;
+			}
+			else {
+				return getPayServiceDetailExit;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getPayServiceDetailExitMonthModel> getPayServiceDetailExitMonth(String document, String code,
+			String user) {
+		List<getPayServiceDetailExitMonthModel> getPayServiceDetailExitMonth = new ArrayList<getPayServiceDetailExitMonthModel>();
+		
+		try {
+			
+			getPayServiceDetailExitMonth = getPayServiceDetailExitMonthJdbcRepository.getPayServiceDetailExitMonth(document, code, user);
+			if(GenericUtil.isCollectionEmpty(getPayServiceDetailExitMonth)) {
+				return null;
+			}
+			else {
+				return getPayServiceDetailExitMonth;
 			}
 		}
 		catch(Exception e) {

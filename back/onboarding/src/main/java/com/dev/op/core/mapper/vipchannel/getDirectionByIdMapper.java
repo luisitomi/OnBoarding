@@ -16,6 +16,7 @@ public class getDirectionByIdMapper implements RowMapper<getDirectionByIdModel> 
 		getDirectionById.setDirection(rs.getString("direction"));
 		getDirectionById.setName(rs.getString("name"));
 		getDirectionById.setNumber(rs.getString("number"));
+		getDirectionById.setId(rs.getInt("id"));
 		return getDirectionById;
 	}
 }
