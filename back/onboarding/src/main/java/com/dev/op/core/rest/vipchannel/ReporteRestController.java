@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.op.core.dto.vipchannel.getListPayOneModel;
+import com.dev.op.core.dto.vipchannel.getListServiceBySaleModel;
 import com.dev.op.core.dto.vipchannel.getManagerSumationModel;
 import com.dev.op.core.facade.vipchannel.CobranzaFacade;
+import com.dev.op.core.facade.vipchannel.VentaFacade;
 import com.dev.op.core.view.vipchannel.pdf.PdfGenerator;
 
 @RestController
@@ -27,6 +29,10 @@ public class ReporteRestController {
 	@Autowired
 	@Qualifier("cobranzaFacade")
 	private CobranzaFacade cobranzaFacade;
+	
+	@Autowired
+	@Qualifier("ventaFacade")
+	private VentaFacade ventaFacade;
 	
 	@GetMapping(value = "planillaCajaUno", produces = MediaType.APPLICATION_PDF_VALUE)
 	public ResponseEntity<InputStreamResource> planillaCajaUno() throws IOException {
@@ -101,6 +107,27 @@ public class ReporteRestController {
 				
 				HttpHeaders headers = new HttpHeaders();
 				headers.add("Content-Disposition", "inline; filename=planilla.pdf");
+				
+				return ResponseEntity.ok()
+						.headers(headers)
+						.contentType(MediaType.APPLICATION_PDF)
+						.body(new InputStreamResource(bis));
+		}
+		catch(Exception e) {
+				return new ResponseEntity<InputStreamResource>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping(value = "vendedorListado", produces = MediaType.APPLICATION_PDF_VALUE)
+	public ResponseEntity<InputStreamResource> vendedor() throws IOException {
+		try {
+			
+			List<getListServiceBySaleModel> vendedor = ventaFacade.getListServiceBySale();
+				
+				ByteArrayInputStream bis = PdfGenerator.pdfBySeller(vendedor);
+				
+				HttpHeaders headers = new HttpHeaders();
+				headers.add("Content-Disposition", "inline; filename=vendedor.pdf");
 				
 				return ResponseEntity.ok()
 						.headers(headers)

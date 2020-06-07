@@ -26,7 +26,7 @@ import com.dev.op.core.dto.vipchannel.getPayServiceDetailMonthModel;
 import com.dev.op.core.dto.vipchannel.getPersonByDocumentModel;
 import com.dev.op.core.dto.vipchannel.getPersonByIdModel;
 import com.dev.op.core.dto.vipchannel.getReferenceByIdModel;
-import com.dev.op.core.dto.vipchannel.getVoucherByIdModel;;
+import com.dev.op.core.dto.vipchannel.getVoucherByIdModel;
 
 public interface CobranzaService {
 	List<getPersonByDocumentModel> getPersonByDocument(String search);

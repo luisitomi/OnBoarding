@@ -157,6 +157,10 @@ public class CobranzaServiceImpl implements CobranzaService {
 	private getPayServiceDetailDeleteJdbcRepository getPayServiceDetailDeleteMonth;
 	
 	@Autowired
+	@Qualifier("getPayServiceDetailExitMonthJdbcRepository")
+	private getPayServiceDetailExitMonthJdbcRepository getPayServiceDetailExitMonthJdbcRepository;
+	
+	@Autowired
 	@Qualifier("patchManagerByIdJdbcRepository")
 	private patchManagerByIdJdbcRepository patchManagerByIdJdbcRepository;
 	
@@ -195,10 +199,6 @@ public class CobranzaServiceImpl implements CobranzaService {
 	@Autowired
 	@Qualifier("postPayServiceDetailDeleteJdbcRepository")
 	private postPayServiceDetailDeleteJdbcRepository postPayServiceDetailDeleteJdbcRepository;
-	
-	@Autowired
-	@Qualifier("getPayServiceDetailExitMonthJdbcRepository")
-	private getPayServiceDetailExitMonthJdbcRepository getPayServiceDetailExitMonthJdbcRepository;
 	
 	@Override
 	public List<getPersonByDocumentModel> getPersonByDocument(String search) {

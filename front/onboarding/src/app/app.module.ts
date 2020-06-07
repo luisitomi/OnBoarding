@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { CommonModule } from "@angular/common";
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
+import { CommonModule, LocationStrategy, HashLocationStrategy } from "@angular/common";
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA  } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
@@ -31,7 +31,7 @@ import {
 } from '@coreui/angular';
 
 // Import routing module
-import { AppRoutingModule } from './app.routing';
+import { AppRoutingModule, routes } from './app.routing';
 
 // Import 3rd party components
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -40,12 +40,21 @@ import { ChartsModule } from 'ng2-charts';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { ErrorInterceptor } from './interceptors/error.interceptor';
-import { AlertService } from './shared/services/alert.service';
+import { LoginComponent } from './components/login/login.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { P404Component } from './components/error/404.component';
+import { P500Component } from './components/error/500.component';
+import { RouterModule } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
+   
 
 @NgModule({
   imports: [
     BrowserModule,
+    RouterModule.forRoot( routes ,{
+      onSameUrlNavigation: 'reload',
+      enableTracing: false
+  }), 
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
@@ -63,18 +72,22 @@ import { AlertService } from './shared/services/alert.service';
     HttpClientModule, HttpModule,
     NgxPaginationModule,
     Ng2SearchPipeModule,
+    NgbModule,
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   declarations: [
     AppComponent,
     ...APP_CONTAINERS,
+    LoginComponent,
+    P404Component,
+    P500Component,
   ],
   providers: [
+    AuthGuard,
     {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ErrorInterceptor,
-      multi: true
-    },
+      provide: LocationStrategy,
+      useClass: HashLocationStrategy,
+    }
   ],
   bootstrap: [ AppComponent ]
 })

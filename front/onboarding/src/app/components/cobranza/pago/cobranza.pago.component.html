@@ -71,7 +71,7 @@
             <div class="h1 text-muted text-left mb-4">
               <i class="icon-people" style="color: red;"></i>
               <button style="background-color: transparent;"
-                      class="btn" data-toggle="modal" (click)="personModal.show()">
+                      class="btn" data-toggle="modal" (click)="personamodal()">
                 <i class="fa fa-pencil fa-lg" style="color: green;"></i>
               </button>
             </div>
@@ -91,7 +91,7 @@
       <div class="col-sm-12 col-md-6">
         <div class="card">
           <div class="card-body p-6 clearfix">
-            <i class="fa fa-area-chart bg-info p-3 font-2xl mr-3 float-left"></i>
+            <i class="fa fa-area-chart bg-success p-3 font-2xl mr-3 float-left"></i>
             <div class="h5 mb-0 mt-2" style="color: black;">S/ {{amountgeneral}}
               <button *ngIf="pagoActive" class="btn" style="background-color: transparent;"
                 class="btn" data-toggle="modal" (click)="openMonthActive()">
@@ -181,18 +181,17 @@
       <div class="col-sm-12 col-md-6">
         <div class="card">
           <div class="card-body p-6 clearfix">
-            <i class="fa fa-drivers-license-o bg-danger p-3 font-2xl mr-3 float-left"></i>
-            <div class="h5 mb-0 mt-2" style="color: black;">S/ {{amountgeneraldelete}}</div>
-            <div class="text-muted text-uppercase font-weight-bold font-xs">{{servicedelete}}</div>
-         </div>
-         <div class="row card-body" style="padding: 10px 1px 10px 25px;" *ngIf="pagoDeleteActive">
-          <div class="col-sm-4">
-            <div class="form-group">
-              <label for="amountpaySaveDelete">Monto</label>
-              <input class="form-control form-control-sm" maxlength="6" id="amountpaySaveDelete" placeholder="Ingrese monto" type="text">
+            <i class="fa fa-calendar bg-warning p-3 font-2xl mr-3 float-left"></i>
+            <div class="text-muted text-uppercase font-weight-bold font-xs">{{serviceexit}}
+              <button *ngIf="pagoExitActive" class="btn" style="background-color: transparent;"
+                  class="btn" data-toggle="modal" (click)="openMonthExit()">
+                  <i class="fa fa-eye fa-lg" style="color: green;"></i>
+                </button>
             </div>
-          </div>
+            <div class="text-muted text-uppercase font-weight-bold font-xs" style="color: black;">S/ {{amountdetailinternetexit}} "Internet"</div>
+            <div class="text-muted text-uppercase font-weight-bold font-xs" style="color: black;">S/ {{amountdetailcableexit}} "Cable"</div>
          </div>
+         
         </div>
       </div>
     </div>
@@ -236,17 +235,18 @@
     <div class="col-sm-12 col-md-6">
       <div class="card">
         <div class="card-body p-6 clearfix">
-          <i class="fa fa-calendar bg-warning p-3 font-2xl mr-3 float-left"></i>
-          <div class="text-muted text-uppercase font-weight-bold font-xs">{{serviceexit}}
-            <button *ngIf="pagoExitActive" class="btn" style="background-color: transparent;"
-                class="btn" data-toggle="modal" (click)="openMonthExit()">
-                <i class="fa fa-eye fa-lg" style="color: green;"></i>
-              </button>
-          </div>
-          <div class="text-muted text-uppercase font-weight-bold font-xs" style="color: black;">S/ {{amountdetailinternetexit}} "Internet"</div>
-          <div class="text-muted text-uppercase font-weight-bold font-xs" style="color: black;">S/ {{amountdetailcableexit}} "Cable"</div>
+          <i class="fa fa-drivers-license-o bg-danger p-3 font-2xl mr-3 float-left"></i>
+          <div class="h5 mb-0 mt-2" style="color: black;">S/ {{amountgeneraldelete}}</div>
+          <div class="text-muted text-uppercase font-weight-bold font-xs">{{servicedelete}}</div>
        </div>
-       
+       <div class="row card-body" style="padding: 10px 1px 10px 25px;" *ngIf="pagoDeleteActive">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="amountpaySaveDelete">Monto</label>
+            <input class="form-control form-control-sm" maxlength="6" id="amountpaySaveDelete" placeholder="Ingrese monto" type="text">
+          </div>
+        </div>
+       </div>
       </div>
     </div>
   </div>
@@ -259,7 +259,7 @@
 
 
 
-<div bsModal #personModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div bsModal #personModal="bs-modal" class="modal fade" tabindex="-1" [config]="{backdrop: 'static'}" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-success" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -324,7 +324,7 @@
     </div>
   </div>
 </div>
-<div bsModal #directionModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div bsModal #directionModal="bs-modal" class="modal fade" tabindex="-1" [config]="{backdrop: 'static'}" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-success" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -382,7 +382,7 @@
     </div>
   </div>
 </div>
-<div bsModal #referenceModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div bsModal #referenceModal="bs-modal" class="modal fade" tabindex="-1" [config]="{backdrop: 'static'}" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-success" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -430,7 +430,7 @@
     </div>
   </div>
 </div>
-<div bsModal #managerModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div bsModal #managerModal="bs-modal" class="modal fade" tabindex="-1" [config]="{backdrop: 'static'}" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-success" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -480,7 +480,7 @@
     </div>
   </div>
 </div>
-<div bsModal #serviceactiveModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div bsModal #serviceactiveModal="bs-modal" class="modal fade" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-success" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -528,7 +528,7 @@
     </div>
   </div>
 </div>
-<div bsModal #serviceaexitModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div bsModal #serviceaexitModal="bs-modal" class="modal fade" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-warning" role="document">
     <div class="modal-content">
       <div class="modal-header">

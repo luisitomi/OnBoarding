@@ -1,0 +1,74 @@
+<div class="app-body" style="background-image: url('./assets/img/brand/login.jpg');
+height: 100%; width: 100%;position: fixed;top: 0;left: 0;background-repeat: no-repeat;">
+  <main class="main d-flex align-items-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 mx-auto">
+          <div class="card-group">
+            <div class="card p-4"style="background-color: transparent;border-color: transparent;border-right-color: red">
+            </div>
+            <div class="card p-4" style="width:100%;border-color: #ED9F2A;">
+              <form *ngIf="formulariologin" [formGroup]="formulariologin" autocomplete="offs" class="form-register-section">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <h1>Inicio de Sesión</h1>
+                <p class="text-muted">Ingrese sus credenciales</p>
+                <div class="input-group mb-3">
+                  <div class="row">
+                    <div class="col-6">
+                      <input type="text" class="form-control form-control-md" disabled style="background-color: transparent;border-color: transparent;">
+                    </div>
+                    <div class="col-2"><button type="button" (click)="validacion(1)" class="btn btn-danger px-3">1</button></div>
+                    <div class="col-2"><button type="button" (click)="validacion(2)" class="btn btn-danger px-3">2</button></div>
+                    <div class="col-2"><button type="button" (click)="validacion(3)" class="btn btn-danger px-3">3</button></div>
+                  </div>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="row">
+                      <div class="col-6">
+                        <input type="text" [(ngModel)]="userText" maxlength="20" class="form-control form-control-md"
+                               placeholder="usuario" autocomplete="username" required
+                               [ngClass]="{ 'is-invalid': submitted && f.uuu.errors }" formControlName="uuu">
+                      </div>
+                      <div class="col-2"><button type="button" (click)="validacion(4)" class="btn btn-danger px-3">4</button></div>
+                      <div class="col-2"><button type="button" (click)="validacion(5)" class="btn btn-danger px-3">5</button></div>
+                      <div class="col-2"><button type="button" (click)="validacion(6)" class="btn btn-danger px-3">6</button></div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                  <div class="row">
+                    <div class="col-6">
+                      <input type="password" [(ngModel)]="passwordText" maxlength="6" class="form-control form-control-md"
+                             disabled placeholder="Contraseña" autocomplete="current-password" required
+                             [ngClass]="{ 'is-invalid': submitted && f.ppp.errors }"
+                             formControlName="ppp">
+                    </div>
+                    <div class="col-2"><button type="button" (click)="validacion(7)" class="btn btn-danger px-3">7</button></div>
+                    <div class="col-2"><button type="button" (click)="validacion(8)" class="btn btn-danger px-3">8</button></div>
+                    <div class="col-2"><button type="button" (click)="validacion(9)" class="btn btn-danger px-3">9</button></div>
+                  </div>
+                </div>
+                <div class="input-group mb-3">
+                  <div class="row">
+                    <div class="col-6">
+                      <input class="form-control form-control-md" disabled style="background-color: transparent;border-color: transparent;">
+                    </div>
+                    <div class="col-2"><button type="button" (click)="validacion(-1)" class="btn btn-danger px-3">#</button></div>
+                    <div class="col-2"><button type="button" (click)="validacion(0)" class="btn btn-danger px-3">0</button></div>
+                    <div class="col-2"><button type="button" (click)="validacion(-1)" class="btn btn-danger px-3">*</button></div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <button type="button" (click)="enviodata()" class="btn btn-success px-4">Ingresar</button>
+                  </div>
+                  <div class="col-6 text-right">
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

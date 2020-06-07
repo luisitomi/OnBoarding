@@ -16,6 +16,8 @@ public class getPayServiceDetailExitMonthModel implements Serializable {
 	
 	private BigDecimal amount;
 	
+	private Integer code;
+	
 	public getPayServiceDetailExitMonthModel() {
 		
 	}
@@ -42,6 +44,14 @@ public class getPayServiceDetailExitMonthModel implements Serializable {
 
 	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
+	}
+
+	public Integer getCode() {
+		return code;
+	}
+
+	public void setCode(Integer code) {
+		this.code = code;
 	}
 	
 }

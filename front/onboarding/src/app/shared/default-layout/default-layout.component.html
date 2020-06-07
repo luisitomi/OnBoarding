@@ -19,6 +19,50 @@
     </li>
     <li class="nav-item d-md-down-none">
     </li>
+    <li class="nav-item dropdown" dropdown placement="bottom right">
+      <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
+        <img src="{{userImage}}" class="img-avatar" alt="user" width="40px"/>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+        <div class="dropdown-header text-center"><strong>Cuenta</strong></div>
+        <div class="dropdown-header text-center"><strong>Configuración</strong></div>
+        <div class="divider"></div>
+        <a class="dropdown-item" (click)="open(mymodal)"><i class="fa fa-shield"></i> Cambiar Contraseña</a>
+        <a class="dropdown-item" (click)="logout()"><i class="fa fa-lock"></i> Cerrar Sesión</a>
+      </div>
+      <ng-template #mymodal let-modal>
+        <div tabindex="-1" style="background-color: grey;">
+          <div class="modal-dialog modal-info">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Cambiar Contraseña</h4>
+                <button type="button" class="close" (click)="modal.close('Cross  click')" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form *ngIf="formularioPassword" [formGroup]="formularioPassword" autocomplete="offs" class="form-register-section">
+                  <div asp-validation-summary="All" class="text-danger"></div>
+                  <div class="row" >
+                    <div class="col-6">
+                      <div class="form-group">
+                        <label for="passnew">Contraseña Nueva</label>
+                        <input type="password" class="form-control form-control-sm" id="passnew" maxlength="6"
+                              formControlName="passnew" style="font-weight:25%;" [ngClass]="{ 'is-invalid': submitted && f.passnew.errors }">
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary ml-auto" (click)="modal.close('Save click')">CANCELAR</button>
+                <button type="button" class="btn btn-info mr-auto" (click)="savepass()">GUARDAR</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </li>
   </ul>
 </app-header>
 <div class="app-body">
@@ -40,5 +84,5 @@
   </main>
 </div>
 <app-footer>
-  <span><a href="https://coreui.io">VipChannel S.A.C.</a> &copy; 2020 </span>
+  <span><a href="https://google.com">VipChannel S.A.C.</a> &copy; 2020 </span>
 </app-footer>

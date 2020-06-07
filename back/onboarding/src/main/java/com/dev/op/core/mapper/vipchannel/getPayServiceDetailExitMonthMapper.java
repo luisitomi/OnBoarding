@@ -16,6 +16,7 @@ public class getPayServiceDetailExitMonthMapper implements RowMapper<getPayServi
 		getPayServiceDetailExitMonth.setInformation(rs.getString("information"));
 		getPayServiceDetailExitMonth.setService(rs.getString("service"));
 		getPayServiceDetailExitMonth.setAmount(rs.getBigDecimal("amount"));
+		getPayServiceDetailExitMonth.setCode(rs.getInt("codeservice"));
 		return getPayServiceDetailExitMonth;
 	}
 }

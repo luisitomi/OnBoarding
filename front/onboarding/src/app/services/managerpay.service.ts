@@ -18,9 +18,7 @@ export class ManagerPayService {
     getgestoreslistado(): Observable<ManagerPayModel[]> {
         return this.httpClient.get<ManagerPayModel[]>(`${this.BASE_URL}/cobranza/getListManger`);
     }
-
     
-
     patchManagerByIddetalle(document: string,code: string,code_manager: number): Observable<ResponseModel[]> {
         return this.httpClient.get<ResponseModel[]>(`${this.BASE_URL}/cobranza/patchManagerById/`+ document + "/" + code + "/" + code_manager);
     }

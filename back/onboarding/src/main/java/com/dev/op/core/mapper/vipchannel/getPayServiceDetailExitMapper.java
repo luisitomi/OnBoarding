@@ -16,7 +16,6 @@ public class getPayServiceDetailExitMapper implements RowMapper<getPayServiceDet
 		getPayServiceDetailExit.setService(rs.getString("service"));
 		getPayServiceDetailExit.setAmount(rs.getString("amount"));
 		getPayServiceDetailExit.setStatus(rs.getString("status"));
-		getPayServiceDetailExit.setCode(rs.getInt("codeservice"));
 		return getPayServiceDetailExit;
 	}
 }

@@ -50,13 +50,14 @@ export class ListadoComponent implements OnInit{
     this.busqueda = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
     this.busquedaS = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
     this.formsearch();
+    this.searchfech();
   }
 
   generarPdf(){
-    if(parseInt(sessionStorage.getItem(AppConstants.Session.USERNAME)) == 1){
+    if(parseInt(sessionStorage.getItem(AppConstants.Session.USERID)) == 1 || parseInt(sessionStorage.getItem(AppConstants.Session.USERID)) == 0){
       window.open("http://localhost:8050/planillaCajaUno","_blank");
     }else{
-      if(parseInt(sessionStorage.getItem(AppConstants.Session.USERNAME)) == 2){
+      if(parseInt(sessionStorage.getItem(AppConstants.Session.USERID)) == 2 || parseInt(sessionStorage.getItem(AppConstants.Session.USERID)) == 0){
         window.open("http://localhost:8050/planillaCajaDos","_blank");
       }else{
         window.open("http://localhost:8050/planillaCajaTres","_blank");
@@ -124,7 +125,8 @@ export class ListadoComponent implements OnInit{
        
        return false;
     }
-    this.ListPayService.getpagoslistado(parseInt(sessionStorage.getItem(AppConstants.Session.USERNAME)),
+
+    this.ListPayService.getpagoslistado(parseInt(sessionStorage.getItem(AppConstants.Session.USERID)),
                                                  this.busqueda).subscribe(
       (result: ListPayModel[]) => {
         try{

@@ -144,7 +144,7 @@ export class CobranzaComponent implements OnInit{
     registerSaveLed.amountpaySave = parseFloat(registerSaveLed.amountpaySave).toFixed(2);
     registerSaveLed.selectpaySave = parseInt(registerSaveLed.selectpaySave);
     registerSaveLed.documentosave = this.document
-    registerSaveLed.userSave = parseInt(sessionStorage.getItem(AppConstants.Session.USERNAME))
+    registerSaveLed.userSave = parseInt(sessionStorage.getItem(AppConstants.Session.USERID))
     registerSaveLed.codesave = this.code
 
     if (!this.formularioSavePayActive.controls.amountpaySave.valid ||
@@ -755,28 +755,23 @@ export class CobranzaComponent implements OnInit{
         this.listadoclientesdatabyid();
         this.listadoclientesdata();
         this.limipiarinputs();
-        this.initForms();
       break;
       case 2:
         this.listadoclientesdatadirecccion();
         this.listadoclientesdatadirecccionById();
-        this.initForms();
         this.listadodirecciones();
       break;
       case 3:
         this.listadoclientesdatareferencia();
         this.listadoclientesdatareferenciaById();
-        this.initForms();
       break;
       case 4:
         this.listadoclientesdatagestor();
         this.listadogestores();
         this.listadoclientesdatagestorById();
-        this.initForms();
       break;
       case 5:
         this.listadoclientesdatavoucher();
-        this.initForms();
       break;
       case 6:
         this.listadoclientesdatapago();        
@@ -810,6 +805,10 @@ export class CobranzaComponent implements OnInit{
     this.currentPage = 1;
     this.serviceaexitModal.show(),
     this.onReturndata(9);
+  }
+
+  personamodal(){
+    this.personModal.show();
   }
 
   openRedirection(documento:string,codigo:string){
