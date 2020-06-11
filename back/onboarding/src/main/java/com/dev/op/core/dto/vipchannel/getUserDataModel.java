@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class getUserDataModel implements Serializable {
 
 	/**
-	 * call getListSubModule(:user);
+	 * call getUserData(:user,:password);
 	 */
 	private static final long serialVersionUID = 7440851506308938680L;
 	

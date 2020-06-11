@@ -38,7 +38,7 @@ height: 100%; width: 100%;position: fixed;top: 0;left: 0;background-repeat: no-r
                   <div class="row">
                     <div class="col-6">
                       <input type="password" [(ngModel)]="passwordText" maxlength="6" class="form-control form-control-md"
-                             disabled placeholder="Contraseña" autocomplete="current-password" required
+                             disabled placeholder="Contraseña" required
                              [ngClass]="{ 'is-invalid': submitted && f.ppp.errors }"
                              formControlName="ppp">
                     </div>
@@ -52,9 +52,12 @@ height: 100%; width: 100%;position: fixed;top: 0;left: 0;background-repeat: no-r
                     <div class="col-6">
                       <input class="form-control form-control-md" disabled style="background-color: transparent;border-color: transparent;">
                     </div>
-                    <div class="col-2"><button type="button" (click)="validacion(-1)" class="btn btn-danger px-3">#</button></div>
+                    <div class="col-2"><button type="button" (click)="validacion(-1)" class="btn btn-danger px-3">
+                      <i class="fa fa-trash"></i>
+                    </button></div>
                     <div class="col-2"><button type="button" (click)="validacion(0)" class="btn btn-danger px-3">0</button></div>
-                    <div class="col-2"><button type="button" (click)="validacion(-1)" class="btn btn-danger px-3">*</button></div>
+                    <div class="col-2">
+                    </div>
                   </div>
                 </div>
                 <div class="row">

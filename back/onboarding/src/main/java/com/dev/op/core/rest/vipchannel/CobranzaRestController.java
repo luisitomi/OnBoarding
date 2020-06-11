@@ -19,6 +19,7 @@ import com.dev.op.core.dto.ResponseModel;
 
 import com.dev.op.core.dto.vipchannel.getDirectionByIdModel;
 import com.dev.op.core.dto.vipchannel.getListDirectionModel;
+import com.dev.op.core.dto.vipchannel.getListManagerReportModel;
 import com.dev.op.core.dto.vipchannel.getListMangerModel;
 import com.dev.op.core.dto.vipchannel.getListPayModel;
 import com.dev.op.core.dto.vipchannel.getListVoucherModel;
@@ -345,6 +346,23 @@ public class CobranzaRestController {
 		}
 		catch(Exception e) {
 			return new ResponseEntity<List<getListlienteByManagerModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/getListManagerReport/{manager}")
+	public ResponseEntity<List<getListManagerReportModel>> getListManagerReport(@PathVariable(value="manager") Integer manager) {
+		
+		try{
+			List<getListManagerReportModel> getListManagerReport = cobranzaFacade.getListManagerReport(manager);
+			if(!GenericUtil.isCollectionEmpty(getListManagerReport)) {
+				return new ResponseEntity<List<getListManagerReportModel>>(getListManagerReport, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<getListManagerReportModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<List<getListManagerReportModel>>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	

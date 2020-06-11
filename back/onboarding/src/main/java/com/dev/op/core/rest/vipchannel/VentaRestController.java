@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.op.core.dto.ResponseModel;
 import com.dev.op.core.dto.vipchannel.getListSellerModel;
+import com.dev.op.core.dto.vipchannel.getListServiceModel;
 import com.dev.op.core.dto.vipchannel.getListStreetModel;
 import com.dev.op.core.dto.vipchannel.getServicePreInstallModel;
 import com.dev.op.core.dto.vipchannel.getListDistictModel;
@@ -144,6 +145,43 @@ public class VentaRestController {
 			List<ResponseModel> putChangeDirectionById = ventaFacade.putChangeDirectionById(document, code, number, zone, reference);
 			if(!GenericUtil.isCollectionEmpty(putChangeDirectionById)) {
 				return new ResponseEntity<List<ResponseModel>>(putChangeDirectionById, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<ResponseModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<List<ResponseModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/getListService")
+	public ResponseEntity<List<getListServiceModel>> getListService() {
+		
+		try{
+			List<getListServiceModel> getListService = ventaFacade.getListService();
+			if(!GenericUtil.isCollectionEmpty(getListService)) {
+				return new ResponseEntity<List<getListServiceModel>>(getListService, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<getListServiceModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<List<getListServiceModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/deletePreInstallSale/{detail}/{next}/{description}")
+	public ResponseEntity<List<ResponseModel>> deletePreInstallSale(
+			@PathVariable(value="detail") Integer detail,
+			@PathVariable(value="next") Integer next,
+			@PathVariable(value="description") String description) {
+		
+		try{
+			List<ResponseModel> deletePreInstallSale = ventaFacade.deletePreInstallSale(detail, next, description);
+			if(!GenericUtil.isCollectionEmpty(deletePreInstallSale)) {
+				return new ResponseEntity<List<ResponseModel>>(deletePreInstallSale, HttpStatus.OK);
 			}
 			else {
 				return new ResponseEntity<List<ResponseModel>>(HttpStatus.NO_CONTENT);

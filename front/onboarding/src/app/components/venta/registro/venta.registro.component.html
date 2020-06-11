@@ -122,6 +122,10 @@
                 class="btn" data-toggle="modal" (click)="directionModal.show()">
                 <i class="fa fa-pencil fa-lg" style="color: green;"></i>
               </button>
+              <button class="btn" style="background-color: transparent;"
+                class="btn" data-toggle="modal" (click)="directionChangeModal.show()">
+                <i class="fa fa-refresh fa-lg" style="color: green;"></i>
+              </button>
             </div>
             <div class="h4 mb-0">Dirección:</div>
             <small class="text-muted text-uppercase font-weight-bold">{{direction}}</small>
@@ -188,48 +192,54 @@
                   <div class="form-group">
                     <label for="documento">N° Documento</label>
                     <input type="text" maxlength="11" class="form-control"
-                    formControlName="documento"
+                    formControlName="documento" [ngClass]="{ 'is-invalid': submittedSaveActive && k.documento.errors }"
                     id="documento" placeholder="">
+                    <div class="invalid-feedback"> Ingrese valor para documento</div>
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="codigo">Código</label>
                     <input type="text" maxlength="5"
-                    formControlName="codigo"
+                    formControlName="codigo" [ngClass]="{ 'is-invalid': submittedSaveActive && k.codigo.errors }"
                     class="form-control" id="codigo" placeholder="">
+                    <div class="invalid-feedback"> Ingrese valor para código </div>
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="nombre">Nombres </label>
                     <input type="text" maxlength="30"
-                    formControlName="nombre"
+                    formControlName="nombre" [ngClass]="{ 'is-invalid': submittedSaveActive && k.nombre.errors }"
                     class="form-control" id="nombre" placeholder="">
+                    <div class="invalid-feedback"> Ingrese valor para nombre </div>
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="paterno">Apellido Paterno </label>
                     <input type="text" maxlength="30"
-                    formControlName="paterno"
+                    formControlName="paterno" [ngClass]="{ 'is-invalid': submittedSaveActive && k.paterno.errors }"
                     class="form-control" id="paterno" placeholder="">
+                    <div class="invalid-feedback"> Ingrese valor para apellido paterno </div>
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="materno">Apellido Materno </label>
                     <input type="text" maxlength="30"
-                    formControlName="materno"
+                    formControlName="materno" [ngClass]="{ 'is-invalid': submittedSaveActive && k.materno.errors }"
                     class="form-control" id="materno" placeholder="">
+                    <div class="invalid-feedback"> Ingrese valor para apellido materno </div>
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="fecha">Fecha de Nacimiento </label>
                     <input type="date" maxlength="30"
-                    formControlName="fecha"
+                    formControlName="fecha" [ngClass]="{ 'is-invalid': submittedSaveActive && k.fecha.errors }"
                     class="form-control" id="fecha" placeholder="">
+                    <div class="invalid-feedback"> Ingrese valor para fecha nacimiento </div>
                   </div>
                 </div>
                 <div class="col-sm-12">
@@ -238,10 +248,11 @@
                     <input type="text" maxlength="200"
                     formControlName="empresa"
                     class="form-control" id="empresa" placeholder="">
+                    <div class="invalid-feedback"> Ingrese valor para empresa </div>
                   </div>
                 </div>
                 <div class="col-sm-6">
-                  <button class="btn btn-success btn-md">GUARDAR CONTRATO</button>
+                  <button class="btn btn-success btn-md" (click)="savec()">GUARDAR CONTRATO</button>
                 </div>
               </div>
             </div>
@@ -258,88 +269,105 @@
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="vendedor">Vendedor</label>
-                    <select class="form-control" formControlName="vendedor" id="vendedor">
+                    <select class="form-control" [ngClass]="{ 'is-invalid': submittedSaveActive && k.vendedor.errors }"
+                      formControlName="vendedor" id="vendedor">
                       <option *ngFor="let the of vendedoresview" [value]="the.id">
                         <p>{{the.name}}</p>
                       </option>
                     </select>
+                    <div class="invalid-feedback"> Seleccione opción para vendedor </div>
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="distrito">Distrito</label>
-                    <select class="form-control" [(ngModel)]="distIds" (change)="listcalles()" formControlName="distrito" id="distrito">
+                    <select class="form-control" [ngClass]="{ 'is-invalid': submittedSaveActive && k.distrito.errors }"
+                      [(ngModel)]="distIds" (change)="listcalles()" formControlName="distrito" id="distrito">
                       <option *ngFor="let the of distritoview" [value]="the.id">
                         <p>{{the.name}}</p>
                       </option>
                     </select>
+                    <div class="invalid-feedback"> Seleccione opción para distrito </div>
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="calle">Calle </label>
-                    <select class="form-control" formControlName="calle" id="calle">
+                    <select class="form-control" [ngClass]="{ 'is-invalid': submittedSaveActive && k.calle.errors }"
+                      formControlName="calle" id="calle">
                       <option *ngFor="let the of callesview" [value]="the.id">
                         <p>{{the.name}}</p>
                       </option>
                     </select>
+                    <div class="invalid-feedback"> Seleccione opción para calle </div>
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="numero">Número</label>
                     <input type="text" maxlength="20"
-                    formControlName="numero"
+                    formControlName="numero" [ngClass]="{ 'is-invalid': submittedSaveActive && k.numero.errors }"
                     class="form-control" id="numero" placeholder="">
+                    <div class="invalid-feedback"> Ingrese valor para número </div>
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="referencia">Referencia </label>
                     <textarea rows="2" maxlength="250"
-                    formControlName="referencia"
+                    formControlName="referencia" [ngClass]="{ 'is-invalid': submittedSaveActive && k.referencia.errors }"
                     class="form-control" id="referencia" placeholder="">
                     </textarea>
+                    <div class="invalid-feedback"> Ingrese valor para referencia </div>
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="detalle">Detalle Extra </label>
                     <textarea rows="2" maxlength="250"
-                    formControlName="detalle"
+                    formControlName="detalle" [ngClass]="{ 'is-invalid': submittedSaveActive && k.detalle.errors }"
                     class="form-control" id="detalle" placeholder="">
                     </textarea>
+                    <div class="invalid-feedback"> Ingrese valor para detalle extra </div>
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="servicio">Servicio</label>
-                    <select class="form-control" formControlName="servicio"  id="servicio">
+                    <select class="form-control" [ngClass]="{ 'is-invalid': submittedSaveActive && k.servicio.errors }"
+                      formControlName="servicio"  id="servicio">
+                      <option *ngFor="let the of servicioview" [value]="the.id">
+                        <p>{{the.description}}</p>
+                      </option>
                     </select>
+                    <div class="invalid-feedback"> Seleccione opción para servicio </div>
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="hora">Fecha - Hora Instalación</label>
                     <input type="datetime-local" maxlength="30"
-                    formControlName="hora"
+                    formControlName="hora" [ngClass]="{ 'is-invalid': submittedSaveActive && k.hora.errors }"
                     class="form-control" id="hora" placeholder="">
+                    <div class="invalid-feedback"> Ingrese valor para fecha hora </div>
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
-                    <label for="inicial">Primera Mensualidad </label>
+                    <label for="inicial">Mensualidad Inicial </label>
                     <input type="text" maxlength="5"
-                    formControlName="inicial"
+                    formControlName="inicial" [ngClass]="{ 'is-invalid': submittedSaveActive && k.inicial.errors }"
                     class="form-control" id="inicial" placeholder="">
+                    <div class="invalid-feedback"> Ingrese valor para mensualidad inicial </div>
                   </div>
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
                     <label for="mensual">Mensualidad Mensual </label>
                     <input type="text" maxlength="5"
-                    formControlName="mensual"
+                    formControlName="mensual" [ngClass]="{ 'is-invalid': submittedSaveActive && k.mensual.errors }"
                     class="form-control" id="mensual" placeholder="">
+                    <div class="invalid-feedback"> Ingrese valor para mensualidad mensual </div>
                   </div>
                 </div>
               </div>
@@ -420,6 +448,76 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary ml-auto" (click)="personModal.hide()">CANCELAR</button>
         <button type="button" class="btn btn-success mr-auto" (click)="registerPerson()">GUARDAR</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div bsModal #directionChangeModal="bs-modal" class="modal fade" tabindex="-1" [config]="{backdrop: 'static'}" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Cambio de Domicilio</h4>
+        <button type="button" class="close" (click)="directionChangeModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form *ngIf="formularioChangeDirection" [formGroup]="formularioChangeDirection" autocomplete="offs" class="form-register-section">
+          <div asp-validation-summary="All" class="text-danger"></div>
+          <div class="row" >
+            <div class="col-6">
+              <div class="form-group">
+                <label for="documentodirection">Documento</label>
+                <input type="text" class="form-control form-control-sm" id="documentodirection" value="{{document}}" disabled
+                      formControlName="documentodirection" style="font-weight:25%;" [ngClass]="{ 'is-invalid': submittedChangeDirection && j.documentodirection.errors }">
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label for="codedirection">Código</label>
+                <input type="text" class="form-control form-control-sm" id="codedirection" value="{{code}}" disabled
+                      formControlName="codedirection" style="font-weight:25%;" [ngClass]="{ 'is-invalid': submittedChangeDirection && j.codedirection.errors }">
+              </div>
+            </div>
+          </div>
+          <div class="row" >
+            <div class="col-6">
+              <div class="form-group">
+                <label for="zonedirection">Calle</label>
+                <select class="form-control form-control-sm select-select" id="zonedirection" placeholder="Seleccione"
+                      formControlName="zonedirection" [ngClass]="{ 'is-invalid': submittedChangeDirection && j.zonedirection.errors }" required>
+                  <option *ngFor="let the of directionview" [value]="the.id">
+                    <p>{{the.name}}</p>
+                  </option>
+                </select>
+                <div class="invalid-feedback"> Seleccione opción para calle </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label for="numberdirection">Número</label>
+                <input type="text" class="form-control form-control-sm" id="numberdirection"
+                      formControlName="numberdirection" maxlength="15" style="font-weight:25%;" [ngClass]="{ 'is-invalid': submittedChangeDirection && j.numberdirection.errors }">
+                <div class="invalid-feedback"> Ingrese valor para número </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="referencedirection">Descripción</label>
+                <textarea rows="3" class="form-control form-control-sm" id="referencedirection" maxlength="255"
+                  formControlName="referencedirection" style="font-weight:25%;" [ngClass]="{ 'is-invalid': submittedChangeDirection && j.referencedirection.errors }">
+                </textarea>
+	              <div class="invalid-feedback"> Ingrese valor para descripción </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary ml-auto" (click)="directionChangeModal.hide()">CANCELAR</button>
+        <button type="button" class="btn btn-success mr-auto" (click)="registerChangeDirection()">GUARDAR</button>
       </div>
     </div>
   </div>

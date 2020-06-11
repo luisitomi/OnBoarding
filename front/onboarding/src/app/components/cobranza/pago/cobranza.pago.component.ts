@@ -9,8 +9,10 @@ import { ManagerPayModel } from '../../../models/managerpay.model';
 import { MonthPayService } from '../../../services/monthpay.service';
 import { MonthPayModel } from '../../../models/monthpay.model';
 import { AppConstants } from '../../../shared/constants/app.constants';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
+  selector: 'app-pago',
   templateUrl: 'cobranza.pago.component.html'
 })
 
@@ -86,6 +88,7 @@ export class CobranzaComponent implements OnInit{
     private MonthPayService: MonthPayService,
     private router: Router,
     private formBuilder: FormBuilder,
+    private toastr: ToastrService
   ) {
     this.router.events.subscribe(evt => {
       if (evt instanceof NavigationEnd) {
@@ -167,21 +170,41 @@ export class CobranzaComponent implements OnInit{
     (result: ResponseModel[]) => {
       try{
         if(result[0].id == 1){
+          this.toastr.success(
+            AppConstants.MessageModal.REGISTER_CREATED,
+            AppConstants.TitleModal.REGISTER_TITLE,
+            {closeButton: true}
+          );
           this.serviceactiveModal.hide();
           this.onReturndata(8);
           this.submittedSaveActive = false;
         }else{
+          this.toastr.warning(
+            AppConstants.MessageModal.REGISTER_NO_CREATED,
+            AppConstants.TitleModal.REGISTER_TITLE,
+            {closeButton: true}
+          );
           this.serviceactiveModal.hide();
           this.onReturndata(8);
           this.submittedSaveActive = false;
         }
       }catch{
-          this.serviceactiveModal.hide();
-          this.onReturndata(8);
-          this.submittedSaveActive = false;
+        this.toastr.error(
+          AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+          AppConstants.TitleModal.REGISTER_TITLE,
+          {closeButton: true}
+        );
+        this.serviceactiveModal.hide();
+        this.onReturndata(8);
+        this.submittedSaveActive = false;
       }
     },
     error => {
+      this.toastr.error(
+        AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+        AppConstants.TitleModal.REGISTER_TITLE,
+        {closeButton: true}
+      );
       this.serviceactiveModal.hide();
       this.onReturndata(8);
       this.submittedSaveActive = false;
@@ -205,21 +228,41 @@ export class CobranzaComponent implements OnInit{
     (result: ResponseModel[]) => {
        try{
         if(result[0].id == 1){
+          this.toastr.success(
+            AppConstants.MessageModal.REGISTER_CREATED,
+            AppConstants.TitleModal.REGISTER_TITLE,
+            {closeButton: true}
+          );
           this.referenceModal.hide();
           this.onReturndata(3);
           this.submittedReference = false;
         }else{
+          this.toastr.warning(
+            AppConstants.MessageModal.REGISTER_NO_CREATED,
+            AppConstants.TitleModal.REGISTER_TITLE,
+            {closeButton: true}
+          );
           this.referenceModal.hide();
           this.onReturndata(3);
           this.submittedReference = false;
         }
        }catch{
+        this.toastr.error(
+          AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+          AppConstants.TitleModal.REGISTER_TITLE,
+          {closeButton: true}
+        );
           this.referenceModal.hide();
           this.onReturndata(3);
           this.submittedReference = false;
        }
      },
      error => {
+      this.toastr.error(
+        AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+        AppConstants.TitleModal.REGISTER_TITLE,
+        {closeButton: true}
+      );
       this.referenceModal.hide();
       this.onReturndata(3);
       this.submittedReference = false;
@@ -243,21 +286,41 @@ export class CobranzaComponent implements OnInit{
     (result: ResponseModel[]) => {
        try{
         if(result[0].id == 1){
+          this.toastr.success(
+            AppConstants.MessageModal.REGISTER_CREATED,
+            AppConstants.TitleModal.REGISTER_TITLE,
+            {closeButton: true}
+          );
           this.managerModal.hide();
           this.onReturndata(4);
           this.submittedManager = false;
         }else{
+          this.toastr.warning(
+            AppConstants.MessageModal.REGISTER_NO_CREATED,
+            AppConstants.TitleModal.REGISTER_TITLE,
+            {closeButton: true}
+          );
           this.managerModal.hide();
           this.onReturndata(4);
           this.submittedManager = false;
         }
        }catch{
+        this.toastr.error(
+          AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+          AppConstants.TitleModal.REGISTER_TITLE,
+          {closeButton: true}
+        );
           this.managerModal.hide();
           this.onReturndata(4);
           this.submittedManager = false;
        }
      },
      error => {
+      this.toastr.error(
+        AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+        AppConstants.TitleModal.REGISTER_TITLE,
+        {closeButton: true}
+      );
       this.managerModal.hide();
       this.onReturndata(4);
       this.submittedManager = false;
@@ -285,21 +348,41 @@ export class CobranzaComponent implements OnInit{
     (result: ResponseModel[]) => {
        try{
         if(result[0].id == 1){
+          this.toastr.success(
+            AppConstants.MessageModal.REGISTER_CREATED,
+            AppConstants.TitleModal.REGISTER_TITLE,
+            {closeButton: true}
+          );
           this.directionModal.hide();
           this.onReturndata(2);
           this.submittedDirection = false;
         }else{
+          this.toastr.warning(
+            AppConstants.MessageModal.REGISTER_NO_CREATED,
+            AppConstants.TitleModal.REGISTER_TITLE,
+            {closeButton: true}
+          );
           this.directionModal.hide();
           this.onReturndata(2);
           this.submittedDirection = false;
         }
        }catch{
+        this.toastr.error(
+          AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+          AppConstants.TitleModal.REGISTER_TITLE,
+          {closeButton: true}
+        );
           this.directionModal.hide();
           this.onReturndata(2);
           this.submittedDirection = false;
        }
      },
      error => {
+      this.toastr.error(
+        AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+        AppConstants.TitleModal.REGISTER_TITLE,
+        {closeButton: true}
+      );
       this.directionModal.hide();
       this.onReturndata(2);
       this.submittedDirection = false;
@@ -332,21 +415,41 @@ export class CobranzaComponent implements OnInit{
     (result: ResponseModel[]) => {
        try{
         if(result[0].id == 1){
+          this.toastr.success(
+            AppConstants.MessageModal.REGISTER_CREATED,
+            AppConstants.TitleModal.REGISTER_TITLE,
+            {closeButton: true}
+          );
           this.personModal.hide();
           this.onReturndata(1);
           this.submitted = false;
         }else{
+          this.toastr.warning(
+            AppConstants.MessageModal.REGISTER_NO_CREATED,
+            AppConstants.TitleModal.REGISTER_TITLE,
+            {closeButton: true}
+          );
           this.personModal.hide();
           this.onReturndata(1);
           this.submitted = false;
         }
        }catch{
+        this.toastr.error(
+          AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+          AppConstants.TitleModal.REGISTER_TITLE,
+          {closeButton: true}
+        );
           this.personModal.hide();
           this.onReturndata(1);
           this.submitted = false;
        }
      },
      error => {
+      this.toastr.error(
+        AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+        AppConstants.TitleModal.REGISTER_TITLE,
+        {closeButton: true}
+      );
       this.personModal.hide();
       this.onReturndata(1);
       this.submitted = false;

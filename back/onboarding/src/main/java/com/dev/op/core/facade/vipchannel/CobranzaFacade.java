@@ -7,6 +7,7 @@ import java.util.List;
 import com.dev.op.core.dto.ResponseModel;
 import com.dev.op.core.dto.vipchannel.getDirectionByIdModel;
 import com.dev.op.core.dto.vipchannel.getListDirectionModel;
+import com.dev.op.core.dto.vipchannel.getListManagerReportModel;
 import com.dev.op.core.dto.vipchannel.getListMangerModel;
 import com.dev.op.core.dto.vipchannel.getListPayModel;
 import com.dev.op.core.dto.vipchannel.getListPayOneModel;
@@ -51,6 +52,7 @@ public interface CobranzaFacade {
 	List<getListPayThreeModel> getListPayThree();
 	List<getPayServiceDetailMonthModel> getPayServiceDetailMonth(String document,String code, String user);
 	List<getPayServiceDetailDeleteMonthModel> getPayServiceDetailDeleteMonth(String document,String code);
+	List<getListManagerReportModel> getListManagerReport(Integer manager);
 	List<ResponseModel> patchManagerById(String document,String code,Integer code_manager);
 	List<ResponseModel> patchVoucherById(String document,String code,Integer voucher,Integer service);
 	List<ResponseModel> putDirectionById(String document,String code,String number,Integer zone);

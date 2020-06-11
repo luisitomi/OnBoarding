@@ -9,7 +9,9 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { ManagerPayModel } from '../../../models/managerpay.model';
 import { MonthPayService } from '../../../services/monthpay.service';
 import { MonthPayModel } from '../../../models/monthpay.model';
-import { SellerModel } from '../../../models/seller.model';
+import { SellerModel, SellerServiceModel } from '../../../models/seller.model';
+import { ToastrService } from 'ngx-toastr';
+import { AppConstants } from '../../../shared/constants/app.constants';
 
 @Component({
   templateUrl: 'venta.registro.component.html'
@@ -19,6 +21,7 @@ export class RegistroComponent implements OnInit{
 
   public formularioPerson: FormGroup;
   public formularioDirection: FormGroup;
+  public formularioChangeDirection: FormGroup;
   public formularioReference: FormGroup;
   public formularioContrato: FormGroup;
   
@@ -26,6 +29,7 @@ export class RegistroComponent implements OnInit{
   @ViewChild('directionModal') public directionModal: ModalDirective;
   @ViewChild('referenceModal') public referenceModal: ModalDirective;
   @ViewChild('serviceaexitModal') public serviceaexitModal: ModalDirective;
+  @ViewChild('directionChangeModal') public directionChangeModal: ModalDirective;
   
   personpay: PersonPayModel[];
   personpaydata: PersonByIdPayModel[];
@@ -65,6 +69,7 @@ export class RegistroComponent implements OnInit{
   distritoview:SellerModel[];
   callesview:SellerModel[];
   vendedoresview:SellerModel[];
+  servicioview:SellerServiceModel[];
 
   listadoActive: boolean = false;
   detalleActive: boolean = false;
@@ -75,6 +80,7 @@ export class RegistroComponent implements OnInit{
 
   submitted: boolean;
   submittedDirection: boolean;
+  submittedChangeDirection: boolean;
   submittedManager: boolean;
   submittedReference: boolean;
   submittedSaveActive: boolean;
@@ -86,6 +92,7 @@ export class RegistroComponent implements OnInit{
     private SellerService: SellerService,
     private router: Router,
     private formBuilder: FormBuilder,
+    private toastr: ToastrService
   ) {
     this.router.events.subscribe(evt => {
       if (evt instanceof NavigationEnd) {
@@ -115,6 +122,13 @@ export class RegistroComponent implements OnInit{
       numberdirection: ['', Validators.required],
       zonedirection: ['', Validators.required]
     });
+    this.formularioChangeDirection   = this.formBuilder.group({
+      documentodirection: [''],
+      codedirection: [''],
+      numberdirection: ['', Validators.required],
+      zonedirection: ['', Validators.required],
+      referencedirection: ['', Validators.required]
+    });
     this.formularioReference   = this.formBuilder.group({
       documentoreference: [''],
       codereference: [''],
@@ -130,7 +144,7 @@ export class RegistroComponent implements OnInit{
       paterno: ['', Validators.required],
       fecha: ['', Validators.required],
       materno: ['', Validators.required],
-      empresa: ['', Validators.required],
+      empresa: [''],
       vendedor: ['', Validators.required],
       distrito: ['', Validators.required],
       calle: ['', Validators.required],
@@ -160,24 +174,112 @@ export class RegistroComponent implements OnInit{
     (result: ResponseModel[]) => {
        try{
         if(result[0].id == 1){
+          this.toastr.success(
+            AppConstants.MessageModal.REGISTER_CREATED,
+            AppConstants.TitleModal.REGISTER_TITLE,
+            {closeButton: true}
+          );
           this.referenceModal.hide();
           this.onReturndata(3);
           this.submittedReference = false;
         }else{
+          this.toastr.warning(
+            AppConstants.MessageModal.REGISTER_NO_CREATED,
+            AppConstants.TitleModal.REGISTER_TITLE,
+            {closeButton: true}
+          );
           this.referenceModal.hide();
           this.onReturndata(3);
           this.submittedReference = false;
         }
        }catch{
+        this.toastr.error(
+          AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+          AppConstants.TitleModal.REGISTER_TITLE,
+          {closeButton: true}
+        );
           this.referenceModal.hide();
           this.onReturndata(3);
           this.submittedReference = false;
        }
      },
      error => {
+      this.toastr.error(
+        AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+        AppConstants.TitleModal.REGISTER_TITLE,
+        {closeButton: true}
+      );
       this.referenceModal.hide();
       this.onReturndata(3);
       this.submittedReference = false;
+     })
+  }
+
+  registerChangeDirection(){
+    this.submittedChangeDirection = true;
+    let registerDirection = this.formularioChangeDirection.value;
+
+    registerDirection.documentodirection = this.document
+    registerDirection.codedirection = this.code
+    registerDirection.zonedirection = parseInt(registerDirection.zonedirection);
+
+    if (!this.formularioChangeDirection.controls.numberdirection.valid ||
+      !this.formularioChangeDirection.controls.zonedirection.valid||
+      !this.formularioChangeDirection.controls.referencedirection.valid ) {
+
+      return false;
+    }
+    
+    this.SellerService.putChangeDirectionByIdList(this.document,
+                                              this.code,
+                                              registerDirection.numberdirection.toUpperCase(),
+                                              registerDirection.zonedirection,
+                                              registerDirection.referencedirection.toUpperCase()).subscribe(
+    (result: ResponseModel[]) => {
+       try{
+        if(result[0].id == 1){
+          this.toastr.success(
+            AppConstants.MessageModal.REGISTER_CREATED,
+            AppConstants.TitleModal.REGISTER_TITLE,
+            {closeButton: true}
+          );
+          this.directionChangeModal.hide();
+          this.onReturndata(2);
+          this.onReturndata(3);
+          this.submittedChangeDirection = false;
+        }else{
+          this.toastr.warning(
+            AppConstants.MessageModal.REGISTER_NO_CREATED,
+            AppConstants.TitleModal.REGISTER_TITLE,
+            {closeButton: true}
+          );
+          this.directionChangeModal.hide();
+          this.onReturndata(2);
+          this.onReturndata(3);
+          this.submittedChangeDirection = false;
+        }
+       }catch{
+        this.toastr.error(
+          AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+          AppConstants.TitleModal.REGISTER_TITLE,
+          {closeButton: true}
+        );
+          this.directionChangeModal.hide();
+          this.onReturndata(2);
+          this.onReturndata(3);
+          this.submittedChangeDirection = false;
+       }
+     },
+     error => {
+      this.toastr.error(
+        AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+        AppConstants.TitleModal.REGISTER_TITLE,
+        {closeButton: true}
+      );
+      this.directionChangeModal.hide();
+      this.onReturndata(2);
+      this.onReturndata(3);
+      this.submittedChangeDirection = false;
      })
   }
 
@@ -202,21 +304,41 @@ export class RegistroComponent implements OnInit{
     (result: ResponseModel[]) => {
        try{
         if(result[0].id == 1){
+          this.toastr.success(
+            AppConstants.MessageModal.REGISTER_CREATED,
+            AppConstants.TitleModal.REGISTER_TITLE,
+            {closeButton: true}
+          );
           this.directionModal.hide();
           this.onReturndata(2);
           this.submittedDirection = false;
         }else{
+          this.toastr.warning(
+            AppConstants.MessageModal.REGISTER_NO_CREATED,
+            AppConstants.TitleModal.REGISTER_TITLE,
+            {closeButton: true}
+          );
           this.directionModal.hide();
           this.onReturndata(2);
           this.submittedDirection = false;
         }
        }catch{
+        this.toastr.error(
+          AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+          AppConstants.TitleModal.REGISTER_TITLE,
+          {closeButton: true}
+        );
           this.directionModal.hide();
           this.onReturndata(2);
           this.submittedDirection = false;
        }
      },
      error => {
+      this.toastr.error(
+        AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+        AppConstants.TitleModal.REGISTER_TITLE,
+        {closeButton: true}
+      );
       this.directionModal.hide();
       this.onReturndata(2);
       this.submittedDirection = false;
@@ -249,25 +371,136 @@ export class RegistroComponent implements OnInit{
     (result: ResponseModel[]) => {
        try{
         if(result[0].id == 1){
+          this.toastr.success(
+            AppConstants.MessageModal.REGISTER_CREATED,
+            AppConstants.TitleModal.REGISTER_TITLE,
+            {closeButton: true}
+          );
           this.personModal.hide();
           this.onReturndata(1);
           this.submitted = false;
         }else{
+          this.toastr.warning(
+            AppConstants.MessageModal.REGISTER_NO_CREATED,
+            AppConstants.TitleModal.REGISTER_TITLE,
+            {closeButton: true}
+          );
           this.personModal.hide();
           this.onReturndata(1);
           this.submitted = false;
         }
        }catch{
+        this.toastr.error(
+          AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+          AppConstants.TitleModal.REGISTER_TITLE,
+          {closeButton: true}
+        );
           this.personModal.hide();
           this.onReturndata(1);
           this.submitted = false;
        }
      },
      error => {
+      this.toastr.error(
+        AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+        AppConstants.TitleModal.REGISTER_TITLE,
+        {closeButton: true}
+      );
       this.personModal.hide();
       this.onReturndata(1);
       this.submitted = false;
      })
+  }
+
+  savec(){
+    this.submittedSaveActive = true;
+    let registerContrato = this.formularioContrato.value;
+
+    registerContrato.calle = parseInt(registerContrato.calle);
+    registerContrato.servicio = parseInt(registerContrato.servicio);
+    registerContrato.vendedor = parseInt(registerContrato.vendedor);
+
+    if (!this.formularioContrato.controls.documento.valid ||
+      !this.formularioContrato.controls.codigo.valid ||
+      !this.formularioContrato.controls.nombre.valid ||
+      !this.formularioContrato.controls.paterno.valid ||
+      !this.formularioContrato.controls.fecha.valid ||
+      !this.formularioContrato.controls.materno.valid ||
+      !this.formularioContrato.controls.vendedor.valid ||
+      !this.formularioContrato.controls.distrito.valid ||
+      !this.formularioContrato.controls.calle.valid ||
+      !this.formularioContrato.controls.numero.valid ||
+      !this.formularioContrato.controls.referencia.valid ||
+      !this.formularioContrato.controls.detalle.valid ||
+      !this.formularioContrato.controls.servicio.valid ||
+      !this.formularioContrato.controls.hora.valid ||
+      !this.formularioContrato.controls.inicial.valid ||
+      !this.formularioContrato.controls.mensual.valid) {
+
+      return false;
+    }
+
+    if(registerContrato.empresa == null || registerContrato.empresa == undefined ||
+      registerContrato.empresa.length < 2){
+        registerContrato.empresa = "a"
+    }
+
+    this.SellerService.postSaveServiceSaleSave( registerContrato.documento.toUpperCase(),
+                                                registerContrato.codigo.toUpperCase(),
+                                                registerContrato.nombre.toUpperCase(),
+                                                registerContrato.paterno.toUpperCase(),
+                                                registerContrato.materno.toUpperCase(),
+                                                registerContrato.empresa.toUpperCase(),
+                                                registerContrato.fecha,
+                                                registerContrato.calle,
+                                                registerContrato.numero.toUpperCase(),
+                                                registerContrato.referencia.toUpperCase(),
+                                                registerContrato.vendedor,
+                                                "2020-01-06",
+                                                "20:00",
+                                                registerContrato.servicio,
+                                                registerContrato.inicial,
+                                                registerContrato.mensual,
+                                                registerContrato.detalle).subscribe(
+      (result: ResponseModel[]) => {
+      try{
+      if(result[0].id == 1){
+        this.toastr.success(
+          AppConstants.MessageModal.REGISTER_CREATED,
+          AppConstants.TitleModal.REGISTER_TITLE,
+          {closeButton: true}
+        );
+        this.onReturndata(0);
+        this.submittedSaveActive = false;
+      }else{
+        this.toastr.warning(
+          AppConstants.MessageModal.REGISTER_NO_CREATED,
+          AppConstants.TitleModal.REGISTER_TITLE,
+          {closeButton: true}
+        );
+        this.onReturndata(0);
+        this.submittedSaveActive = false;
+      }
+      }catch{
+        this.toastr.error(
+          AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+          AppConstants.TitleModal.REGISTER_TITLE,
+          {closeButton: true}
+        );
+        this.onReturndata(0);
+        this.submittedSaveActive = false;
+      }
+      },
+      error => {
+        this.toastr.error(
+          AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+          AppConstants.TitleModal.REGISTER_TITLE,
+          {closeButton: true}
+        );
+        this.onReturndata(0);
+        this.submittedSaveActive = false;
+      })
+   
   }
 
   get f() { return this.formularioPerson.controls; }
@@ -276,11 +509,25 @@ export class RegistroComponent implements OnInit{
 
   get i() { return this.formularioReference.controls; }
 
+  get j() { return this.formularioChangeDirection.controls; }
+
+  get k() { return this.formularioContrato.controls; }
+
   listadoclientes(){
     this.personpay = [];
     this.PersonPayService.getpersonaslistado("&").subscribe(
     (result: PersonPayModel[]) => {
       this.personpay = result
+    },
+    error => {
+    })
+  }
+
+  listservicios(){
+    this.servicioview = [];
+    this.SellerService.listadoservicioscombo().subscribe(
+    (result: SellerServiceModel[]) => {
+      this.servicioview = result
     },
     error => {
     })
@@ -645,6 +892,7 @@ export class RegistroComponent implements OnInit{
         this.detalleActive = false;
         this.registroActive = true;
         this.initFC();
+        this.listservicios();
         this.listvendedores();
         this.listdistritos();
       break;

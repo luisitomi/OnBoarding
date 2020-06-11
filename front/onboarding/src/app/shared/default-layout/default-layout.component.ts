@@ -7,6 +7,7 @@ import { UserModel } from '../../models/user.model';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ResponseModel } from '../../models/personpay.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard',
@@ -98,6 +99,7 @@ export class DefaultLayoutComponent implements OnInit{
     private UserService: UserService,
     private modalService: NgbModal,
     private formBuilder: FormBuilder,
+    private toastr: ToastrService
   ) {
   }
 
@@ -115,8 +117,19 @@ export class DefaultLayoutComponent implements OnInit{
       sessionStorage.getItem(AppConstants.Session.USERID) == "-1"){
       this.router.navigate(['/login']);
     }else{
+      
+      this.toastr.success(
+        sessionStorage.getItem(AppConstants.Session.USERLASTNAME),
+        AppConstants.MessageModal.WELCOME_MESSAGE,
+        {closeButton: true}
+      );
+
       this.router.navigate(['dashboard']);
-      this.userImage = './assets/img/imgusu/' + parseInt(sessionStorage.getItem(AppConstants.Session.USERID)) + '.JPG'
+      try{
+        this.userImage = './assets/img/imgusu/' + parseInt(sessionStorage.getItem(AppConstants.Session.USERID)) + '.JPG'
+      }catch{
+        this.userImage = './assets/img/imgusu/1.JPG'
+      }
       this.opciones();
     }
   }

@@ -34,6 +34,7 @@ import {
 import { AppRoutingModule, routes } from './app.routing';
 
 // Import 3rd party components
+import { ToastrModule, ToastrService, ToastContainerModule } from 'ngx-toastr';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
@@ -46,7 +47,7 @@ import { P404Component } from './components/error/404.component';
 import { P500Component } from './components/error/500.component';
 import { RouterModule } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
-   
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   imports: [
@@ -54,7 +55,9 @@ import { AuthGuard } from './guards/auth.guard';
     RouterModule.forRoot( routes ,{
       onSameUrlNavigation: 'reload',
       enableTracing: false
-  }), 
+  }),
+    BrowserAnimationsModule,
+    ToastContainerModule,
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
@@ -67,12 +70,18 @@ import { AuthGuard } from './guards/auth.guard';
     AppSidebarModule,
     PerfectScrollbarModule,
     BsDropdownModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+    }),
     TabsModule.forRoot(),
     ChartsModule,
     HttpClientModule, HttpModule,
     NgxPaginationModule,
     Ng2SearchPipeModule,
     NgbModule,
+    NgxSpinnerModule,
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   declarations: [
@@ -80,14 +89,14 @@ import { AuthGuard } from './guards/auth.guard';
     ...APP_CONTAINERS,
     LoginComponent,
     P404Component,
-    P500Component,
+    P500Component
   ],
   providers: [
-    AuthGuard,
     {
       provide: LocationStrategy,
       useClass: HashLocationStrategy,
-    }
+    },
+    AuthGuard,
   ],
   bootstrap: [ AppComponent ]
 })

@@ -1,0 +1,92 @@
+﻿<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12 mb-4">
+      <tabset>
+        <tab>
+          <ng-template tabHeading><i class="icon-list"></i> Reclamos Registrados &nbsp;</ng-template>
+          <div class="row" >
+            <div class="col-8">
+              
+                <div class="row">
+                  <div class="col-3">
+                    <div class="form-group">
+                      <input class="form-control" [(ngModel)]="inicio" name="inicio"
+                                required
+                                id="inicio" type="date">
+                    </div>
+                  </div>
+                  <div class="col-3">
+                    <div class="form-group">
+                      <input class="form-control" [(ngModel)]="final" name="final"
+                                required
+                                id="final" type="date">
+                    </div>
+                  </div>
+                  <div class="col-3">
+                    <div class="form-group">
+                      <button type="button"  class="btn btn-info" (click)="listadoreclamoData()">
+                        <i class="fa fa-search fa-md" style="color: red;"></i>
+                        BUSCAR
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <i class="fa fa-align-justify" style="color: red;"></i> <span style="color: red;">LISTADO DE RECLAMOS</span>
+                </div>
+                <div class="card-body">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr class="t-head-style">
+                          <th class="text-center" style="background-color: mediumturquoise;" scope="col">Código</th>
+                          <th class="text-center" style="background-color: mediumturquoise;" scope="col">Cliente</th>
+                          <th class="text-center" style="background-color: mediumturquoise;" scope="col">Servicio</th>
+                          <th class="text-center" style="background-color: mediumturquoise;" scope="col">Dirección</th>
+                          <th class="text-center" style="background-color: mediumturquoise;" scope="col">Descripción</th>
+                          <th class="text-center" style="background-color: mediumturquoise;" scope="col">Estado</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let item of reclamoview
+                        | paginate: { itemsPerPage: itemsPerPageS, currentPage: currentPageS }; let i = index">
+                            <tr>
+                              <td class="align-middle text-center">{{ item.code }}</td>
+                              <td class="align-middle text-center">{{ item.client }}</td>
+                              <td class="align-middle text-center">{{ item.service }}</td>
+                              <td class="align-middle text-center">{{ item.direction }}</td>
+                              <td class="align-middle text-center">{{ item.descripcion }}</td>
+                              <td class="align-middle text-center">
+                                <div class="row justify-content-center">
+                                  <div *ngIf="item.status == 0">
+                                    <span class="badge badge-warning">Pendiente</span>
+                                  </div>
+                                  <div *ngIf="item.status == 1">
+                                    <span class="badge badge-success">Solucionado</span>
+                                  </div>
+                                  <div *ngIf="item.status == 2">
+                                    <span class="badge badge-danger">Anulado</span>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                  </table>
+                  <pagination-controls class="my-pagination" (pageChange)="currentPageS = $event"autoHide="true" responsive="true"
+                    previousLabel="Anterior" nextLabel="Siguiente">
+                  </pagination-controls>
+                </div>
+              </div>
+            </div>
+          </div>
+        </tab>
+      </tabset>
+    </div>
+  </div>
+</div>

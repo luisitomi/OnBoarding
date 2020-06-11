@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ListPayModel, ListManagerModel } from '../models/listpay.model';
+import { ListPayModel, ListManagerModel, GestorModel, GestorSegundoModel } from '../models/listpay.model';
 import { ResponseModel } from '../models/personpay.model';
 
 @Injectable({
@@ -37,8 +37,16 @@ export class ListPayService {
         return this.httpClient.get<ListPayModel[]>(`${this.BASE_URL_PDF}/planillaCajaTres`);
     }
 
+    getlistadogestores(id:number): Observable<GestorModel[]> {
+        return this.httpClient.get<GestorModel[]>(`${this.BASE_URL}/cobranza/getListManagerReport/`+ id);
+    }
+
     deletePayServiceData(id:string): Observable<ResponseModel[]> {
         return this.httpClient.get<ResponseModel[]>(`${this.BASE_URL}/cobranza/deletePayService/`+ id);
+    }
+
+    getlistadosegundogestores(id:number): Observable<GestorSegundoModel[]> {
+        return this.httpClient.get<GestorSegundoModel[]>(`${this.BASE_URL}/cobranza/getListlienteByManager/`+ id);
     }
 
 }

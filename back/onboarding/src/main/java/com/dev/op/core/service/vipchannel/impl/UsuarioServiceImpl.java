@@ -11,9 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dev.op.core.dto.ResponseModel;
 import com.dev.op.core.dto.vipchannel.getListModuleModel;
 import com.dev.op.core.dto.vipchannel.getListSubModuleModel;
+import com.dev.op.core.dto.vipchannel.getNameUserModel;
 import com.dev.op.core.dto.vipchannel.getUserDataModel;
 import com.dev.op.core.repository.vipchannel.jdbc.getListModuleJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getListSubModuleJdbcRepository;
+import com.dev.op.core.repository.vipchannel.jdbc.getNameUserJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getUserDataJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.patchUpdatePasswordJdbcRepository;
 import com.dev.op.core.service.vipchannel.UsuarioService;
@@ -34,6 +36,10 @@ public class UsuarioServiceImpl implements UsuarioService{
 	@Autowired
 	@Qualifier("getUserDataJdbcRepository")
 	private getUserDataJdbcRepository getUserDataJdbcRepository;
+	
+	@Autowired
+	@Qualifier("getNameUserJdbcRepository")
+	private getNameUserJdbcRepository getNameUserJdbcRepository;
 	
 	@Autowired
 	@Qualifier("patchUpdatePasswordJdbcRepository")
@@ -112,6 +118,26 @@ public class UsuarioServiceImpl implements UsuarioService{
 			}
 			else {
 				return patchUpdatePassword;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getNameUserModel> getNameUser(String user) {
+		List<getNameUserModel> getNameUser = new ArrayList<getNameUserModel>();
+		
+		try {
+			
+			getNameUser = getNameUserJdbcRepository.getNameUser(user);
+			if(GenericUtil.isCollectionEmpty(getNameUser)) {
+				return null;
+			}
+			else {
+				return getNameUser;
 			}
 		}
 		catch(Exception e) {

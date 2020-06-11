@@ -12,3 +12,7 @@ export class UserDataModel{
 	id:number;
 	code:number;
 }
+
+export class UserNameModel{
+	name:string;
+}

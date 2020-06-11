@@ -14,3 +14,16 @@ export class ListManagerModel{
 	manager:string;
 	amount:string;
 }
+
+export class GestorModel{
+	code:string;
+	client:string;
+	direction:string;
+	min:string;
+	max:string;
+	amount:string;
+}
+
+export class GestorSegundoModel{
+	code:string;
+}

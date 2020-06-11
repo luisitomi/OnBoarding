@@ -33,7 +33,7 @@ export const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     data: {
-      title: 'Inicio de Ssesión'
+      title: 'Inicio de Sesión'
     }
   },
   {
@@ -50,6 +50,10 @@ export const routes: Routes = [
       {
         path: 'venta',
         loadChildren: () => import('./components/venta/venta.module').then(m => m.VentaModule)
+      },
+      {
+        path: 'atencion',
+        loadChildren: () => import('./components/atencion/atencion.module').then(m => m.AtencionModule)
       },
       {
         path: 'dashboard',

@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dev.op.core.dto.ResponseModel;
 import com.dev.op.core.dto.vipchannel.getDirectionByIdModel;
 import com.dev.op.core.dto.vipchannel.getListDirectionModel;
+import com.dev.op.core.dto.vipchannel.getListManagerReportModel;
 import com.dev.op.core.dto.vipchannel.getListMangerModel;
 import com.dev.op.core.dto.vipchannel.getListPayModel;
 import com.dev.op.core.dto.vipchannel.getListPayOneModel;
@@ -37,6 +38,7 @@ import com.dev.op.core.repository.vipchannel.jdbc.deleteDetailCountJdbcRepositor
 import com.dev.op.core.repository.vipchannel.jdbc.deletePayServiceJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getDirectionByIdJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getListDirectionJdbcRepository;
+import com.dev.op.core.repository.vipchannel.jdbc.getListManagerReportJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getListMangerJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getListVoucherJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getManagerByIdJdbcRepository;
@@ -159,6 +161,10 @@ public class CobranzaServiceImpl implements CobranzaService {
 	@Autowired
 	@Qualifier("getPayServiceDetailExitMonthJdbcRepository")
 	private getPayServiceDetailExitMonthJdbcRepository getPayServiceDetailExitMonthJdbcRepository;
+	
+	@Autowired
+	@Qualifier("getListManagerReportJdbcRepository")
+	private getListManagerReportJdbcRepository getListManagerReportJdbcRepository;
 	
 	@Autowired
 	@Qualifier("patchManagerByIdJdbcRepository")
@@ -836,6 +842,26 @@ public class CobranzaServiceImpl implements CobranzaService {
 			}
 			else {
 				return getPayServiceDetailExitMonth;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getListManagerReportModel> getListManagerReport(Integer manager) {
+		List<getListManagerReportModel> getListManagerReport = new ArrayList<getListManagerReportModel>();
+		
+		try {
+			
+			getListManagerReport = getListManagerReportJdbcRepository.getListManagerReport(manager);
+			if(GenericUtil.isCollectionEmpty(getListManagerReport)) {
+				return null;
+			}
+			else {
+				return getListManagerReport;
 			}
 		}
 		catch(Exception e) {

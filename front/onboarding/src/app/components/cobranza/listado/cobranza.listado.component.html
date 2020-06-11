@@ -12,8 +12,8 @@
                   <div class="col-6">
                     <div class="form-group">
                       <input class="form-control" [(ngModel)]="busqueda" formControlName="selectdate"
-                                [ngClass]="{ 'is-invalid': submitted && f.selectdate.errors }" required
-                                id="selectdate" placeholder="" type="date" max="01/07/2020" min="01/07/2019">
+                                 required
+                                id="selectdate" placeholder="" type="date">
                       <div class="invalid-feedback"> Ingrese valor para fecha </div>
                     </div>
                   </div>
@@ -90,7 +90,7 @@
                                   </div>
                                 </div>
                                 <div class="row justify-content-center">
-                                  <div *ngIf="item.sumation != 0 && item.client != '' && busqueda == busquedaS">
+                                  <div *ngIf="item.sumation != 0 && item.client != '' && active == 0">
                                     <button id="{{item.id}}" type="button"  class="btn"
                                       (click)="openRedirection(item.id,item.code,i,currentPageS)">
                                       <i class="fa fa-trash fa-lg" style="color: red;"></i>
@@ -110,8 +110,74 @@
             </div>
           </div>
         </tab>
-        <tab>
+        <tab *ngIf="gestorActive">
           <ng-template tabHeading><i class="icon-calculator"></i> Gestor &nbsp;</ng-template>
+          <div class="row">
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-4">
+                    <div class="form-group">
+                      <select class="form-control" required [(ngModel)]="valueG" (change)="searchfechG()"
+                        name="valueG" id="valueG">
+                        <option *ngFor="let the of gestoresview" [value]="the.id">
+                          <p>{{the.manager}}</p>
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="form-group">
+                      <input class="form-control" [(ngModel)]="busquedaListado" maxlength="20"
+                              id="busquedaListado" name="busquedaListado" placeholder="Texto a a buscar" type="text">
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <i class="fa fa-align-justify" style="color: red;"></i> <span style="color: red;">LISTADO DE CLIENTE POR GESTOR</span>
+                </div>
+                <div class="card-body">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr class="t-head-style">
+                          <th class="text-center" style="background-color: mediumturquoise;" scope="col">Número</th>
+                          <th class="text-center" style="background-color: mediumturquoise;" scope="col">Código</th>
+                          <th class="text-center" style="background-color: mediumturquoise;" scope="col">Cliente</th>
+                          <th class="text-center" style="background-color: mediumturquoise;" scope="col">Mensualidad</th>
+                          <th class="text-center" style="background-color: mediumturquoise;" scope="col">Instalacion</th>
+                          <th class="text-center" style="background-color: mediumturquoise;" scope="col">Otros</th>
+                          <th class="text-center" style="background-color: mediumturquoise;" scope="col">Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let item of listgestor | filter: busquedaListado
+                        | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }; let i = index">
+                            <tr>
+                              <td class="align-middle text-center">{{ item.code }}</td>
+                              <td class="align-middle text-center">{{ item.client }}</td>
+                              <td class="align-middle text-center">{{ item.direction }}</td>
+                              <td class="align-middle text-center">{{ item.service }}</td>
+                              <td class="align-middle text-center">{{ item.min }}</td>
+                              <td class="align-middle text-center">{{ item.max }}</td>
+                              <td class="align-middle text-center">{{ item.amount }}</td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                  </table>
+                  <pagination-controls class="my-pagination" (pageChange)="currentPage = $event"autoHide="true" responsive="true"
+                    previousLabel="Anterior" nextLabel="Siguiente">
+                  </pagination-controls>
+                </div>
+              </div>
+            </div>
+          </div>
+        </tab>
+        <tab *ngIf="gestorActive">
+          <ng-template tabHeading><i class="icon-calculator"></i> Extras &nbsp;</ng-template>
           <div class="row">
              <div class="col-6">
                <div class="form-group row">

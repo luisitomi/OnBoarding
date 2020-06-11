@@ -28,6 +28,7 @@ export const AppConstants = {
     USER_REGISTERED: "Usuario registrado satisfactoriamente.",
     REGISTER_UPDATED: "Se actualizó correctamente.",
     REGISTER_CREATED: "Se registró correctamente",
+    REGISTER_NO_CREATED: "No se registró correctamente",
     REQUIRED_FIELDS_MESSAGE: "Faltan campos por completar.",
     REQUIRED_ACCEPT_TERMS_CONDITIONS: "Por favor debe aceptar los términos y condiciones.",
     REQUIRED_LIST: "No ha agregado ningún(a) ",
@@ -46,42 +47,10 @@ export const AppConstants = {
 
   Session: {
     ACCESS_TOKEN: 'ACCESS_TOKEN',
-    TOKEN_TYPE: 'TOKEN_TYPE',
-    USER_TYPE: 'USER_TYPE',
-    REFRESH_TOKEN: 'REFRESH_TOKEN',
-    EXPIRATION_TIME: 'EXPIRATION_TIME',
     USERNAME: 'USERNAME',
     USERID: 'USERID',
-    LANGUAGE: 'LANGUAGE',
+    USERLASTNAME: 'USERLASTNAME',
     USERDATA: 'USERDATA',
-    LAST_URL: 'LAST_URL',
-    DOCUMENT_DATA: 'DOCUMENT_DATA',
-    CODE_DATA: 'CODE_DATA',
-  },
-  
-  UserRole:{
-    ADMIN: 'ADMIN',
-    CLIENT: 'CLIENT',
-    ENTERPRISE: 'ENTERPRISE',
-    ENTERPRISE_USER: 'ENTERPRISE_USER'
-  },
-
-  DocumentType:{
-    DNI: '1',
-    CE: '2'
-  },
-
-  GeneralType:{
-    MOVIE: 'MOVIE'
-  },
-
-  UserParameter: {
-    TIMESECONDS: '2'
-  },
-
-  LanguageApp: {
-    SPANISH: '1',
-    ENGLISH: '2'
   },
 
   Design:{

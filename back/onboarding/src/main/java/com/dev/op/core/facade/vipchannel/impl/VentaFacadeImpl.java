@@ -11,6 +11,7 @@ import com.dev.op.core.dto.ResponseModel;
 import com.dev.op.core.dto.vipchannel.getListDistictModel;
 import com.dev.op.core.dto.vipchannel.getListSellerModel;
 import com.dev.op.core.dto.vipchannel.getListServiceBySaleModel;
+import com.dev.op.core.dto.vipchannel.getListServiceModel;
 import com.dev.op.core.dto.vipchannel.getListStreetModel;
 import com.dev.op.core.dto.vipchannel.getServicePreInstallModel;
 import com.dev.op.core.facade.vipchannel.VentaFacade;
@@ -160,6 +161,46 @@ public class VentaFacadeImpl implements VentaFacade{
 			}
 			else {
 				return putChangeDirectionById;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getListServiceModel> getListService() {
+		List<getListServiceModel> getListService = new ArrayList<getListServiceModel>();
+		
+		try {
+			
+			getListService = ventaService.getListService();
+			if(GenericUtil.isEmpty(getListService)) {
+				return null;
+			}
+			else {
+				return getListService;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ResponseModel> deletePreInstallSale(Integer detail, Integer next, String description) {
+		List<ResponseModel> deletePreInstallSale = new ArrayList<ResponseModel>();
+		
+		try {
+			
+			deletePreInstallSale = ventaService.deletePreInstallSale(detail, next, description);
+			if(GenericUtil.isEmpty(deletePreInstallSale)) {
+				return null;
+			}
+			else {
+				return deletePreInstallSale;
 			}
 		}
 		catch(Exception e) {

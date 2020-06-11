@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { UserModel, UserDataModel } from '../models/user.model';
+import { UserModel, UserDataModel, UserNameModel } from '../models/user.model';
 import { ResponseModel } from '../models/personpay.model';
 
 @Injectable({
@@ -25,6 +25,10 @@ export class UserService {
 
     usuariodata(user: string,pass:string): Observable<UserDataModel[]> {
         return this.httpClient.get<UserDataModel[]>(`${this.BASE_URL}/usuario/getUserData/`+ user + "/" + pass);
+    }
+
+    usuariodataname(user: string): Observable<UserNameModel[]> {
+        return this.httpClient.get<UserNameModel[]>(`${this.BASE_URL}/usuario/getNameUser/`+ user);
     }
 
     patchpassword(user: string,pass: string): Observable<ResponseModel[]> {

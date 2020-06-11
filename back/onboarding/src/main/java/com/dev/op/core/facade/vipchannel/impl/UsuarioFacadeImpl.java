@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.dev.op.core.dto.ResponseModel;
 import com.dev.op.core.dto.vipchannel.getListModuleModel;
 import com.dev.op.core.dto.vipchannel.getListSubModuleModel;
+import com.dev.op.core.dto.vipchannel.getNameUserModel;
 import com.dev.op.core.dto.vipchannel.getUserDataModel;
 import com.dev.op.core.facade.vipchannel.UsuarioFacade;
 import com.dev.op.core.service.vipchannel.UsuarioService;
@@ -101,4 +102,25 @@ public class UsuarioFacadeImpl implements UsuarioFacade{
 		}
 		return null;
 	}
+
+	@Override
+	public List<getNameUserModel> getNameUser(String user) {
+		List<getNameUserModel> getNameUser = new ArrayList<getNameUserModel>();
+		
+		try {
+			
+			getNameUser = usuarioService.getNameUser(user);
+			if(GenericUtil.isEmpty(getNameUser)) {
+				return null;
+			}
+			else {
+				return getNameUser;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 }

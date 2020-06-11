@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
-import { UserDataModel } from '../../models/user.model';
+import { UserDataModel, UserNameModel } from '../../models/user.model';
 import { AppConstants } from '../../shared/constants/app.constants';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,6 +14,7 @@ export class LoginComponent implements OnInit {
   
   userText:string="";
   passwordText:string="";
+  userName=[];
 
   codigo:string="";
 
@@ -21,6 +23,7 @@ export class LoginComponent implements OnInit {
   formulariologin: FormGroup;
 
   ngOnInit(){
+    sessionStorage.clear();
     this.formsearch();
     this.validacion(-1);
   }
@@ -29,6 +32,7 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private UserService: UserService,
     private router: Router,
+    private toastr: ToastrService
   ) {
   }
 
@@ -44,11 +48,18 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  process(){
+    this.UserService.usuariodataname(this.userText).subscribe(
+      (result: UserNameModel[]) => {
+        this.userName = result;
+    })
+  }
+  
   enviodata(){
     this.submitted = true;
-    
-    let registerlogin = this.formulariologin.value;
 
+    let registerlogin = this.formulariologin.value;
+    
     if (!this.formulariologin.controls.uuu.valid ||
       !this.formulariologin.controls.ppp.valid) {
       return false;
@@ -59,18 +70,31 @@ export class LoginComponent implements OnInit {
       
       try{
        if(result[0].id > 0){
+         
+        this.process();
         sessionStorage.setItem(AppConstants.Session.USERID,result[0].code.toString())
         sessionStorage.setItem(AppConstants.Session.USERNAME,this.userText)
+        sessionStorage.setItem(AppConstants.Session.USERLASTNAME,this.userName[0].name)
         this.router.navigate(['/dashboard']);
        }else{
-        this.passwordText = "";
-        this.codigo = "";
-        this.userText = "";
+        this.toastr.warning(
+          AppConstants.MessageModal.USERNAME_PASSWORD_ERROR_MESSAGE,
+          AppConstants.TitleModal.REGISTER_TITLE,
+          {closeButton: true}
+        );
+        this.validacion(-1);
        }
       }catch{
+        this.enviodata();
       }
+    
     },
     error => {
+      this.toastr.error(
+        AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+        AppConstants.TitleModal.REGISTER_TITLE,
+        {closeButton: true}
+      );
     })
 
   }

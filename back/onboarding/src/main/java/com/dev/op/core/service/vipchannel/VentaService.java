@@ -6,6 +6,7 @@ import com.dev.op.core.dto.ResponseModel;
 import com.dev.op.core.dto.vipchannel.getListDistictModel;
 import com.dev.op.core.dto.vipchannel.getListSellerModel;
 import com.dev.op.core.dto.vipchannel.getListServiceBySaleModel;
+import com.dev.op.core.dto.vipchannel.getListServiceModel;
 import com.dev.op.core.dto.vipchannel.getListStreetModel;
 import com.dev.op.core.dto.vipchannel.getServicePreInstallModel;
 
@@ -33,4 +34,6 @@ public interface VentaService {
 	List<getServicePreInstallModel> getServicePreInstall(Integer codeid,String datei,String datef);
 	List<getListServiceBySaleModel> getListServiceBySale();
 	List<ResponseModel> putChangeDirectionById(String document,String code,String number,Integer zone,String reference);
+	List<getListServiceModel> getListService();
+	List<ResponseModel> deletePreInstallSale(Integer detail,Integer next,String description);
 }

@@ -32,6 +32,12 @@ public class Constantes {
 	public static final String GETUSERDATA = "getUserData";
 	public static final String GETSERVICEPREINSTALL = "getServicePreInstall";
 	public static final String GETLISTSERVICEBYSALE = "getListServiceBySale";
+	public static final String GETLISTSERVICE = "getListService";
+	public static final String GETLISTRECLAIM = "getListReclaim";
+	public static final String GETLISTSERVICEACTIVE = "getListServiceActive";
+	public static final String GETRECLAIMSTATUS = "getReclaimStatus";
+	public static final String GETNAMEUSER = "getNameUser";
+	public static final String GETLISTMANAGERREPORT = "getListManagerReport";
 	public static final String PATCHMANAGERBYID = "patchManagerById";
 	public static final String PATCHVOUCHERBYID = "patchVoucherById";
 	public static final String PATCHUPDATEPASSWORD = "patchUpdatePassword";
@@ -43,8 +49,10 @@ public class Constantes {
 	public static final String POSTPAYSERVICEDETAILDELETE = "postPayServiceDetailDelete";
 	public static final String POSTCHANGEAMOUNT = "postChangeAmount";
 	public static final String POSTSAVESERVICESALE = "postSaveServiceSale";
+	public static final String POSTRECLAIMBYID = "postReclaimById";
 	public static final String DELETEDETAILCOUNT = "deleteDetailCount";
 	public static final String DELETEPAYSERVICE = "deletePayService";
+	public static final String DELETEPREINSTALLSALE = "deletePreInstallSale";
 	
 	
 	public static final String EMPTY = "";

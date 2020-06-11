@@ -19,3 +19,8 @@ export class SellerListModel{
     seller:string;
     active:number;
 }
+
+export class SellerServiceModel{
+    id:number;
+    description:string;
+}

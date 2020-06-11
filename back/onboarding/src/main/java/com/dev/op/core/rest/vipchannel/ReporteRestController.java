@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.op.core.dto.vipchannel.getListPayOneModel;
+import com.dev.op.core.dto.vipchannel.getListPayThreeModel;
+import com.dev.op.core.dto.vipchannel.getListPayTwoModel;
 import com.dev.op.core.dto.vipchannel.getListServiceBySaleModel;
 import com.dev.op.core.dto.vipchannel.getManagerSumationModel;
 import com.dev.op.core.facade.vipchannel.CobranzaFacade;
@@ -59,9 +61,9 @@ public class ReporteRestController {
 	public ResponseEntity<InputStreamResource> planillaCajaDos() throws IOException {
 		try {
 			
-			List<getListPayOneModel> planilla = cobranzaFacade.getListPayOne();
+			List<getListPayTwoModel> planilla = cobranzaFacade.getListPayTwo();
 				
-				ByteArrayInputStream bis = PdfGenerator.pdfPayOne(planilla);
+				ByteArrayInputStream bis = PdfGenerator.pdfPayTwo(planilla);
 				
 				HttpHeaders headers = new HttpHeaders();
 				headers.add("Content-Disposition", "inline; filename=planilla.pdf");
@@ -80,9 +82,9 @@ public class ReporteRestController {
 	public ResponseEntity<InputStreamResource> planillaCajaTres() throws IOException {
 		try {
 			
-			List<getListPayOneModel> planilla = cobranzaFacade.getListPayOne();
+			List<getListPayThreeModel> planilla = cobranzaFacade.getListPayThree();
 				
-				ByteArrayInputStream bis = PdfGenerator.pdfPayOne(planilla);
+				ByteArrayInputStream bis = PdfGenerator.pdfPayThree(planilla);
 				
 				HttpHeaders headers = new HttpHeaders();
 				headers.add("Content-Disposition", "inline; filename=planilla.pdf");

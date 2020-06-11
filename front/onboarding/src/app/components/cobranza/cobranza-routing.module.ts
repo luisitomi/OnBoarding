@@ -19,14 +19,14 @@ const routes: Routes = [
         path: 'pago',
         component: CobranzaComponent,
         data: {
-          title: 'Pago'
+          title: 'Registro'
         }
       },
       {
         path: 'listado',
         component: ListadoComponent,
         data: {
-          title: 'Listado de Pagos'
+          title: 'Listado'
         }
       },
     ]

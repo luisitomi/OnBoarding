@@ -18,14 +18,14 @@ const routes: Routes = [
         path: 'registro',
         component: RegistroComponent,
         data: {
-          title: 'Registro de Clientes'
+          title: 'Registro'
         }
       },
       {
         path: 'listado',
         component: ListadoVentaComponent,
         data: {
-          title: 'Listado'
+          title: 'Contratos'
         }
       },
     ]

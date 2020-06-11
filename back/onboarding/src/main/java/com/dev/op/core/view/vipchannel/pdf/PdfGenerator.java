@@ -519,7 +519,7 @@ public class PdfGenerator {
 		
 		try {
 			
-			String imageUrl = "file:///C:/Users/Luis/Desktop/OnBoarding/back/onboarding/src/main/resources/img/planilla.jpg";
+			String imageUrl = "file:///C:/Users/Luis/Desktop/OnBoarding/back/onboarding/src/main/resources/img/contrato.jpg";
 						
 			Image img = Image.getInstance(new URL(imageUrl));
 			img.disableBorderSide(Rectangle.BOX);
@@ -527,7 +527,7 @@ public class PdfGenerator {
 			float documentWidth = documento.getPageSize().getWidth() - documento.leftMargin() - documento.rightMargin();
 			float documentHeight = documento.getPageSize().getHeight() - documento.topMargin()/2 - documento.bottomMargin()/2;
 			img.scaleToFit(documentWidth + 10, documentHeight);
-			img.setAbsolutePosition(50, 10);
+			img.setAbsolutePosition(20, 10);
 			
 			PdfReader reader = new PdfReader("https://www.uv.mx/personal/artulopez/files/2012/08/02_TS-y-TI.pdf");
 			 

@@ -3,7 +3,7 @@ import { ChartsModule } from 'ng2-charts';
 
 import { CobranzaComponent } from './pago/cobranza.pago.component';
 import { CobranzaRoutingModule } from './cobranza-routing.module';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { AlertModule } from 'ngx-bootstrap/alert';

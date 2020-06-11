@@ -12,11 +12,14 @@ import com.dev.op.core.dto.ResponseModel;
 import com.dev.op.core.dto.vipchannel.getListDistictModel;
 import com.dev.op.core.dto.vipchannel.getListSellerModel;
 import com.dev.op.core.dto.vipchannel.getListServiceBySaleModel;
+import com.dev.op.core.dto.vipchannel.getListServiceModel;
 import com.dev.op.core.dto.vipchannel.getListStreetModel;
 import com.dev.op.core.dto.vipchannel.getServicePreInstallModel;
+import com.dev.op.core.repository.vipchannel.jdbc.deletePreInstallSaleJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getListDistictJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getListSellerJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getListServiceBySaleJdbcRepository;
+import com.dev.op.core.repository.vipchannel.jdbc.getListServiceJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getListStreetJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getServicePreInstallJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.postSaveServiceSaleJdbcRepository;
@@ -53,8 +56,16 @@ public class VentaServiceImpl implements VentaService{
 	private getListServiceBySaleJdbcRepository getListServiceBySaleJdbcRepository;
 	
 	@Autowired
+	@Qualifier("getListServiceJdbcRepository")
+	private getListServiceJdbcRepository getListServiceJdbcRepository;
+	
+	@Autowired
 	@Qualifier("putChangeDirectionByIdJdbcRepository")
 	private putChangeDirectionByIdJdbcRepository putChangeDirectionByIdJdbcRepository;
+	
+	@Autowired
+	@Qualifier("deletePreInstallSaleJdbcRepository")
+	private deletePreInstallSaleJdbcRepository deletePreInstallSaleJdbcRepository;
 	
 	
 	
@@ -193,6 +204,46 @@ public class VentaServiceImpl implements VentaService{
 			}
 			else {
 				return putChangeDirectionById;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getListServiceModel> getListService() {
+		List<getListServiceModel> getListService = new ArrayList<getListServiceModel>();
+		
+		try {
+			
+			getListService = getListServiceJdbcRepository.getListService();
+			if(GenericUtil.isCollectionEmpty(getListService)) {
+				return null;
+			}
+			else {
+				return getListService;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ResponseModel> deletePreInstallSale(Integer detail, Integer next, String description) {
+		List<ResponseModel> deletePreInstallSale = new ArrayList<ResponseModel>();
+		
+		try {
+			
+			deletePreInstallSale = deletePreInstallSaleJdbcRepository.deletePreInstallSale(detail, next, description);
+			if(GenericUtil.isCollectionEmpty(deletePreInstallSale)) {
+				return null;
+			}
+			else {
+				return deletePreInstallSale;
 			}
 		}
 		catch(Exception e) {

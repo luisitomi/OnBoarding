@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dev.op.core.dto.ResponseModel;
 import com.dev.op.core.dto.vipchannel.getListModuleModel;
 import com.dev.op.core.dto.vipchannel.getListSubModuleModel;
+import com.dev.op.core.dto.vipchannel.getNameUserModel;
 import com.dev.op.core.dto.vipchannel.getUserDataModel;
 import com.dev.op.core.facade.vipchannel.UsuarioFacade;
 import com.dev.op.core.util.vipchannel.GenericUtil;
@@ -75,6 +76,24 @@ public class UsuarioRestController {
 		}
 		catch(Exception e) {
 			return new ResponseEntity<List<getUserDataModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/getNameUser/{user}")
+	public ResponseEntity<List<getNameUserModel>> getNameUser(
+			@PathVariable(value="user") String user) {
+		
+		try{
+			List<getNameUserModel> getNameUser = usuarioFacade.getNameUser(user);
+			if(!GenericUtil.isCollectionEmpty(getNameUser)) {
+				return new ResponseEntity<List<getNameUserModel>>(getNameUser, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<getNameUserModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<List<getNameUserModel>>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	

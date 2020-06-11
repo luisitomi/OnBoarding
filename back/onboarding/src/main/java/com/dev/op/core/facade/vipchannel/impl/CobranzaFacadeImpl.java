@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.dev.op.core.dto.ResponseModel;
 import com.dev.op.core.dto.vipchannel.getDirectionByIdModel;
 import com.dev.op.core.dto.vipchannel.getListDirectionModel;
+import com.dev.op.core.dto.vipchannel.getListManagerReportModel;
 import com.dev.op.core.dto.vipchannel.getListMangerModel;
 import com.dev.op.core.dto.vipchannel.getListPayModel;
 import com.dev.op.core.dto.vipchannel.getListPayOneModel;
@@ -679,6 +680,26 @@ public class CobranzaFacadeImpl implements CobranzaFacade {
 			}
 			else {
 				return getPayServiceDetailExitMonth;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getListManagerReportModel> getListManagerReport(Integer manager) {
+		List<getListManagerReportModel> getListManagerReport = new ArrayList<getListManagerReportModel>();
+		
+		try {
+			
+			getListManagerReport = cobranzaService.getListManagerReport(manager);
+			if(GenericUtil.isEmpty(getListManagerReport)) {
+				return null;
+			}
+			else {
+				return getListManagerReport;
 			}
 		}
 		catch(Exception e) {
