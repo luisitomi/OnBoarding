@@ -1,0 +1,159 @@
+﻿<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12 mb-4">
+      <tabset>
+        <tab>
+          <ng-template tabHeading><i class="icon-list"></i> Pendientes &nbsp;</ng-template>
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <i class="fa fa-align-justify" style="color: red;"></i> <span style="color: red;">LISTADO DE ACTIVIDADES</span>
+                </div>
+                <div class="card-body">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr class="t-head-style">
+                          <th class="text-center" style="background-color: mediumturquoise;" scope="col">Enviado</th>
+                          <th class="text-center" style="background-color: mediumturquoise;" scope="col">Cliente</th>
+                          <th class="text-center" style="background-color: mediumturquoise;" scope="col">Solicitud</th>
+                          <th *ngIf="addNotiActive" class="text-center" style="background-color: mediumturquoise;" scope="col">Asignado</th>
+                          <th *ngIf="addNotiActive" class="text-center" style="background-color: mediumturquoise;" scope="col">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let item of actividad
+                        | paginate: { itemsPerPage: itemsPerPageS, currentPage: currentPageS }; let i = index">
+                            <tr>
+                              <td class="align-middle text-center">{{ item.user }}</td>
+                              <td class="align-middle text-center">{{ item.client }}</td>
+                              <td class="align-middle text-center">{{ item.pending }}</td>
+                              <td *ngIf="addNotiActive" class="align-middle text-center">{{ item.asign }}</td>
+                              <td *ngIf="addNotiActive" class="align-middle text-center">
+                                <div class="row justify-content-center">
+                                  <button id="{{item.id}}" type="button"  class="btn"
+                                    (click)="valeuItem(item.id)">
+                                    <i class="fa fa-hand-pointer-o fa-lg" style="color: red;"></i>
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                  </table>
+                  <pagination-controls class="my-pagination" (pageChange)="currentPageS = $event"autoHide="true" responsive="true"
+                    previousLabel="Anterior" nextLabel="Siguiente">
+                  </pagination-controls>
+                </div>
+              </div>
+            </div>
+          </div>
+        </tab>
+        <tab *ngIf="addNotiActive">
+          <ng-template tabHeading><i class="icon-call-in"></i> Registro &nbsp;</ng-template>
+            <form *ngIf="formularioIntra" [formGroup]="formularioIntra" autocomplete="offs" class="form-register-section">
+              <div asp-validation-summary="All" class="text-danger"></div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="card">
+                    <div class="card-header">
+                      <strong>Registro</strong>
+                      <small>Datos de Envio</small>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                            <label for="modulo">Área</label>
+                            <select class="form-control" [ngClass]="{ 'is-invalid': submitted && f.modulo.errors }"
+                              formControlName="modulo"  id="modulo">
+                              <option *ngFor="let the of listViewModule" [value]="the.id">
+                                <p>{{the.description}}</p>
+                              </option>
+                            </select>
+                            <div class="invalid-feedback"> Seleccione opción para área </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="form-group">
+                            <label for="documento">N° Documento</label>
+                            <input type="text" maxlength="8" class="form-control"
+                            formControlName="documento" [ngClass]="{ 'is-invalid': submitted && f.documento.errors }"
+                            id="documento" placeholder="">
+                            <div class="invalid-feedback"> Ingrese valor para documento</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                            <label for="nombre">Nombres </label>
+                            <input type="text" maxlength="100"
+                            formControlName="nombre" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }"
+                            class="form-control" id="nombre" placeholder="">
+                            <div class="invalid-feedback"> Ingrese valor para nombre </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <div class="form-group">
+                            <label for="asunto">Asunto </label>
+                            <textarea rows="2" maxlength="250"
+                              formControlName="asunto" [ngClass]="{ 'is-invalid': submitted && f.asunto.errors }"
+                              class="form-control" id="asunto" placeholder="">
+                            </textarea>
+                            <div class="invalid-feedback"> Ingrese valor para asunto </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <button class="btn btn-success btn-md" (click)="savenoti()">GUARDAR</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+        </tab>
+      </tabset>
+    </div>
+  </div>
+</div>
+
+<div bsModal #userModal="bs-modal" class="modal fade" tabindex="-1" [config]="{backdrop: 'static'}" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Cambiar Asignación</h4>
+        <button type="button" class="close" (click)="userModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form *ngIf="formularioUser" [formGroup]="formularioUser" autocomplete="offs" class="form-register-section">
+          <div asp-validation-summary="All" class="text-danger"></div>
+          <div class="row" >
+            <div class="col-6">
+              <div class="form-group">
+                <label for="user">Usuario</label>
+                <select class="form-control form-control-sm select-select" id="user" placeholder="Seleccione"
+                      formControlName="user" [ngClass]="{ 'is-invalid': submittedUser && h.user.errors }" required>
+                <option *ngFor="let the of user" [value]="the.code">
+                  <p>{{the.user}}</p>
+                </option>
+              </select>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary ml-auto" (click)="userModal.hide()">CANCELAR</button>
+        <button type="button" class="btn btn-success mr-auto" (click)="changeUser()">GUARDAR</button>
+      </div>
+    </div>
+  </div>
+</div>

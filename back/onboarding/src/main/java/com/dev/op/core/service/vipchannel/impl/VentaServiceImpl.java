@@ -9,13 +9,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dev.op.core.dto.ResponseModel;
+import com.dev.op.core.dto.vipchannel.getDetailContractModel;
 import com.dev.op.core.dto.vipchannel.getListDistictModel;
 import com.dev.op.core.dto.vipchannel.getListSellerModel;
 import com.dev.op.core.dto.vipchannel.getListServiceBySaleModel;
 import com.dev.op.core.dto.vipchannel.getListServiceModel;
 import com.dev.op.core.dto.vipchannel.getListStreetModel;
 import com.dev.op.core.dto.vipchannel.getServicePreInstallModel;
+import com.dev.op.core.dto.vipchannel.returnGetContractModel;
 import com.dev.op.core.repository.vipchannel.jdbc.deletePreInstallSaleJdbcRepository;
+import com.dev.op.core.repository.vipchannel.jdbc.getDetailContractJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getListDistictJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getListSellerJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getListServiceBySaleJdbcRepository;
@@ -24,6 +27,7 @@ import com.dev.op.core.repository.vipchannel.jdbc.getListStreetJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getServicePreInstallJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.postSaveServiceSaleJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.putChangeDirectionByIdJdbcRepository;
+import com.dev.op.core.repository.vipchannel.jdbc.returnGetContractJdbcRepository;
 import com.dev.op.core.service.vipchannel.VentaService;
 import com.dev.op.core.util.vipchannel.GenericUtil;
 
@@ -32,8 +36,8 @@ import com.dev.op.core.util.vipchannel.GenericUtil;
 public class VentaServiceImpl implements VentaService{
 
 	@Autowired
-	@Qualifier("postSaveServiceSaleJdbcRepository")
-	private postSaveServiceSaleJdbcRepository postSaveServiceSaleJdbcRepository;
+	@Qualifier("getDetailContractJdbcRepository")
+	private getDetailContractJdbcRepository getDetailContractJdbcRepository;
 	
 	@Autowired
 	@Qualifier("getListSellerJdbcRepository")
@@ -60,6 +64,10 @@ public class VentaServiceImpl implements VentaService{
 	private getListServiceJdbcRepository getListServiceJdbcRepository;
 	
 	@Autowired
+	@Qualifier("postSaveServiceSaleJdbcRepository")
+	private postSaveServiceSaleJdbcRepository postSaveServiceSaleJdbcRepository;
+	
+	@Autowired
 	@Qualifier("putChangeDirectionByIdJdbcRepository")
 	private putChangeDirectionByIdJdbcRepository putChangeDirectionByIdJdbcRepository;
 	
@@ -67,18 +75,20 @@ public class VentaServiceImpl implements VentaService{
 	@Qualifier("deletePreInstallSaleJdbcRepository")
 	private deletePreInstallSaleJdbcRepository deletePreInstallSaleJdbcRepository;
 	
-	
+	@Autowired
+	@Qualifier("returnGetContractJdbcRepository")
+	private returnGetContractJdbcRepository returnGetContractJdbcRepository;
 	
 	@Override
 	public List<ResponseModel> postSaveServiceSale(String document, String code, String name, String last,
-			String second, String client, String fech, Integer zone, String number, String descriptionrefe,
+			String second, String client, String email,String fech, Integer zone, String number, String descriptionrefe,
 			Integer seller, String fechadate, String timedate, Integer servicecount, String amountfirst,
 			String amountsecond, String textins) {
 		List<ResponseModel> postSaveServiceSale = new ArrayList<ResponseModel>();
 		
 		try {
 			
-			postSaveServiceSale = postSaveServiceSaleJdbcRepository.postSaveServiceSale(document, code, name, last, second, client, fech, zone, number, descriptionrefe, seller, fechadate, timedate, servicecount, amountfirst, amountsecond, textins);
+			postSaveServiceSale = postSaveServiceSaleJdbcRepository.postSaveServiceSale(document, code, name, last, second, client, fech, email,zone, number, descriptionrefe, seller, fechadate, timedate, servicecount, amountfirst, amountsecond, textins);
 			if(GenericUtil.isCollectionEmpty(postSaveServiceSale)) {
 				return null;
 			}
@@ -244,6 +254,47 @@ public class VentaServiceImpl implements VentaService{
 			}
 			else {
 				return deletePreInstallSale;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getDetailContractModel> getDetailContract(Integer detailId, Integer nextId) {
+		List<getDetailContractModel> getDetailContract = new ArrayList<getDetailContractModel>();
+		
+		try {
+			
+			getDetailContract = getDetailContractJdbcRepository.getDetailContract(detailId, nextId);
+			if(GenericUtil.isCollectionEmpty(getDetailContract)) {
+				return null;
+			}
+			else {
+				return getDetailContract;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public returnGetContractModel returnGetContract(Integer detailId, Integer nextId) {
+		returnGetContractModel returnGetContract;
+		
+		try {
+			
+			returnGetContract = returnGetContractJdbcRepository.returnGetContract(detailId, nextId);
+			
+			if(GenericUtil.isNotNull(returnGetContract)) {
+				return returnGetContract;
+			}
+			else {
+				return null;
 			}
 		}
 		catch(Exception e) {

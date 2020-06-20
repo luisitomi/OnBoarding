@@ -12,7 +12,7 @@ export class PersonPayService {
 
     constructor(private httpClient: HttpClient) { }
 
-    private BASE_URL: string = "http://localhost:8050/api/v1";
+    private BASE_URL: string = "/api/v2";
     
     getpersonaslistado(id: string): Observable<PersonPayModel[]> {
         return this.httpClient.get<PersonPayModel[]>(`${this.BASE_URL}/cobranza/getPersonByDocument/`+ id);

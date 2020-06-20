@@ -63,4 +63,5 @@ public interface CobranzaService {
 	List<ResponseModel> postChangeAmount(String document,String code,Integer service,BigDecimal amount,Date dateformat,Integer user);
 	List<ResponseModel> postPayService(String document,String code,BigDecimal amount,Integer user, Integer manager);
 	List<ResponseModel> postPayServiceDetailDelete(String document,String code,BigDecimal amount,Integer user);
+	List<ResponseModel> postPayServiceExit(String document,String code,BigDecimal amount,Integer user, Integer managerId,Integer type, Integer serviceSelect);
 }

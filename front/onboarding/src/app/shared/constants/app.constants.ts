@@ -7,9 +7,12 @@ export const AppConstants = {
   TitleModal: {
     LOGIN_TITLE: "Inicio Sesión.",
     REGISTER_TITLE: "Registro.",
+    ENVIAR_TITLE: "Enviado.",
+    SERVICE_TITLE: "Servicio",
     UPDATE_TITLE: "Actualizar",
     ERROR_TITLE: "Error",
-    WARNING_TITLE:"Advertencia"
+    WARNING_TITLE:"Advertencia",
+    INFO_TITLE: "Información",
   },
 
   MessageModal: {
@@ -38,6 +41,9 @@ export const AppConstants = {
     DATA_EMPTY: "No se encontraron resultados",
     DATA_REPET: "Registro ya listado",
     DATA_EMPTY_NULL: "Listado vacio de: ",
+
+    COUNT_MESSAGE: "Total de Notificaciones:",
+    EMAIL_MESSAGE: "Contrato Enviado"
 
   },
 

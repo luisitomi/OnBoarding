@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +21,7 @@ import com.dev.op.core.dto.vipchannel.getListPayThreeModel;
 import com.dev.op.core.dto.vipchannel.getListPayTwoModel;
 import com.dev.op.core.dto.vipchannel.getListServiceBySaleModel;
 import com.dev.op.core.dto.vipchannel.getManagerSumationModel;
+import com.dev.op.core.dto.vipchannel.returnGetContractModel;
 import com.dev.op.core.facade.vipchannel.CobranzaFacade;
 import com.dev.op.core.facade.vipchannel.VentaFacade;
 import com.dev.op.core.view.vipchannel.pdf.PdfGenerator;
@@ -138,6 +140,29 @@ public class ReporteRestController {
 		}
 		catch(Exception e) {
 				return new ResponseEntity<InputStreamResource>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping(value = "/contrato/{detailId}/{nextId}", produces = MediaType.APPLICATION_PDF_VALUE)
+	public ResponseEntity<InputStreamResource> contrato(@PathVariable(value = "detailId") Integer detailId,
+			@PathVariable(value = "nextId") Integer nextId) {
+		
+		try {
+			
+			returnGetContractModel contrato = ventaFacade.returnGetContract(detailId, nextId);
+			
+			ByteArrayInputStream bis = PdfGenerator.pdfContrat(contrato);
+			
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Content-Disposition", "inline; filename=contrato.pdf");
+			
+			return ResponseEntity.ok()
+					.headers(headers)
+					.contentType(MediaType.APPLICATION_PDF)
+					.body(new InputStreamResource(bis));
+		}
+		catch(Exception e) {
+			return new ResponseEntity<InputStreamResource>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	

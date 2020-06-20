@@ -15,12 +15,13 @@ import com.dev.op.core.dto.ResponseModel;
 import com.dev.op.core.dto.vipchannel.getListModuleModel;
 import com.dev.op.core.dto.vipchannel.getListSubModuleModel;
 import com.dev.op.core.dto.vipchannel.getNameUserModel;
+import com.dev.op.core.dto.vipchannel.getNotificationModel;
 import com.dev.op.core.dto.vipchannel.getUserDataModel;
 import com.dev.op.core.facade.vipchannel.UsuarioFacade;
 import com.dev.op.core.util.vipchannel.GenericUtil;
 
 @RestController
-@RequestMapping("/api/v1/usuario")
+@RequestMapping("/api/v2/usuario")
 public class UsuarioRestController {
 
 	@Autowired
@@ -76,6 +77,23 @@ public class UsuarioRestController {
 		}
 		catch(Exception e) {
 			return new ResponseEntity<List<getUserDataModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/getNotification/{user}")
+	public ResponseEntity<List<getNotificationModel>> getNotification(@PathVariable(value="user") String user) {
+		
+		try{
+			List<getNotificationModel> getNotification = usuarioFacade.getNotification(user);
+			if(!GenericUtil.isCollectionEmpty(getNotification)) {
+				return new ResponseEntity<List<getNotificationModel>>(getNotification, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<getNotificationModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<List<getNotificationModel>>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	

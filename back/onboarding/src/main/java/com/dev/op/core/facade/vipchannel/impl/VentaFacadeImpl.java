@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.dev.op.core.dto.ResponseModel;
+import com.dev.op.core.dto.vipchannel.getDetailContractModel;
 import com.dev.op.core.dto.vipchannel.getListDistictModel;
 import com.dev.op.core.dto.vipchannel.getListSellerModel;
 import com.dev.op.core.dto.vipchannel.getListServiceBySaleModel;
 import com.dev.op.core.dto.vipchannel.getListServiceModel;
 import com.dev.op.core.dto.vipchannel.getListStreetModel;
 import com.dev.op.core.dto.vipchannel.getServicePreInstallModel;
+import com.dev.op.core.dto.vipchannel.returnGetContractModel;
 import com.dev.op.core.facade.vipchannel.VentaFacade;
 import com.dev.op.core.service.vipchannel.VentaService;
 import com.dev.op.core.util.vipchannel.GenericUtil;
@@ -27,14 +29,14 @@ public class VentaFacadeImpl implements VentaFacade{
 
 	@Override
 	public List<ResponseModel> postSaveServiceSale(String document, String code, String name, String last,
-			String second, String client, String fech, Integer zone, String number, String descriptionrefe,
+			String second, String client, String fech, String email, Integer zone, String number, String descriptionrefe,
 			Integer seller, String fechadate, String timedate, Integer servicecount, String amountfirst,
 			String amountsecond, String textins) {
 		List<ResponseModel> postSaveServiceSale = new ArrayList<ResponseModel>();
 		
 		try {
 			
-			postSaveServiceSale = ventaService.postSaveServiceSale(document, code, name, last, second, client, fech, zone, number, descriptionrefe, seller, fechadate, timedate, servicecount, amountfirst, amountsecond, textins);
+			postSaveServiceSale = ventaService.postSaveServiceSale(document, code, name, last, second, client, fech, email, zone, number, descriptionrefe, seller, fechadate, timedate, servicecount, amountfirst, amountsecond, textins);
 			if(GenericUtil.isEmpty(postSaveServiceSale)) {
 				return null;
 			}
@@ -201,6 +203,49 @@ public class VentaFacadeImpl implements VentaFacade{
 			}
 			else {
 				return deletePreInstallSale;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getDetailContractModel> getDetailContract(Integer detailId, Integer nextId) {
+		List<getDetailContractModel> getDetailContract = new ArrayList<getDetailContractModel>();
+		
+		try {
+			
+			getDetailContract = ventaService.getDetailContract(detailId, nextId);
+			if(GenericUtil.isEmpty(getDetailContract)) {
+				return null;
+			}
+			else {
+				return getDetailContract;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public returnGetContractModel returnGetContract(Integer detailId, Integer nextId) {
+		returnGetContractModel returnGetContract;
+		
+		try {
+			
+			if(GenericUtil.isNotNull(detailId) && detailId.intValue() > 0 && GenericUtil.isNotNull(nextId) && nextId.intValue() > 0) {
+				returnGetContract = ventaService.returnGetContract(detailId, nextId);
+				
+				if(GenericUtil.isNotNull(returnGetContract)) {
+					return returnGetContract;
+				}
+				else if(GenericUtil.isNull(returnGetContract)) {
+					return null;
+				}
 			}
 		}
 		catch(Exception e) {

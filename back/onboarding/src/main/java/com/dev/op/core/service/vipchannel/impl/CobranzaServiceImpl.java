@@ -64,6 +64,7 @@ import com.dev.op.core.repository.vipchannel.jdbc.patchVoucherByIdJdbcRepository
 import com.dev.op.core.repository.vipchannel.jdbc.postChangeAmountJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.postPayServiceJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.postPayServiceDetailDeleteJdbcRepository;
+import com.dev.op.core.repository.vipchannel.jdbc.postPayServiceExitJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.putPersonByIdJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.putDirectionByIdJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.putReferenceByIdJdbcRepository;
@@ -205,6 +206,10 @@ public class CobranzaServiceImpl implements CobranzaService {
 	@Autowired
 	@Qualifier("postPayServiceDetailDeleteJdbcRepository")
 	private postPayServiceDetailDeleteJdbcRepository postPayServiceDetailDeleteJdbcRepository;
+	
+	@Autowired
+	@Qualifier("postPayServiceExitJdbcRepository")
+	private postPayServiceExitJdbcRepository postPayServiceExitJdbcRepository;
 	
 	@Override
 	public List<getPersonByDocumentModel> getPersonByDocument(String search) {
@@ -862,6 +867,27 @@ public class CobranzaServiceImpl implements CobranzaService {
 			}
 			else {
 				return getListManagerReport;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ResponseModel> postPayServiceExit(String document, String code, BigDecimal amount, Integer user,
+			Integer managerId, Integer type, Integer serviceSelect) {
+		List<ResponseModel> postPayServiceExit = new ArrayList<ResponseModel>();
+		
+		try {
+			
+			postPayServiceExit = postPayServiceExitJdbcRepository.postPayServiceExit(document, code, amount, user, managerId, type, serviceSelect);
+			if(GenericUtil.isCollectionEmpty(postPayServiceExit)) {
+				return null;
+			}
+			else {
+				return postPayServiceExit;
 			}
 		}
 		catch(Exception e) {

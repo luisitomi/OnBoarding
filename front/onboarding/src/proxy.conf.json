@@ -1,0 +1,13 @@
+{
+  "/api/v2/*": {
+    "target": "http://localhost:8050",
+    "secure": false,
+    "logLevel":"debug"
+  },
+  "/api/v1/*": {
+    "target": "https://gestionysistemas.ipzmarketing.com",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel":"debug"
+  }
+}

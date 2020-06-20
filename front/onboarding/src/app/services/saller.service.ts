@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { SellerModel, SellerListModel, SellerServiceModel } from '../models/seller.model';
+import { SellerModel, SellerListModel, SellerServiceModel, ClientPdfModel } from '../models/seller.model';
 import { ResponseModel } from '../models/personpay.model';
+import { HttpService } from '../shared/services/http.service';
 
 @Injectable({
     providedIn: "root"
@@ -11,37 +12,49 @@ import { ResponseModel } from '../models/personpay.model';
 export class SellerService {
     results: SellerModel[];
 
-    constructor(private httpClient: HttpClient) { }
+    constructor(private httpService: HttpService) { }
 
-    private BASE_URL: string = "http://localhost:8050/api/v1";
+    httpOptions = {
+        headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'x-auth-token': '1FxmRyxhogwjXwPmLQzdj83HeNz91tdsBFfMdaJm'
+        })
+      }
+
+    private BASE_URL: string = "/api/v2";
+    private BASE_URL_SEND: string = "/api/v1";
     
     listadovendedores(): Observable<SellerModel[]> {
-        return this.httpClient.get<SellerModel[]>(`${this.BASE_URL}/venta/getListSeller`);
+        return this.httpService.get<SellerModel[]>(`${this.BASE_URL}/venta/getListSeller`);
     }
 
     listadodistrito(): Observable<SellerModel[]> {
-        return this.httpClient.get<SellerModel[]>(`${this.BASE_URL}/venta/getListDistict`);
+        return this.httpService.get<SellerModel[]>(`${this.BASE_URL}/venta/getListDistict`);
     }
 
     listadocalle(id:number): Observable<SellerModel[]> {
-        return this.httpClient.get<SellerModel[]>(`${this.BASE_URL}/venta/getListStreet/` + id);
+        return this.httpService.get<SellerModel[]>(`${this.BASE_URL}/venta/getListStreet/` + id);
     }
 
     listadoservicios(id:number,datei:string,datef:string): Observable<SellerListModel[]> {
-        return this.httpClient.get<SellerListModel[]>(`${this.BASE_URL}/venta/getServicePreInstall/` + id + "/" + datei + "/" + datef);
+        return this.httpService.get<SellerListModel[]>(`${this.BASE_URL}/venta/getServicePreInstall/` + id + "/" + datei + "/" + datef);
+    }
+
+    recuperardatosPdf(detailId:number,nextId:number): Observable<ClientPdfModel[]> {
+        return this.httpService.get<ClientPdfModel[]>(`${this.BASE_URL}/venta/getDetailContract/` + detailId + "/" + nextId);
     }
 
     putChangeDirectionByIdList(document: string,code: string,number: string,zone :number,reference: string): Observable<ResponseModel[]> {
-        return this.httpClient.get<ResponseModel[]>(`${this.BASE_URL}/venta/putChangeDirectionById/`+
+        return this.httpService.get<ResponseModel[]>(`${this.BASE_URL}/venta/putChangeDirectionById/`+
         document + "/" + code + "/" + number + "/" + zone + "/" + reference);
     }
 
     listadoservicioscombo(): Observable<SellerServiceModel[]> {
-        return this.httpClient.get<SellerServiceModel[]>(`${this.BASE_URL}/venta/getListService`);
+        return this.httpService.get<SellerServiceModel[]>(`${this.BASE_URL}/venta/getListService`);
     }
 
     deletePreInstallSaleSave(detail: number,next: number,description: string): Observable<ResponseModel[]> {
-        return this.httpClient.get<ResponseModel[]>(`${this.BASE_URL}/venta/deletePreInstallSale/`+
+        return this.httpService.get<ResponseModel[]>(`${this.BASE_URL}/venta/deletePreInstallSale/`+
         detail + "/" + next + "/" + description);
     }
     
@@ -52,6 +65,7 @@ export class SellerService {
                             second: string,
                             client: string,
                             fech: string,
+                            email: string,
                             zone: number,
                             number: string,
                             descriptionrefe: string,
@@ -62,13 +76,17 @@ export class SellerService {
                             amountfirst: string,
                             amountsecond: string,
                             textins: string): Observable<ResponseModel[]> {
-        return this.httpClient.get<ResponseModel[]>(`${this.BASE_URL}/venta/postSaveServiceSale/`+
+        return this.httpService.get<ResponseModel[]>(`${this.BASE_URL}/venta/postSaveServiceSale/`+
         document + "/" + code + "/" + name + "/" +
-        last + "/" + second + "/" + client + "/" +
-        fech + "/" + zone + "/" + number + "/" +
+        last + "/" + second + "/" + client + "/" + fech + "/" +
+        email + "/" + zone + "/" + number + "/" +
         descriptionrefe + "/" + seller + "/" + fechadate + "/" +
         timedate + "/" + servicecount + "/" + amountfirst + "/" +
         amountsecond + "/" + textins);
+    }
+
+    createSendEmail(model: any) {
+        return this.httpService.post(`${this.BASE_URL_SEND}/send_emails`,model,this.httpOptions);
     }
 
 }

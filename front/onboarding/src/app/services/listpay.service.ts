@@ -13,9 +13,7 @@ export class ListPayService {
 
     constructor(private httpClient: HttpClient) { }
 
-    private BASE_URL: string = "http://localhost:8050/api/v1";
-
-    private BASE_URL_PDF: string = "http://localhost:8050";
+    private BASE_URL: string = "/api/v2";
     
     getpagoslistado(id: number,fecha: string): Observable<ListPayModel[]> {
         return this.httpClient.get<ListPayModel[]>(`${this.BASE_URL}/cobranza/getListPay/`+ id + "/" + fecha);
@@ -23,18 +21,6 @@ export class ListPayService {
 
     getpagoslistadomanager(id: number): Observable<ListManagerModel[]> {
         return this.httpClient.get<ListManagerModel[]>(`${this.BASE_URL}/cobranza/getManagaerCount/`+ id);
-    }
-
-    getpagoslistadoPDFOne(): Observable<ListPayModel[]> {
-        return this.httpClient.get<ListPayModel[]>(`${this.BASE_URL_PDF}/planillaCajaUno`);
-    }
-
-    getpagoslistadoPDFTwo(): Observable<ListPayModel[]> {
-        return this.httpClient.get<ListPayModel[]>(`${this.BASE_URL_PDF}/planillaCajaDos`);
-    }
-
-    getpagoslistadoPDFThree(): Observable<ListPayModel[]> {
-        return this.httpClient.get<ListPayModel[]>(`${this.BASE_URL_PDF}/planillaCajaTres`);
     }
 
     getlistadogestores(id:number): Observable<GestorModel[]> {

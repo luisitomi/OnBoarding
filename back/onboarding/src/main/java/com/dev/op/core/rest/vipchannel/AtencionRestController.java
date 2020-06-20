@@ -19,7 +19,7 @@ import com.dev.op.core.facade.vipchannel.AtencionFacade;
 import com.dev.op.core.util.vipchannel.GenericUtil;
 
 @RestController
-@RequestMapping("/api/v1/atencion")
+@RequestMapping("/api/v2/atencion")
 public class AtencionRestController {
 	
 	@Autowired

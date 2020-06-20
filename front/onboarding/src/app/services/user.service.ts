@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { UserModel, UserDataModel, UserNameModel } from '../models/user.model';
+import { UserModel, UserDataModel, UserNameModel, UserNotiModel, ModuleModel, UserListModel } from '../models/user.model';
 import { ResponseModel } from '../models/personpay.model';
 
 @Injectable({
@@ -13,7 +13,11 @@ export class UserService {
 
     constructor(private httpClient: HttpClient) { }
 
-    private BASE_URL: string = "http://localhost:8050/api/v1";
+    private BASE_URL: string = "/api/v2";
+
+    notificacionlistado(user: string): Observable<UserNotiModel[]> {
+        return this.httpClient.get<UserNotiModel[]>(`${this.BASE_URL}/usuario/getNotification/`+ user);
+    }
     
     submodulolistado(user: string): Observable<UserModel[]> {
         return this.httpClient.get<UserModel[]>(`${this.BASE_URL}/usuario/getListSubModule/`+ user);
@@ -33,6 +37,23 @@ export class UserService {
 
     patchpassword(user: string,pass: string): Observable<ResponseModel[]> {
         return this.httpClient.get<ResponseModel[]>(`${this.BASE_URL}/usuario/patchUpdatePassword/`+ user + "/" + pass);
+    }
+
+    listadoModuleuser(): Observable<ModuleModel[]> {
+        return this.httpClient.get<ModuleModel[]>(`${this.BASE_URL}/notificacion/getModule`);
+    }
+
+    listadouser(id:number): Observable<UserListModel[]> {
+        return this.httpClient.get<UserListModel[]>(`${this.BASE_URL}/notificacion/getListUser/` + id);
+    }
+
+    putChangeAsignationSave(id:number,user:number): Observable<ResponseModel[]> {
+        return this.httpClient.get<ResponseModel[]>(`${this.BASE_URL}/notificacion/putChangeAsignation/`+ id + "/" + user);
+    }
+
+    postNotificationSave(id:number,user:number,document:string,client:string,asunt:string): Observable<ResponseModel[]> {
+        return this.httpClient.get<ResponseModel[]>(`${this.BASE_URL}/notificacion/postNotification/`+
+        id + "/" + user + "/" + document + "/" + client + "/" + asunt);
     }
 
 }

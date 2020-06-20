@@ -53,14 +53,14 @@ export class ListadoAtencionComponent implements OnInit{
         }else{
           this.toastr.warning(
             AppConstants.MessageModal.DATA_EMPTY,
-            AppConstants.TitleModal.REGISTER_TITLE,
+            AppConstants.TitleModal.WARNING_TITLE,
             {closeButton: true}
           );
         }
       }catch{
         this.toastr.warning(
           AppConstants.MessageModal.DATA_EMPTY,
-          AppConstants.TitleModal.REGISTER_TITLE,
+          AppConstants.TitleModal.WARNING_TITLE,
           {closeButton: true}
         );
       }
@@ -69,7 +69,7 @@ export class ListadoAtencionComponent implements OnInit{
     error => {
       this.toastr.error(
         AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-        AppConstants.TitleModal.REGISTER_TITLE,
+        AppConstants.TitleModal.ERROR_TITLE,
         {closeButton: true}
       );
     })

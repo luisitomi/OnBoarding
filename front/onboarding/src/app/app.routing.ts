@@ -58,10 +58,14 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         loadChildren: () => import('./components/dashboard/dashboard.module').then(m => m.DashboardModule)
+      },
+      {
+        path: 'actividad',
+        loadChildren: () => import('./components/actividad/actividad.module').then(m => m.ActividadModule)
       }
     ]
   },
-  { path: '**', component: P404Component , data: { title: "Page Not Found" }}
+  { path: '**', component: P404Component , data: { title: "Página No Encontrada" }}
 ];
 
 @NgModule({

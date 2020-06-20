@@ -49,10 +49,18 @@ export class LoginComponent implements OnInit {
   }
 
   process(){
-    this.UserService.usuariodataname(this.userText).subscribe(
-      (result: UserNameModel[]) => {
-        this.userName = result;
-    })
+    try{
+      this.UserService.usuariodataname(this.userText).subscribe(
+        (result: UserNameModel[]) => {
+          this.userName = result;
+      })
+    }catch{
+      this.toastr.error(
+        AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+        AppConstants.TitleModal.REGISTER_TITLE,
+        {closeButton: true}
+      );
+    }
   }
   
   enviodata(){
@@ -62,6 +70,11 @@ export class LoginComponent implements OnInit {
     
     if (!this.formulariologin.controls.uuu.valid ||
       !this.formulariologin.controls.ppp.valid) {
+        this.toastr.warning(
+          AppConstants.MessageModal.REQUIRED_CUSTOM_FIELD,
+          AppConstants.TitleModal.WARNING_TITLE,
+          {closeButton: true}
+        );
       return false;
     }
     

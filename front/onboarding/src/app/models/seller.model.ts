@@ -24,3 +24,8 @@ export class SellerServiceModel{
     id:number;
     description:string;
 }
+
+export class ClientPdfModel{
+    name:string;
+    email:string;
+}

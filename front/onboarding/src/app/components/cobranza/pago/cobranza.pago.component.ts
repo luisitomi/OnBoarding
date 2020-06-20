@@ -23,6 +23,7 @@ export class CobranzaComponent implements OnInit{
   public formularioManager: FormGroup;
   public formularioReference: FormGroup;
   public formularioSavePayActive: FormGroup;
+  public formularioSavePayExit: FormGroup;
   
   @ViewChild('personModal') public personModal: ModalDirective;
   @ViewChild('directionModal') public directionModal: ModalDirective;
@@ -81,6 +82,7 @@ export class CobranzaComponent implements OnInit{
   submittedManager: boolean;
   submittedReference: boolean;
   submittedSaveActive: boolean;
+  submittedSaveExit: boolean;
 
   constructor(
     private PersonPayService: PersonPayService,
@@ -140,6 +142,166 @@ export class CobranzaComponent implements OnInit{
     });
   }
 
+  formsaveExit(){
+    this.formularioSavePayExit = this.formBuilder.group({
+      documentosaveE: [''],
+      codesaveE: [''],
+      amountpaySaveE: ['0', Validators.required],
+      userSaveE: [''],
+      selectpaySaveE: ['', Validators.required],
+      typesaveE: ['', Validators.required],
+      selectserviceSaveE: ['', Validators.required]
+    });
+  }
+
+  saveexitfunction(){
+    this.submittedSaveExit = true;
+    let registerSaveLed = this.formularioSavePayExit.value;
+
+    registerSaveLed.amountpaySaveE = parseFloat(registerSaveLed.amountpaySaveE).toFixed(2);
+    registerSaveLed.selectpaySaveE = parseInt(registerSaveLed.selectpaySaveE);
+    registerSaveLed.documentosaveE = this.document
+    registerSaveLed.userSaveE = parseInt(sessionStorage.getItem(AppConstants.Session.USERID))
+    registerSaveLed.codesaveE = this.code
+    registerSaveLed.typesaveE = parseInt(registerSaveLed.typesaveE);
+    registerSaveLed.selectserviceSaveE = parseInt(registerSaveLed.selectserviceSaveE);
+
+    if (!this.formularioSavePayExit.controls.amountpaySaveE.valid ||
+      !this.formularioSavePayExit.controls.selectpaySaveE.valid ||
+      !this.formularioSavePayExit.controls.typesaveE.valid ||
+      !this.formularioSavePayExit.controls.selectserviceSaveE.valid) {
+     this.toastr.warning(
+        AppConstants.MessageModal.REQUIRED_CUSTOM_FIELD,
+        AppConstants.TitleModal.WARNING_TITLE,
+        {closeButton: true}
+      );
+      return false;
+    }
+
+    if (registerSaveLed.amountpaySaveE == 0) {
+      this.toastr.warning(
+        "El monto debe ser mayor a 0",
+        AppConstants.TitleModal.WARNING_TITLE,
+        {closeButton: true}
+      );
+      return false;
+
+    }
+
+    if (registerSaveLed.typesaveE == 2 && registerSaveLed.amountpaySaveE <= 10) {
+      this.toastr.warning(
+        "El monto no cumple como mínimo saldo",
+        AppConstants.TitleModal.WARNING_TITLE,
+        {closeButton: true}
+      );
+      return false;
+
+    }
+
+    if (registerSaveLed.typesaveE == 2 && registerSaveLed.amountpaySaveE > 10) {
+      registerSaveLed.amountpaySaveE = parseFloat(registerSaveLed.amountpaySaveE) - 10
+    }
+
+
+    if (registerSaveLed.amountpaySaveE == 3 && registerSaveLed.amountpaySaveE <= 20) {
+      this.toastr.warning(
+        "El monto no cumple como mínimo saldo",
+        AppConstants.TitleModal.WARNING_TITLE,
+        {closeButton: true}
+      );
+      return false;
+
+    }
+
+    if (registerSaveLed.typesaveE == 3 && registerSaveLed.amountpaySaveE > 20) {
+      registerSaveLed.amountpaySaveE = parseFloat(registerSaveLed.amountpaySaveE) - 20
+    }
+    
+    this.MonthPayService.postPayServiceExits(this.document,
+                                            this.code,
+                                            registerSaveLed.amountpaySaveE,
+                                            registerSaveLed.userSaveE,
+                                            registerSaveLed.selectpaySaveE,
+                                            registerSaveLed.typesaveE,
+                                            registerSaveLed.selectserviceSaveE).subscribe(
+      (resultS: ResponseModel[]) => {
+        try{
+          if(resultS[0].id == 1){
+            this.toastr.success(
+              AppConstants.MessageModal.REGISTER_CREATED,
+              AppConstants.TitleModal.REGISTER_TITLE,
+              {closeButton: true}
+            );
+            this.MonthPayService.deleteDetailCountExit( this.document,
+                                                        this.code,
+                                                        registerSaveLed.selectserviceSaveE).subscribe(
+            (result: ResponseModel[]) => {
+              try{
+                if(result[0].id == 1){
+                  this.toastr.success(
+                    AppConstants.MessageModal.REGISTER_UPDATED,
+                    AppConstants.TitleModal.SERVICE_TITLE,
+                    {closeButton: true}
+                  );
+                  this.onReturndata(8);
+                  this.onReturndata(5);
+                  this.submittedSaveExit = false;
+                }else{
+                  this.toastr.warning(
+                    AppConstants.MessageModal.REGISTER_NO_CREATED,
+                    AppConstants.TitleModal.SERVICE_TITLE,
+                    {closeButton: true}
+                  );
+                  this.onReturndata(8);
+                  this.onReturndata(5);
+                  this.submittedSaveExit = false;
+                }
+              }catch{
+                this.toastr.error(
+                  AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+                  AppConstants.TitleModal.SERVICE_TITLE,
+                  {closeButton: true}
+                );
+                this.onReturndata(8);
+                this.onReturndata(5);
+                this.submittedSaveExit = false;
+              }
+            },
+            error => {
+              this.toastr.error(
+              AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+              AppConstants.TitleModal.SERVICE_TITLE,
+              {closeButton: true}
+              );
+              this.onReturndata(8);
+              this.onReturndata(5);
+              this.submittedSaveExit = false;
+            })
+          }else{
+            this.toastr.warning(
+            AppConstants.MessageModal.REGISTER_NO_CREATED,
+            AppConstants.TitleModal.REGISTER_TITLE,
+            {closeButton: true}
+            );
+          }
+        }catch{
+          this.toastr.error(
+            AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+            AppConstants.TitleModal.REGISTER_TITLE,
+            {closeButton: true}
+          );
+        }
+      },
+      error => {
+        this.toastr.error(
+        AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+        AppConstants.TitleModal.REGISTER_TITLE,
+        {closeButton: true}
+        );
+      })
+
+  }
+
   savepayFunction(){
     this.submittedSaveActive = true;
     let registerSaveLed = this.formularioSavePayActive.value;
@@ -152,12 +314,20 @@ export class CobranzaComponent implements OnInit{
 
     if (!this.formularioSavePayActive.controls.amountpaySave.valid ||
         !this.formularioSavePayActive.controls.selectpaySave.valid) {
-       
+       this.toastr.warning(
+          AppConstants.MessageModal.REQUIRED_CUSTOM_FIELD,
+          AppConstants.TitleModal.WARNING_TITLE,
+          {closeButton: true}
+        );
        return false;
     }
 
     if (registerSaveLed.amountpaySave == 0) {
-      
+      this.toastr.warning(
+        "El monto debe ser mayor a 0",
+        AppConstants.TitleModal.WARNING_TITLE,
+        {closeButton: true}
+      );
       return false;
 
     }
@@ -175,26 +345,23 @@ export class CobranzaComponent implements OnInit{
             AppConstants.TitleModal.REGISTER_TITLE,
             {closeButton: true}
           );
-          this.serviceactiveModal.hide();
           this.onReturndata(8);
           this.submittedSaveActive = false;
         }else{
           this.toastr.warning(
             AppConstants.MessageModal.REGISTER_NO_CREATED,
-            AppConstants.TitleModal.REGISTER_TITLE,
+            AppConstants.TitleModal.WARNING_TITLE,
             {closeButton: true}
           );
-          this.serviceactiveModal.hide();
           this.onReturndata(8);
           this.submittedSaveActive = false;
         }
       }catch{
         this.toastr.error(
           AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-          AppConstants.TitleModal.REGISTER_TITLE,
+          AppConstants.TitleModal.ERROR_TITLE,
           {closeButton: true}
         );
-        this.serviceactiveModal.hide();
         this.onReturndata(8);
         this.submittedSaveActive = false;
       }
@@ -202,13 +369,13 @@ export class CobranzaComponent implements OnInit{
     error => {
       this.toastr.error(
         AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-        AppConstants.TitleModal.REGISTER_TITLE,
+        AppConstants.TitleModal.ERROR_TITLE,
         {closeButton: true}
       );
-      this.serviceactiveModal.hide();
       this.onReturndata(8);
       this.submittedSaveActive = false;
     })
+
   }
     
 
@@ -220,7 +387,11 @@ export class CobranzaComponent implements OnInit{
     registerReference.codereference = this.code
 
     if (!this.formularioReference.controls.descriptionreference.valid) {
-
+      this.toastr.warning(
+        AppConstants.MessageModal.REQUIRED_CUSTOM_FIELD,
+        AppConstants.TitleModal.WARNING_TITLE,
+        {closeButton: true}
+      );
       return false;
     }
 
@@ -239,7 +410,7 @@ export class CobranzaComponent implements OnInit{
         }else{
           this.toastr.warning(
             AppConstants.MessageModal.REGISTER_NO_CREATED,
-            AppConstants.TitleModal.REGISTER_TITLE,
+            AppConstants.TitleModal.WARNING_TITLE,
             {closeButton: true}
           );
           this.referenceModal.hide();
@@ -249,7 +420,7 @@ export class CobranzaComponent implements OnInit{
        }catch{
         this.toastr.error(
           AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-          AppConstants.TitleModal.REGISTER_TITLE,
+          AppConstants.TitleModal.ERROR_TITLE,
           {closeButton: true}
         );
           this.referenceModal.hide();
@@ -260,7 +431,7 @@ export class CobranzaComponent implements OnInit{
      error => {
       this.toastr.error(
         AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-        AppConstants.TitleModal.REGISTER_TITLE,
+        AppConstants.TitleModal.ERROR_TITLE,
         {closeButton: true}
       );
       this.referenceModal.hide();
@@ -278,7 +449,11 @@ export class CobranzaComponent implements OnInit{
     registerManager.gestormanagerid = parseInt(registerManager.gestormanagerid);
 
     if (!this.formularioManager.controls.gestormanagerid.valid) {
-
+      this.toastr.warning(
+        AppConstants.MessageModal.REQUIRED_CUSTOM_FIELD,
+        AppConstants.TitleModal.WARNING_TITLE,
+        {closeButton: true}
+      );
       return false;
     }
 
@@ -297,7 +472,7 @@ export class CobranzaComponent implements OnInit{
         }else{
           this.toastr.warning(
             AppConstants.MessageModal.REGISTER_NO_CREATED,
-            AppConstants.TitleModal.REGISTER_TITLE,
+            AppConstants.TitleModal.WARNING_TITLE,
             {closeButton: true}
           );
           this.managerModal.hide();
@@ -307,7 +482,7 @@ export class CobranzaComponent implements OnInit{
        }catch{
         this.toastr.error(
           AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-          AppConstants.TitleModal.REGISTER_TITLE,
+          AppConstants.TitleModal.ERROR_TITLE,
           {closeButton: true}
         );
           this.managerModal.hide();
@@ -318,7 +493,7 @@ export class CobranzaComponent implements OnInit{
      error => {
       this.toastr.error(
         AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-        AppConstants.TitleModal.REGISTER_TITLE,
+        AppConstants.TitleModal.ERROR_TITLE,
         {closeButton: true}
       );
       this.managerModal.hide();
@@ -337,7 +512,11 @@ export class CobranzaComponent implements OnInit{
 
     if (!this.formularioDirection.controls.numberdirection.valid ||
       !this.formularioDirection.controls.zonedirection.valid ) {
-
+        this.toastr.warning(
+          AppConstants.MessageModal.REQUIRED_CUSTOM_FIELD,
+          AppConstants.TitleModal.WARNING_TITLE,
+          {closeButton: true}
+        );
       return false;
     }
 
@@ -359,7 +538,7 @@ export class CobranzaComponent implements OnInit{
         }else{
           this.toastr.warning(
             AppConstants.MessageModal.REGISTER_NO_CREATED,
-            AppConstants.TitleModal.REGISTER_TITLE,
+            AppConstants.TitleModal.WARNING_TITLE,
             {closeButton: true}
           );
           this.directionModal.hide();
@@ -369,7 +548,7 @@ export class CobranzaComponent implements OnInit{
        }catch{
         this.toastr.error(
           AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-          AppConstants.TitleModal.REGISTER_TITLE,
+          AppConstants.TitleModal.ERROR_TITLE,
           {closeButton: true}
         );
           this.directionModal.hide();
@@ -380,7 +559,7 @@ export class CobranzaComponent implements OnInit{
      error => {
       this.toastr.error(
         AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-        AppConstants.TitleModal.REGISTER_TITLE,
+        AppConstants.TitleModal.ERROR_TITLE,
         {closeButton: true}
       );
       this.directionModal.hide();
@@ -392,13 +571,21 @@ export class CobranzaComponent implements OnInit{
   registerPerson(){
     this.submitted = true;
     let registerPerson = this.formularioPerson.value;
-
+    this.toastr.warning(
+      AppConstants.MessageModal.REQUIRED_CUSTOM_FIELD,
+      AppConstants.TitleModal.REGISTER_TITLE,
+      {closeButton: true}
+    );
     registerPerson.documentoperson = this.document
 
     if (!this.formularioPerson.controls.nombresperson.valid ||
       !this.formularioPerson.controls.paternoperson.valid ||
       !this.formularioPerson.controls.maternoperson.valid ) {
-
+        this.toastr.warning(
+          AppConstants.MessageModal.REQUIRED_CUSTOM_FIELD,
+          AppConstants.TitleModal.WARNING_TITLE,
+          {closeButton: true}
+        );
       return false;
     }
     
@@ -426,7 +613,7 @@ export class CobranzaComponent implements OnInit{
         }else{
           this.toastr.warning(
             AppConstants.MessageModal.REGISTER_NO_CREATED,
-            AppConstants.TitleModal.REGISTER_TITLE,
+            AppConstants.TitleModal.WARNING_TITLE,
             {closeButton: true}
           );
           this.personModal.hide();
@@ -436,7 +623,7 @@ export class CobranzaComponent implements OnInit{
        }catch{
         this.toastr.error(
           AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-          AppConstants.TitleModal.REGISTER_TITLE,
+          AppConstants.TitleModal.ERROR_TITLE,
           {closeButton: true}
         );
           this.personModal.hide();
@@ -447,7 +634,7 @@ export class CobranzaComponent implements OnInit{
      error => {
       this.toastr.error(
         AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-        AppConstants.TitleModal.REGISTER_TITLE,
+        AppConstants.TitleModal.ERROR_TITLE,
         {closeButton: true}
       );
       this.personModal.hide();
@@ -465,6 +652,8 @@ export class CobranzaComponent implements OnInit{
   get i() { return this.formularioReference.controls; }
 
   get j() { return this.formularioSavePayActive.controls; }
+
+  get k() { return this.formularioSavePayExit.controls; }
 
   listadoclientes(){
     this.personpay = [];
@@ -596,15 +785,12 @@ export class CobranzaComponent implements OnInit{
             }
           }
         }else{
-          try{
+          if(result[0].service == "Cable"){
             this.amountdetailinternet = result[0].amount
-          }catch{
-            this.amountdetailinternet = 0
-          }
-          try{
-            this.amountdetailcable = result[1].amount
-          }catch{
             this.amountdetailcable = 0
+          }else{
+            this.amountdetailcable = result[0].amount
+            this.amountdetailinternet = 0
           }
           sum = this.amountdetailinternet + this.amountdetailcable
           this.amountgeneral = parseFloat(sum).toFixed(2)
@@ -666,16 +852,13 @@ export class CobranzaComponent implements OnInit{
             }
           }
         }else{
-          try{
+          if(result[0].service == "Cable"){
+            this.amountdetailcabledelete = result[0].amount
+            this.servicedelete = "DEUDA ATRASADA DE:" + result[0].service
+            this.amountdetailinternetdelete = 0
+          }else{
             this.amountdetailinternetdelete = result[0].amount
             this.servicedelete = "DEUDA ATRASADA DE:" + result[0].service
-          }catch{
-            this.amountdetailinternetdelete = 0
-          }
-          try{
-            this.amountdetailcabledelete = result[1].amount
-            this.servicedelete = "DEUDA ATRASADA DE:" + result[1].service
-          }catch{
             this.amountdetailcabledelete = 0
           }
           sum = this.amountdetailinternetdelete + this.amountdetailcabledelete
@@ -735,14 +918,11 @@ export class CobranzaComponent implements OnInit{
             }
           }
         }else{
-          try{
-            this.amountdetailinternetexit = result[1].amount
-          }catch{
+          if(result[0].service == "Cable"){
+            this.amountdetailcableexit = result[0].amount
             this.amountdetailinternetexit = 0
-          }
-          try{
-            this.amountdetailcableexit= result[0].amount
-          }catch{
+          }else{
+            this.amountdetailinternetexit = result[0].amount
             this.amountdetailcableexit = 0
           }
           sum = this.amountdetailinternetexit + this.amountdetailcableexit
@@ -879,6 +1059,7 @@ export class CobranzaComponent implements OnInit{
       case 6:
         this.listadoclientesdatapago();        
         this.formsave();
+        this.formsaveExit();
         this.listadoclientesdatapagoDelete();
         this.listadoclientesdatapagoExit();
       break;
@@ -892,6 +1073,9 @@ export class CobranzaComponent implements OnInit{
       break;
       case 9:
         this.listadomesesexit();
+      break;
+      case 10:
+        this.formsaveExit();
       break;
     }
   }

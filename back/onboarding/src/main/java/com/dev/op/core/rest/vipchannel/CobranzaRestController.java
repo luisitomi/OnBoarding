@@ -42,7 +42,7 @@ import com.dev.op.core.facade.vipchannel.CobranzaFacade;
 import com.dev.op.core.util.vipchannel.GenericUtil;
 
 @RestController
-@RequestMapping("/api/v1/cobranza")
+@RequestMapping("/api/v2/cobranza")
 public class CobranzaRestController {
 
 	@Autowired
@@ -579,6 +579,30 @@ public class CobranzaRestController {
 			List<ResponseModel> postPayServiceDetailDelete = cobranzaFacade.postPayServiceDetailDelete(document, code, amount, user);
 			if(!GenericUtil.isCollectionEmpty(postPayServiceDetailDelete)) {
 				return new ResponseEntity<List<ResponseModel>>(postPayServiceDetailDelete, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<ResponseModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {	
+			return new ResponseEntity<List<ResponseModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/postPayServiceExit/{document}/{code}/{amount}/{user}/{managerId}/{type}/{serviceSelect}")
+	public ResponseEntity<List<ResponseModel>> postPayServiceExit(
+			@PathVariable(value="document") String document,
+			@PathVariable(value="code") String code,
+			@PathVariable(value="amount") BigDecimal amount,
+			@PathVariable(value="user") Integer user,
+			@PathVariable(value="managerId") Integer managerId,
+			@PathVariable(value="type") Integer type,
+			@PathVariable(value="serviceSelect") Integer serviceSelect) {
+		
+		try{
+			List<ResponseModel> postPayServiceExit = cobranzaFacade.postPayServiceExit(document, code, amount, user, managerId, type, serviceSelect);
+			if(!GenericUtil.isCollectionEmpty(postPayServiceExit)) {
+				return new ResponseEntity<List<ResponseModel>>(postPayServiceExit, HttpStatus.OK);
 			}
 			else {
 				return new ResponseEntity<List<ResponseModel>>(HttpStatus.NO_CONTENT);

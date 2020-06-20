@@ -16,3 +16,21 @@ export class UserDataModel{
 export class UserNameModel{
 	name:string;
 }
+
+export class UserNotiModel{
+	id:number;
+	user:string;
+	pending:string;
+	client:string;
+	asign:string;
+}
+
+export class ModuleModel{
+	id:number;
+	description:string;
+}
+
+export class UserListModel{
+	code:number;
+	user:string;
+}

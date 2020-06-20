@@ -25,6 +25,7 @@
       </a>
       <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
         <div class="dropdown-header text-center"><strong>Cuenta</strong></div>
+        <a class="dropdown-item" (click)="actividad()"><i class="fa fa-envelope-o"></i> Mensajes<span class="badge badge-success">{{countiIni}}</span></a>
         <div class="dropdown-header text-center"><strong>Configuración</strong></div>
         <div class="divider"></div>
         <a class="dropdown-item" (click)="open(mymodal)"><i class="fa fa-shield"></i> Cambiar Contraseña</a>
@@ -36,7 +37,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <h4 class="modal-title">Cambiar Contraseña</h4>
-                <button type="button" class="close" (click)="modal.close('Cross  click')" aria-label="Close">
+                <button type="button" class="close" style="border-color: transparent;" (click)="modal.close('Cross  click')" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>

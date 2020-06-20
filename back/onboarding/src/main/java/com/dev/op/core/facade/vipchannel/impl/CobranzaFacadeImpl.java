@@ -707,5 +707,26 @@ public class CobranzaFacadeImpl implements CobranzaFacade {
 		}
 		return null;
 	}
+
+	@Override
+	public List<ResponseModel> postPayServiceExit(String document, String code, BigDecimal amount, Integer user,
+			Integer managerId, Integer type, Integer serviceSelect) {
+		List<ResponseModel> postPayServiceExit = new ArrayList<ResponseModel>();
+		
+		try {
+			
+			postPayServiceExit = cobranzaService.postPayServiceExit(document, code, amount, user, managerId, type, serviceSelect);
+			if(GenericUtil.isEmpty(postPayServiceExit)) {
+				return null;
+			}
+			else {
+				return postPayServiceExit;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 }

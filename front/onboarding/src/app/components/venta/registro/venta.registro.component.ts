@@ -145,6 +145,7 @@ export class RegistroComponent implements OnInit{
       fecha: ['', Validators.required],
       materno: ['', Validators.required],
       empresa: [''],
+      email: ['', Validators.required],
       vendedor: ['', Validators.required],
       distrito: ['', Validators.required],
       calle: ['', Validators.required],
@@ -166,7 +167,11 @@ export class RegistroComponent implements OnInit{
     registerReference.codereference = this.code
 
     if (!this.formularioReference.controls.descriptionreference.valid) {
-
+      this.toastr.warning(
+        AppConstants.MessageModal.REQUIRED_CUSTOM_FIELD,
+        AppConstants.TitleModal.WARNING_TITLE,
+        {closeButton: true}
+      );
       return false;
     }
 
@@ -185,7 +190,7 @@ export class RegistroComponent implements OnInit{
         }else{
           this.toastr.warning(
             AppConstants.MessageModal.REGISTER_NO_CREATED,
-            AppConstants.TitleModal.REGISTER_TITLE,
+            AppConstants.TitleModal.WARNING_TITLE,
             {closeButton: true}
           );
           this.referenceModal.hide();
@@ -195,7 +200,7 @@ export class RegistroComponent implements OnInit{
        }catch{
         this.toastr.error(
           AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-          AppConstants.TitleModal.REGISTER_TITLE,
+          AppConstants.TitleModal.ERROR_TITLE,
           {closeButton: true}
         );
           this.referenceModal.hide();
@@ -206,7 +211,7 @@ export class RegistroComponent implements OnInit{
      error => {
       this.toastr.error(
         AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-        AppConstants.TitleModal.REGISTER_TITLE,
+        AppConstants.TitleModal.ERROR_TITLE,
         {closeButton: true}
       );
       this.referenceModal.hide();
@@ -226,7 +231,11 @@ export class RegistroComponent implements OnInit{
     if (!this.formularioChangeDirection.controls.numberdirection.valid ||
       !this.formularioChangeDirection.controls.zonedirection.valid||
       !this.formularioChangeDirection.controls.referencedirection.valid ) {
-
+        this.toastr.warning(
+          AppConstants.MessageModal.REQUIRED_CUSTOM_FIELD,
+          AppConstants.TitleModal.WARNING_TITLE,
+          {closeButton: true}
+        );
       return false;
     }
     
@@ -250,7 +259,7 @@ export class RegistroComponent implements OnInit{
         }else{
           this.toastr.warning(
             AppConstants.MessageModal.REGISTER_NO_CREATED,
-            AppConstants.TitleModal.REGISTER_TITLE,
+            AppConstants.TitleModal.WARNING_TITLE,
             {closeButton: true}
           );
           this.directionChangeModal.hide();
@@ -261,7 +270,7 @@ export class RegistroComponent implements OnInit{
        }catch{
         this.toastr.error(
           AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-          AppConstants.TitleModal.REGISTER_TITLE,
+          AppConstants.TitleModal.ERROR_TITLE,
           {closeButton: true}
         );
           this.directionChangeModal.hide();
@@ -273,7 +282,7 @@ export class RegistroComponent implements OnInit{
      error => {
       this.toastr.error(
         AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-        AppConstants.TitleModal.REGISTER_TITLE,
+        AppConstants.TitleModal.ERROR_TITLE,
         {closeButton: true}
       );
       this.directionChangeModal.hide();
@@ -293,7 +302,11 @@ export class RegistroComponent implements OnInit{
 
     if (!this.formularioDirection.controls.numberdirection.valid ||
       !this.formularioDirection.controls.zonedirection.valid ) {
-
+        this.toastr.warning(
+          AppConstants.MessageModal.REQUIRED_CUSTOM_FIELD,
+          AppConstants.TitleModal.WARNING_TITLE,
+          {closeButton: true}
+        );
       return false;
     }
 
@@ -315,7 +328,7 @@ export class RegistroComponent implements OnInit{
         }else{
           this.toastr.warning(
             AppConstants.MessageModal.REGISTER_NO_CREATED,
-            AppConstants.TitleModal.REGISTER_TITLE,
+            AppConstants.TitleModal.WARNING_TITLE,
             {closeButton: true}
           );
           this.directionModal.hide();
@@ -325,7 +338,7 @@ export class RegistroComponent implements OnInit{
        }catch{
         this.toastr.error(
           AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-          AppConstants.TitleModal.REGISTER_TITLE,
+          AppConstants.TitleModal.ERROR_TITLE,
           {closeButton: true}
         );
           this.directionModal.hide();
@@ -336,7 +349,7 @@ export class RegistroComponent implements OnInit{
      error => {
       this.toastr.error(
         AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-        AppConstants.TitleModal.REGISTER_TITLE,
+        AppConstants.TitleModal.ERROR_TITLE,
         {closeButton: true}
       );
       this.directionModal.hide();
@@ -354,7 +367,11 @@ export class RegistroComponent implements OnInit{
     if (!this.formularioPerson.controls.nombresperson.valid ||
       !this.formularioPerson.controls.paternoperson.valid ||
       !this.formularioPerson.controls.maternoperson.valid ) {
-
+        this.toastr.warning(
+          AppConstants.MessageModal.REQUIRED_CUSTOM_FIELD,
+          AppConstants.TitleModal.WARNING_TITLE,
+          {closeButton: true}
+        );
       return false;
     }
     
@@ -382,7 +399,7 @@ export class RegistroComponent implements OnInit{
         }else{
           this.toastr.warning(
             AppConstants.MessageModal.REGISTER_NO_CREATED,
-            AppConstants.TitleModal.REGISTER_TITLE,
+            AppConstants.TitleModal.WARNING_TITLE,
             {closeButton: true}
           );
           this.personModal.hide();
@@ -392,7 +409,7 @@ export class RegistroComponent implements OnInit{
        }catch{
         this.toastr.error(
           AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-          AppConstants.TitleModal.REGISTER_TITLE,
+          AppConstants.TitleModal.ERROR_TITLE,
           {closeButton: true}
         );
           this.personModal.hide();
@@ -403,7 +420,7 @@ export class RegistroComponent implements OnInit{
      error => {
       this.toastr.error(
         AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-        AppConstants.TitleModal.REGISTER_TITLE,
+        AppConstants.TitleModal.ERROR_TITLE,
         {closeButton: true}
       );
       this.personModal.hide();
@@ -425,6 +442,7 @@ export class RegistroComponent implements OnInit{
       !this.formularioContrato.controls.nombre.valid ||
       !this.formularioContrato.controls.paterno.valid ||
       !this.formularioContrato.controls.fecha.valid ||
+      !this.formularioContrato.controls.email.valid ||
       !this.formularioContrato.controls.materno.valid ||
       !this.formularioContrato.controls.vendedor.valid ||
       !this.formularioContrato.controls.distrito.valid ||
@@ -436,7 +454,11 @@ export class RegistroComponent implements OnInit{
       !this.formularioContrato.controls.hora.valid ||
       !this.formularioContrato.controls.inicial.valid ||
       !this.formularioContrato.controls.mensual.valid) {
-
+        this.toastr.warning(
+          AppConstants.MessageModal.REQUIRED_CUSTOM_FIELD,
+          AppConstants.TitleModal.WARNING_TITLE,
+          {closeButton: true}
+        );
       return false;
     }
 
@@ -452,6 +474,7 @@ export class RegistroComponent implements OnInit{
                                                 registerContrato.materno.toUpperCase(),
                                                 registerContrato.empresa.toUpperCase(),
                                                 registerContrato.fecha,
+                                                registerContrato.email,
                                                 registerContrato.calle,
                                                 registerContrato.numero.toUpperCase(),
                                                 registerContrato.referencia.toUpperCase(),
@@ -463,38 +486,38 @@ export class RegistroComponent implements OnInit{
                                                 registerContrato.mensual,
                                                 registerContrato.detalle).subscribe(
       (result: ResponseModel[]) => {
-      try{
-      if(result[0].id == 1){
-        this.toastr.success(
-          AppConstants.MessageModal.REGISTER_CREATED,
-          AppConstants.TitleModal.REGISTER_TITLE,
-          {closeButton: true}
-        );
-        this.onReturndata(0);
-        this.submittedSaveActive = false;
-      }else{
-        this.toastr.warning(
-          AppConstants.MessageModal.REGISTER_NO_CREATED,
-          AppConstants.TitleModal.REGISTER_TITLE,
-          {closeButton: true}
-        );
-        this.onReturndata(0);
-        this.submittedSaveActive = false;
-      }
-      }catch{
-        this.toastr.error(
-          AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-          AppConstants.TitleModal.REGISTER_TITLE,
-          {closeButton: true}
-        );
-        this.onReturndata(0);
-        this.submittedSaveActive = false;
-      }
+        try{
+          if(result[0].id == 1){
+            this.toastr.success(
+              AppConstants.MessageModal.REGISTER_CREATED,
+              AppConstants.TitleModal.REGISTER_TITLE,
+              {closeButton: true}
+            );
+            this.onReturndata(0);
+            this.submittedSaveActive = false;
+          }else{
+            this.toastr.warning(
+              AppConstants.MessageModal.REGISTER_NO_CREATED,
+              AppConstants.TitleModal.WARNING_TITLE,
+              {closeButton: true}
+            );
+            this.onReturndata(0);
+            this.submittedSaveActive = false;
+          }
+        }catch{
+          this.toastr.error(
+            AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+            AppConstants.TitleModal.ERROR_TITLE,
+            {closeButton: true}
+          );
+          this.onReturndata(0);
+          this.submittedSaveActive = false;
+        }
       },
       error => {
         this.toastr.error(
           AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-          AppConstants.TitleModal.REGISTER_TITLE,
+          AppConstants.TitleModal.ERROR_TITLE,
           {closeButton: true}
         );
         this.onReturndata(0);

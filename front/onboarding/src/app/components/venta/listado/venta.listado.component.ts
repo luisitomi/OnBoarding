@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
-import { SellerListModel, SellerModel } from '../../../models/seller.model';
+import { SellerListModel, SellerModel, ClientPdfModel } from '../../../models/seller.model';
 import { SellerService } from '../../../services/saller.service';
 import { AppConstants } from '../../../shared/constants/app.constants';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
@@ -73,7 +73,7 @@ export class ListadoVentaComponent implements OnInit{
         }else{
           this.toastr.warning(
             AppConstants.MessageModal.DATA_EMPTY,
-            AppConstants.TitleModal.REGISTER_TITLE,
+            AppConstants.TitleModal.WARNING_TITLE,
             {closeButton: true}
           );
           this.pdfExportActive = false
@@ -81,7 +81,7 @@ export class ListadoVentaComponent implements OnInit{
       }catch{
         this.toastr.warning(
           AppConstants.MessageModal.DATA_EMPTY,
-          AppConstants.TitleModal.REGISTER_TITLE,
+          AppConstants.TitleModal.WARNING_TITLE,
           {closeButton: true}
         );
         this.pdfExportActive = false
@@ -90,7 +90,7 @@ export class ListadoVentaComponent implements OnInit{
     error => {
       this.toastr.error(
         AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-        AppConstants.TitleModal.REGISTER_TITLE,
+        AppConstants.TitleModal.ERROR_TITLE,
         {closeButton: true}
       );
     })
@@ -142,7 +142,7 @@ export class ListadoVentaComponent implements OnInit{
           }else{
             this.toastr.warning(
               AppConstants.MessageModal.REGISTER_NO_CREATED,
-              AppConstants.TitleModal.REGISTER_TITLE,
+              AppConstants.TitleModal.WARNING_TITLE,
               {closeButton: true}
             );
             this.cancelacionModal.hide();
@@ -155,7 +155,7 @@ export class ListadoVentaComponent implements OnInit{
             this.submitted = false;
             this.toastr.error(
               AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-              AppConstants.TitleModal.REGISTER_TITLE,
+              AppConstants.TitleModal.ERROR_TITLE,
               {closeButton: true}
             );
          }
@@ -163,7 +163,7 @@ export class ListadoVentaComponent implements OnInit{
        error => {
         this.toastr.error(
           AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-          AppConstants.TitleModal.REGISTER_TITLE,
+          AppConstants.TitleModal.ERROR_TITLE,
           {closeButton: true}
         );
         this.cancelacionModal.hide();
@@ -185,6 +185,60 @@ export class ListadoVentaComponent implements OnInit{
       case 0:
         this.listadoservicioData();
       break;
+    }
+  }
+
+  SendMail(id1:number,id2:number){
+    let envioData = {};
+    let valor = "http://localhost:8050/contrato/"+id1+"/"+id2;
+    this.SellerService.recuperardatosPdf(id1,id2).subscribe(
+      (result: ClientPdfModel[]) => {
+        envioData = {
+          "from": {
+            "email": "Luismiguel.larosa@gestionysistemas.com",
+            "name": "Cable Color - Internet Color!!!"
+          },
+          "to": [
+            {
+              "email": result[0].email,
+              "name": result[0].name
+            }
+          ],
+          "subject": "Envio de contrato",
+          "html_part":  "<h2 style='color:red'>Hola "+result[0].name+"</h2><br /> <h3>Bienvenido a nuestra gran familia </p><a href='https://www.facebook.com/cablecolorhuacho/'>Cable color - Internet Color</a></h3><br />Descarga tu contrato mediante el siguiente link<br/><a href='"+valor+"'>Descargar PDF</a>",
+          "text_part": "My first Mailjet emai",
+          "text_part_auto": false,
+          "CustomID": "AppGettingStartedTest",
+          "headers": {},
+          "smtp_tags": [
+            "string"
+          ]
+        };
+        this.SellerService.createSendEmail(envioData).subscribe(
+          (result: any) => {
+            this.toastr.success(
+              AppConstants.MessageModal.EMAIL_MESSAGE,
+              AppConstants.TitleModal.ENVIAR_TITLE,
+              {closeButton: true}
+            );
+            window.open(valor,"_blank");
+          }
+        ),
+        error => {
+          this.toastr.error(
+            AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+            AppConstants.TitleModal.ERROR_TITLE,
+            {closeButton: true}
+          );
+        }
+      }
+    ),
+    error => {
+      this.toastr.error(
+        AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+        AppConstants.TitleModal.ERROR_TITLE,
+        {closeButton: true}
+      );
     }
   }
 

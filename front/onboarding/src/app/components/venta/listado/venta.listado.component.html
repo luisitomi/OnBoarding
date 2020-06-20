@@ -96,10 +96,16 @@
                                 <div class="row justify-content-center">
                                   <div *ngIf="item.active == 0">
                                     <button id="{{item.code}}" type="button"  class="btn"
-                                    (click)="openRedirection(item.detail,item.next)">
+                                      (click)="openRedirection(item.detail,item.next)">
                                       <i class="fa fa-trash fa-lg" style="color: red;"></i>
                                     </button>
                                   </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                  <button id="{{item.code}}" type="button"  class="btn"
+                                    (click)="SendMail(item.detail,item.next)">
+                                    <i class="fa fa-download fa-lg" style="color: blue;"></i>
+                                  </button>
                                 </div>
                               </td>
                             </tr>

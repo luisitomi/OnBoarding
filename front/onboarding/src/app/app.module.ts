@@ -48,6 +48,7 @@ import { P500Component } from './components/error/500.component';
 import { RouterModule } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { HttpService } from './shared/services/http.service';
 
 @NgModule({
   imports: [
@@ -71,7 +72,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     PerfectScrollbarModule,
     BsDropdownModule.forRoot(),
     ToastrModule.forRoot({
-      timeOut: 10000,
+      timeOut: 5000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),
@@ -97,6 +98,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
       useClass: HashLocationStrategy,
     },
     AuthGuard,
+    HttpService
   ],
   bootstrap: [ AppComponent ]
 })

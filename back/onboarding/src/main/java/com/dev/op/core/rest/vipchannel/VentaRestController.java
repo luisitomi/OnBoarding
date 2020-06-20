@@ -16,51 +16,18 @@ import com.dev.op.core.dto.vipchannel.getListSellerModel;
 import com.dev.op.core.dto.vipchannel.getListServiceModel;
 import com.dev.op.core.dto.vipchannel.getListStreetModel;
 import com.dev.op.core.dto.vipchannel.getServicePreInstallModel;
+import com.dev.op.core.dto.vipchannel.getDetailContractModel;
 import com.dev.op.core.dto.vipchannel.getListDistictModel;
 import com.dev.op.core.facade.vipchannel.VentaFacade;
 import com.dev.op.core.util.vipchannel.GenericUtil;
 
 @RestController
-@RequestMapping("/api/v1/venta")
+@RequestMapping("/api/v2/venta")
 public class VentaRestController {
 	
 	@Autowired
 	@Qualifier("ventaFacade")
 	private VentaFacade ventaFacade;
-	
-	@GetMapping("/postSaveServiceSale/{document}/{code}/{name}/{last}/{second}/{client}/{fech}/{zone}/{number}/{descriptionrefe}/{seller}/{fechadate}/{timedate}/{servicecount}/{amountfirst}/{amountsecond}/{textins}")
-	public ResponseEntity<List<ResponseModel>> postPayServiceDetailDelete(
-			@PathVariable(value="document") String document,
-			@PathVariable(value="code") String code,
-			@PathVariable(value="name") String name,
-			@PathVariable(value="last") String last,
-			@PathVariable(value="second") String second,
-			@PathVariable(value="client") String client,
-			@PathVariable(value="fech") String fech,
-			@PathVariable(value="zone") Integer zone,
-			@PathVariable(value="number") String number,
-			@PathVariable(value="descriptionrefe") String descriptionrefe,
-			@PathVariable(value="seller") Integer seller,
-			@PathVariable(value="fechadate") String fechadate,
-			@PathVariable(value="timedate") String timedate,
-			@PathVariable(value="servicecount") Integer servicecount,
-			@PathVariable(value="amountfirst") String amountfirst,
-			@PathVariable(value="amountsecond") String amountsecond,
-			@PathVariable(value="textins") String textins){
-		
-		try{
-			List<ResponseModel> postPayServiceDetailDelete = ventaFacade.postSaveServiceSale(document, code, name, last, second, client, fech, zone, number, descriptionrefe, seller, fechadate, timedate, servicecount, amountfirst, amountsecond, textins);
-			if(!GenericUtil.isCollectionEmpty(postPayServiceDetailDelete)) {
-				return new ResponseEntity<List<ResponseModel>>(postPayServiceDetailDelete, HttpStatus.OK);
-			}
-			else {
-				return new ResponseEntity<List<ResponseModel>>(HttpStatus.NO_CONTENT);
-			}
-		}
-		catch(Exception e) {	
-			return new ResponseEntity<List<ResponseModel>>(HttpStatus.BAD_REQUEST);
-		}
-	}
 	
 	@GetMapping("/getListSeller")
 	public ResponseEntity<List<getListSellerModel>> getListSeller() {
@@ -133,6 +100,78 @@ public class VentaRestController {
 		}
 	}
 	
+	@GetMapping("/getDetailContract/{detailId}/{nextId}")
+	public ResponseEntity<List<getDetailContractModel>> getDetailContract(
+			@PathVariable(value="detailId") Integer detailId,
+			@PathVariable(value="nextId") Integer nextId) {
+		
+		try{
+			List<getDetailContractModel> getDetailContract = ventaFacade.getDetailContract(detailId, nextId);
+			if(!GenericUtil.isCollectionEmpty(getDetailContract)) {
+				return new ResponseEntity<List<getDetailContractModel>>(getDetailContract, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<getDetailContractModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<List<getDetailContractModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/getListService")
+	public ResponseEntity<List<getListServiceModel>> getListService() {
+		
+		try{
+			List<getListServiceModel> getListService = ventaFacade.getListService();
+			if(!GenericUtil.isCollectionEmpty(getListService)) {
+				return new ResponseEntity<List<getListServiceModel>>(getListService, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<getListServiceModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<List<getListServiceModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/postSaveServiceSale/{document}/{code}/{name}/{last}/{second}/{client}/{fech}/{email}/{zone}/{number}/{descriptionrefe}/{seller}/{fechadate}/{timedate}/{servicecount}/{amountfirst}/{amountsecond}/{textins}")
+	public ResponseEntity<List<ResponseModel>> postPayServiceDetailDelete(
+			@PathVariable(value="document") String document,
+			@PathVariable(value="code") String code,
+			@PathVariable(value="name") String name,
+			@PathVariable(value="last") String last,
+			@PathVariable(value="second") String second,
+			@PathVariable(value="client") String client,
+			@PathVariable(value="fech") String fech,
+			@PathVariable(value="email") String email,
+			@PathVariable(value="zone") Integer zone,
+			@PathVariable(value="number") String number,
+			@PathVariable(value="descriptionrefe") String descriptionrefe,
+			@PathVariable(value="seller") Integer seller,
+			@PathVariable(value="fechadate") String fechadate,
+			@PathVariable(value="timedate") String timedate,
+			@PathVariable(value="servicecount") Integer servicecount,
+			@PathVariable(value="amountfirst") String amountfirst,
+			@PathVariable(value="amountsecond") String amountsecond,
+			@PathVariable(value="textins") String textins){
+		
+		try{
+			List<ResponseModel> postPayServiceDetailDelete = ventaFacade.postSaveServiceSale(document, code, name, last, second, client, email, fech, zone, number, descriptionrefe, seller, fechadate, timedate, servicecount, amountfirst, amountsecond, textins);
+			if(!GenericUtil.isCollectionEmpty(postPayServiceDetailDelete)) {
+				return new ResponseEntity<List<ResponseModel>>(postPayServiceDetailDelete, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<ResponseModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {	
+			return new ResponseEntity<List<ResponseModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	
 	@GetMapping("/putChangeDirectionById/{document}/{code}/{number}/{zone}/{reference}")
 	public ResponseEntity<List<ResponseModel>> putChangeDirectionById(
 			@PathVariable(value="document") String document,
@@ -152,23 +191,6 @@ public class VentaRestController {
 		}
 		catch(Exception e) {
 			return new ResponseEntity<List<ResponseModel>>(HttpStatus.BAD_REQUEST);
-		}
-	}
-	
-	@GetMapping("/getListService")
-	public ResponseEntity<List<getListServiceModel>> getListService() {
-		
-		try{
-			List<getListServiceModel> getListService = ventaFacade.getListService();
-			if(!GenericUtil.isCollectionEmpty(getListService)) {
-				return new ResponseEntity<List<getListServiceModel>>(getListService, HttpStatus.OK);
-			}
-			else {
-				return new ResponseEntity<List<getListServiceModel>>(HttpStatus.NO_CONTENT);
-			}
-		}
-		catch(Exception e) {
-			return new ResponseEntity<List<getListServiceModel>>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	

@@ -37,7 +37,11 @@ public class Constantes {
 	public static final String GETLISTSERVICEACTIVE = "getListServiceActive";
 	public static final String GETRECLAIMSTATUS = "getReclaimStatus";
 	public static final String GETNAMEUSER = "getNameUser";
+	public static final String GETNOTIFICATION = "getNotification";
 	public static final String GETLISTMANAGERREPORT = "getListManagerReport";
+	public static final String GETDETAILCONTRACT = "getDetailContract";
+	public static final String GETMODULE = "getModule";
+	public static final String GETLISTUSER = "getListUser";
 	public static final String PATCHMANAGERBYID = "patchManagerById";
 	public static final String PATCHVOUCHERBYID = "patchVoucherById";
 	public static final String PATCHUPDATEPASSWORD = "patchUpdatePassword";
@@ -45,15 +49,18 @@ public class Constantes {
 	public static final String PUTDIRECTIONBYID = "putDirectionById";
 	public static final String PUTCHANGEDIRECTIONBYID = "putChangeDirectionById";
 	public static final String PUTREFERENCEBYID = "putReferenceById";
+	public static final String PUTCHANGEASIGNATION = "putChangeAsignation";
 	public static final String POSTPAYSERVICE = "postPayService";
+	public static final String POSTPAYSERVICEEXIT = "postPayServiceExit";
 	public static final String POSTPAYSERVICEDETAILDELETE = "postPayServiceDetailDelete";
 	public static final String POSTCHANGEAMOUNT = "postChangeAmount";
 	public static final String POSTSAVESERVICESALE = "postSaveServiceSale";
 	public static final String POSTRECLAIMBYID = "postReclaimById";
+	public static final String POSTNOTIFICATION = "postNotification";
 	public static final String DELETEDETAILCOUNT = "deleteDetailCount";
 	public static final String DELETEPAYSERVICE = "deletePayService";
 	public static final String DELETEPREINSTALLSALE = "deletePreInstallSale";
-	
+	public static final String RETURNGETCONTRACT = "returnGetContract";
 	
 	public static final String EMPTY = "";
 }

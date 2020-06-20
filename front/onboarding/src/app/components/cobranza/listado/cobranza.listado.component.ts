@@ -105,14 +105,14 @@ export class ListadoComponent implements OnInit{
         }else{
           this.toastr.warning(
             AppConstants.MessageModal.DATA_EMPTY,
-            AppConstants.TitleModal.REGISTER_TITLE,
+            AppConstants.TitleModal.WARNING_TITLE,
             {closeButton: true}
           );
         }
       }catch{
         this.toastr.warning(
           AppConstants.MessageModal.DATA_EMPTY,
-          AppConstants.TitleModal.REGISTER_TITLE,
+          AppConstants.TitleModal.WARNING_TITLE,
           {closeButton: true}
         );
       }
@@ -121,7 +121,7 @@ export class ListadoComponent implements OnInit{
     error => {
       this.toastr.error(
         AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-        AppConstants.TitleModal.REGISTER_TITLE,
+        AppConstants.TitleModal.ERROR_TITLE,
         {closeButton: true}
       );
     })
@@ -237,7 +237,7 @@ export class ListadoComponent implements OnInit{
             this.pdfexportActive = false;
             this.toastr.warning(
               AppConstants.MessageModal.DATA_EMPTY,
-              AppConstants.TitleModal.REGISTER_TITLE,
+              AppConstants.TitleModal.WARNING_TITLE,
               {closeButton: true}
             );
             this.active = 1
@@ -247,7 +247,7 @@ export class ListadoComponent implements OnInit{
           this.pdfexportActive = false;
           this.toastr.warning(
             AppConstants.MessageModal.DATA_EMPTY,
-            AppConstants.TitleModal.REGISTER_TITLE,
+            AppConstants.TitleModal.WARNING_TITLE,
             {closeButton: true}
           );
           this.active = 1
@@ -256,7 +256,7 @@ export class ListadoComponent implements OnInit{
       error => {
         this.toastr.error(
           AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-          AppConstants.TitleModal.REGISTER_TITLE,
+          AppConstants.TitleModal.ERROR_TITLE,
           {closeButton: true}
         );
         this.listpay = []

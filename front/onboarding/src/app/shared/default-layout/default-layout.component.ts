@@ -3,7 +3,7 @@ import { navItems } from '../../_nav';
 import { AppConstants } from '../constants/app.constants';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
-import { UserModel } from '../../models/user.model';
+import { UserModel, UserNotiModel } from '../../models/user.model';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ResponseModel } from '../../models/personpay.model';
@@ -33,8 +33,16 @@ export class DefaultLayoutComponent implements OnInit{
 
   submitted: boolean;
 
+  notificacion:any;
+
+  countiIni:number;
+  countCopy:number;
+
   ngOnInit(): void {
     this.validation();
+    setInterval(() => {
+      this.notificaction(1);
+    },3000)
   }
 
   savepass(){
@@ -112,6 +120,10 @@ export class DefaultLayoutComponent implements OnInit{
     this.router.navigate(['/login']);
   }
 
+  actividad(){
+    this.router.navigate(['/actividad']);
+  }
+
   validation(){
     if (!sessionStorage.getItem(AppConstants.Session.USERID) ||
       sessionStorage.getItem(AppConstants.Session.USERID) == "-1"){
@@ -126,11 +138,12 @@ export class DefaultLayoutComponent implements OnInit{
 
       this.router.navigate(['dashboard']);
       try{
-        this.userImage = './assets/img/imgusu/' + parseInt(sessionStorage.getItem(AppConstants.Session.USERID)) + '.JPG'
+        this.userImage = 'assets/img/imgusu/' + parseInt(sessionStorage.getItem(AppConstants.Session.USERID)) + '.JPG'
       }catch{
-        this.userImage = './assets/img/imgusu/1.JPG'
+        this.userImage = 'assets/img/imgusu/1.JPG'
       }
       this.opciones();
+      this.notificaction(0);
     }
   }
 
@@ -159,6 +172,59 @@ export class DefaultLayoutComponent implements OnInit{
         }
       }
     )
+  }
+
+  notificaction(id:number){
+    if(id == 0){
+      this.UserService.notificacionlistado(sessionStorage.getItem(AppConstants.Session.USERNAME)).subscribe(
+        (result:UserNotiModel[])=>{
+          try{
+            if(result.length > 0){
+              this.countiIni = result.length;
+              this.countCopy = result.length;
+              this.toastr.info(
+                AppConstants.MessageModal.COUNT_MESSAGE + " " + this.countiIni,
+                AppConstants.TitleModal.INFO_TITLE,
+                {closeButton: true}
+              );
+            }else{
+              this.countiIni = 0;
+              this.countCopy = 0;
+            }
+          }catch{
+            this.countiIni = 0;
+            this.countCopy = 0;
+          }
+        }
+      )
+    }else{
+      this.UserService.notificacionlistado(sessionStorage.getItem(AppConstants.Session.USERNAME)).subscribe(
+        (result:UserNotiModel[])=>{
+          try{
+            if(result.length > 0){
+              this.countiIni = result.length;
+              if(this.countiIni == this.countCopy){
+
+              }else{
+                this.countCopy = result.length;
+                this.toastr.info(
+                  AppConstants.MessageModal.COUNT_MESSAGE + " " + this.countiIni,
+                  AppConstants.TitleModal.INFO_TITLE,
+                  {closeButton: true}
+                );
+              }
+            }else{
+              this.countiIni = 0;
+              this.countCopy = 0;
+            }
+          }catch{
+            this.countiIni = 0;
+            this.countCopy = 0;
+          }
+        }
+      )
+    }
+    
   }
 
 }

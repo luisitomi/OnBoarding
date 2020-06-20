@@ -13,7 +13,7 @@ export class ManagerPayService {
 
     constructor(private httpClient: HttpClient) { }
 
-    private BASE_URL: string = "http://localhost:8050/api/v1";
+    private BASE_URL: string = "/api/v2";
     
     getgestoreslistado(): Observable<ManagerPayModel[]> {
         return this.httpClient.get<ManagerPayModel[]>(`${this.BASE_URL}/cobranza/getListManger`);

@@ -13,7 +13,7 @@ export class CallCenterService {
 
     constructor(private httpClient: HttpClient) { }
 
-    private BASE_URL: string = "http://localhost:8050/api/v1";
+    private BASE_URL: string = "/api/v2";
     
     listadoServiciobyid(id:string,code:string): Observable<CallCenterModel[]> {
         return this.httpClient.get<CallCenterModel[]>(`${this.BASE_URL}/atencion/getListServiceActive/`+ id + "/" + code);

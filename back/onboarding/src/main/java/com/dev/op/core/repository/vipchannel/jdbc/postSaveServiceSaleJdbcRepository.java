@@ -12,6 +12,7 @@ public interface postSaveServiceSaleJdbcRepository {
 			String second,
 			String client,
 			String fech,
+			String email,
 			Integer zone,
 			String number,
 			String descriptionrefe,

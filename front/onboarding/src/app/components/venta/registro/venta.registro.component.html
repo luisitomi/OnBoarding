@@ -251,6 +251,15 @@
                     <div class="invalid-feedback"> Ingrese valor para empresa </div>
                   </div>
                 </div>
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <label for="email">Correo </label>
+                    <input type="email" maxlength="200"
+                      formControlName="email" [ngClass]="{ 'is-invalid': submittedSaveActive && k.email.errors }"
+                      class="form-control" id="email" placeholder="">
+                    <div class="invalid-feedback"> Ingrese valor para correo </div>
+                  </div>
+                </div>
                 <div class="col-sm-6">
                   <button class="btn btn-success btn-md" (click)="savec()">GUARDAR CONTRATO</button>
                 </div>
@@ -505,11 +514,11 @@
           <div class="row">
             <div class="col-12">
               <div class="form-group">
-                <label for="referencedirection">Descripción</label>
+                <label for="referencedirection">Referencia</label>
                 <textarea rows="3" class="form-control form-control-sm" id="referencedirection" maxlength="255"
                   formControlName="referencedirection" style="font-weight:25%;" [ngClass]="{ 'is-invalid': submittedChangeDirection && j.referencedirection.errors }">
                 </textarea>
-	              <div class="invalid-feedback"> Ingrese valor para descripción </div>
+	              <div class="invalid-feedback"> Ingrese valor para referencia </div>
               </div>
             </div>
           </div>

@@ -142,7 +142,7 @@ export class RegistroAtenciónComponent implements OnInit{
   }
 
   registerReclamo(){
-    this.submittedDirection = true;
+    this.submittedReclamoActive = true;
     let registerReclamo = this.formularioReclamo.value;
 
     registerReclamo.documentodirection = this.document
@@ -153,7 +153,11 @@ export class RegistroAtenciónComponent implements OnInit{
     if (!this.formularioReclamo.controls.servicioreclamo.valid ||
       !this.formularioReclamo.controls.idreclamo.valid ||
       !this.formularioReclamo.controls.descripcionreclamo.valid ) {
-
+        this.toastr.warning(
+          AppConstants.MessageModal.REQUIRED_CUSTOM_FIELD,
+          AppConstants.TitleModal.WARNING_TITLE,
+          {closeButton: true}
+        );
       return false;
     }
 
@@ -175,7 +179,7 @@ export class RegistroAtenciónComponent implements OnInit{
         }else{
           this.toastr.warning(
             AppConstants.MessageModal.REGISTER_NO_CREATED,
-            AppConstants.TitleModal.REGISTER_TITLE,
+            AppConstants.TitleModal.WARNING_TITLE,
             {closeButton: true}
           );
           this.reclamoSaveModal.hide();
@@ -184,7 +188,7 @@ export class RegistroAtenciónComponent implements OnInit{
        }catch{
         this.toastr.error(
           AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-          AppConstants.TitleModal.REGISTER_TITLE,
+          AppConstants.TitleModal.ERROR_TITLE,
           {closeButton: true}
         );
           this.reclamoSaveModal.hide();
@@ -194,7 +198,7 @@ export class RegistroAtenciónComponent implements OnInit{
      error => {
       this.toastr.error(
         AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-        AppConstants.TitleModal.REGISTER_TITLE,
+        AppConstants.TitleModal.ERROR_TITLE,
         {closeButton: true}
       );
       this.reclamoSaveModal.hide();
@@ -214,7 +218,11 @@ export class RegistroAtenciónComponent implements OnInit{
     registerReference.codereference = this.code
 
     if (!this.formularioReference.controls.descriptionreference.valid) {
-
+      this.toastr.warning(
+        AppConstants.MessageModal.REQUIRED_CUSTOM_FIELD,
+        AppConstants.TitleModal.WARNING_TITLE,
+        {closeButton: true}
+      );
       return false;
     }
 
@@ -232,7 +240,11 @@ export class RegistroAtenciónComponent implements OnInit{
 
     if (!this.formularioDirection.controls.numberdirection.valid ||
       !this.formularioDirection.controls.zonedirection.valid ) {
-
+        this.toastr.warning(
+          AppConstants.MessageModal.REQUIRED_CUSTOM_FIELD,
+          AppConstants.TitleModal.REGISTER_TITLE,
+          {closeButton: true}
+        );
       return false;
     }
 
@@ -254,7 +266,7 @@ export class RegistroAtenciónComponent implements OnInit{
         }else{
           this.toastr.warning(
             AppConstants.MessageModal.REGISTER_NO_CREATED,
-            AppConstants.TitleModal.REGISTER_TITLE,
+            AppConstants.TitleModal.WARNING_TITLE,
             {closeButton: true}
           );
           this.directionModal.hide();
@@ -264,7 +276,7 @@ export class RegistroAtenciónComponent implements OnInit{
        }catch{
         this.toastr.error(
           AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-          AppConstants.TitleModal.REGISTER_TITLE,
+          AppConstants.TitleModal.ERROR_TITLE,
           {closeButton: true}
         );
           this.directionModal.hide();
@@ -275,7 +287,7 @@ export class RegistroAtenciónComponent implements OnInit{
      error => {
       this.toastr.error(
         AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-        AppConstants.TitleModal.REGISTER_TITLE,
+        AppConstants.TitleModal.ERROR_TITLE,
         {closeButton: true}
       );
       this.directionModal.hide();
@@ -293,7 +305,11 @@ export class RegistroAtenciónComponent implements OnInit{
     if (!this.formularioPerson.controls.nombresperson.valid ||
       !this.formularioPerson.controls.paternoperson.valid ||
       !this.formularioPerson.controls.maternoperson.valid ) {
-
+        this.toastr.warning(
+          AppConstants.MessageModal.REQUIRED_CUSTOM_FIELD,
+          AppConstants.TitleModal.REGISTER_TITLE,
+          {closeButton: true}
+        );
       return false;
     }
     
@@ -321,7 +337,7 @@ export class RegistroAtenciónComponent implements OnInit{
         }else{
           this.toastr.warning(
             AppConstants.MessageModal.REGISTER_NO_CREATED,
-            AppConstants.TitleModal.REGISTER_TITLE,
+            AppConstants.TitleModal.WARNING_TITLE,
             {closeButton: true}
           );
           this.personModal.hide();
@@ -331,7 +347,7 @@ export class RegistroAtenciónComponent implements OnInit{
        }catch{
         this.toastr.error(
           AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-          AppConstants.TitleModal.REGISTER_TITLE,
+          AppConstants.TitleModal.ERROR_TITLE,
           {closeButton: true}
         );
           this.personModal.hide();
@@ -342,7 +358,7 @@ export class RegistroAtenciónComponent implements OnInit{
      error => {
       this.toastr.error(
         AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
-        AppConstants.TitleModal.REGISTER_TITLE,
+        AppConstants.TitleModal.ERROR_TITLE,
         {closeButton: true}
       );
       this.personModal.hide();
