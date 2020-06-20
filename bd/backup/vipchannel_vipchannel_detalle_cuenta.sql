@@ -31,20 +31,28 @@ CREATE TABLE `vipchannel_detalle_cuenta` (
   `tipoId` int(11) NOT NULL,
   `comprobanteId` int(11) NOT NULL,
   `instalacionId` int(11) NOT NULL,
-  `mensualidad_mensual` float(8,0) NOT NULL,
-  `mensualidad_primera` float(8,0) NOT NULL,
-  `mensualidad_mes_instalacion` float(8,0) NOT NULL,
+  `mensualidad_mensual` float(8,2) NOT NULL,
+  `mensualidad_primera` float(8,2) NOT NULL,
+  `mensualidad_mes_instalacion` float(8,2) NOT NULL,
+  `fecha_pactada` date DEFAULT NULL,
   `motivo_instalacion` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `motivo_corte` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `motivo_cancelacion` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `vendedorid` int(11) DEFAULT NULL,
+  `venta` int(11) NOT NULL,
   `activo` int(11) NOT NULL,
   PRIMARY KEY (`detalleId`,`consecutivo`),
   KEY `Refvipchannel_cuenta19` (`cuentaId`,`consecutivoId`),
   KEY `Refvipchannel_servicio20` (`servicioId`),
   KEY `Refvipchannel_tipo22` (`tipoId`),
   KEY `Refvipchannel_comprobante26` (`comprobanteId`),
-  KEY `Refvipchannel_instalacion32` (`instalacionId`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  KEY `Refvipchannel_instalacion32` (`instalacionId`),
+  KEY `vipchannel_detalle_cuenta_fk` (`vendedorid`),
+  CONSTRAINT `vipchannel_detalle_cuenta_fk` FOREIGN KEY (`cuentaId`, `consecutivoId`) REFERENCES `vipchannel_cuenta` (`cuentaid`, `consecutivoid`),
+  CONSTRAINT `vipchannel_detalle_cuenta_fk_1` FOREIGN KEY (`vendedorid`) REFERENCES `vipchannel_vendedor` (`vendedorid`),
+  CONSTRAINT `vipchannel_detalle_cuenta_fk_2` FOREIGN KEY (`servicioId`) REFERENCES `vipchannel_servicio` (`servicioid`),
+  CONSTRAINT `vipchannel_detalle_cuenta_fk_3` FOREIGN KEY (`tipoId`) REFERENCES `vipchannel_tipo` (`tipoid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -53,7 +61,7 @@ CREATE TABLE `vipchannel_detalle_cuenta` (
 
 LOCK TABLES `vipchannel_detalle_cuenta` WRITE;
 /*!40000 ALTER TABLE `vipchannel_detalle_cuenta` DISABLE KEYS */;
-INSERT INTO `vipchannel_detalle_cuenta` VALUES (2,1,2,1,1,2,1,1,22,0,0,'','','',1),(1,1,1,1,1,3,1,1,28,0,0,'','','',1);
+INSERT INTO `vipchannel_detalle_cuenta` VALUES (1,1,1,1,1,1,1,1,28.00,0.00,0.00,'2020-06-07','MIGRACION','','',1,1,1),(2,1,2,1,1,1,1,1,22.00,0.00,0.00,'2020-06-07','MIGRACION','','',1,1,1);
 /*!40000 ALTER TABLE `vipchannel_detalle_cuenta` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -66,4 +74,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-29  0:15:55
+-- Dump completed on 2020-06-20 11:45:31

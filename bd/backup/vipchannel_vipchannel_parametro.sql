@@ -31,7 +31,7 @@ CREATE TABLE `vipchannel_parametro` (
   `anio_fin` int(11) NOT NULL,
   `valor` float(18,2) DEFAULT NULL,
   PRIMARY KEY (`parametroId`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `vipchannel_parametro` (
 
 LOCK TABLES `vipchannel_parametro` WRITE;
 /*!40000 ALTER TABLE `vipchannel_parametro` DISABLE KEYS */;
-INSERT INTO `vipchannel_parametro` VALUES (1,1,1,1997,2,2020,0.00),(2,1,3,2020,3,2099,2.00),(3,2,1,2019,3,2099,0.00);
+INSERT INTO `vipchannel_parametro` VALUES (1,1,1,1997,2,2020,0.00),(2,1,3,2020,3,2099,2.00),(4,2,1,1997,3,2099,0.00);
 /*!40000 ALTER TABLE `vipchannel_parametro` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-29  0:15:50
+-- Dump completed on 2020-06-20 11:45:12

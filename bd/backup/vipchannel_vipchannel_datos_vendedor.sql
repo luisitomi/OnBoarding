@@ -16,31 +16,37 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `vipchannel_cuenta`
+-- Table structure for table `vipchannel_datos_vendedor`
 --
 
-DROP TABLE IF EXISTS `vipchannel_cuenta`;
+DROP TABLE IF EXISTS `vipchannel_datos_vendedor`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `vipchannel_cuenta` (
-  `cuentaId` int(11) NOT NULL AUTO_INCREMENT,
-  `consecutivoId` int(11) NOT NULL,
-  `documento` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `codigo` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `activo` int(11) NOT NULL,
-  PRIMARY KEY (`cuentaId`,`consecutivoId`),
-  KEY `vipchannel_cuenta_fk` (`documento`,`codigo`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+CREATE TABLE `vipchannel_datos_vendedor` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `detalleId` int(11) DEFAULT NULL,
+  `documento` varchar(20) COLLATE utf8_bin DEFAULT NULL,
+  `codigo` varchar(8) COLLATE utf8_bin DEFAULT NULL,
+  `cliente` varchar(250) COLLATE utf8_bin DEFAULT NULL,
+  `fechainicip` date DEFAULT NULL,
+  `motivo` varchar(250) COLLATE utf8_bin DEFAULT NULL,
+  `servicio` varchar(15) COLLATE utf8_bin DEFAULT NULL,
+  `fechafinal` varchar(15) COLLATE utf8_bin DEFAULT NULL,
+  `vendedor` varchar(250) COLLATE utf8_bin DEFAULT NULL,
+  `activo` varchar(20) COLLATE utf8_bin DEFAULT NULL,
+  `busqueda` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=410 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `vipchannel_cuenta`
+-- Dumping data for table `vipchannel_datos_vendedor`
 --
 
-LOCK TABLES `vipchannel_cuenta` WRITE;
-/*!40000 ALTER TABLE `vipchannel_cuenta` DISABLE KEYS */;
-INSERT INTO `vipchannel_cuenta` VALUES (1,1,'15614626','08183',1);
-/*!40000 ALTER TABLE `vipchannel_cuenta` ENABLE KEYS */;
+LOCK TABLES `vipchannel_datos_vendedor` WRITE;
+/*!40000 ALTER TABLE `vipchannel_datos_vendedor` DISABLE KEYS */;
+INSERT INTO `vipchannel_datos_vendedor` VALUES (407,1,'15614626','08183','JOSE LUIS LA ROSA RAMIREZ','2020-06-07','MIGRACION','CABLE','2019-12-25','HILDA ZONIA AREVALO RUIZ','INSTALADO',0),(408,2,'15614626','08183','JOSE LUIS LA ROSA RAMIREZ','2020-06-07','MIGRACION','INTERNET','2020-01-02','HILDA ZONIA AREVALO RUIZ','INSTALADO',0);
+/*!40000 ALTER TABLE `vipchannel_datos_vendedor` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

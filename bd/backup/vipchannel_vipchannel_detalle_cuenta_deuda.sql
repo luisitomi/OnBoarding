@@ -34,8 +34,9 @@ CREATE TABLE `vipchannel_detalle_cuenta_deuda` (
   `activo` int(11) NOT NULL,
   PRIMARY KEY (`deudaId`),
   KEY `Refvipchannel_detalle_cuenta46` (`detalleId`,`consecutivo`),
-  KEY `Refvipchannel_servicio47` (`servicioId`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='estado = 3';
+  KEY `Refvipchannel_servicio47` (`servicioId`),
+  CONSTRAINT `vipchannel_detalle_cuenta_deuda_fk` FOREIGN KEY (`detalleId`, `consecutivo`) REFERENCES `vipchannel_detalle_cuenta` (`detalleid`, `consecutivo`)
+) ENGINE=InnoDB AUTO_INCREMENT=139 DEFAULT CHARSET=utf8 COMMENT='estado = 3';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -56,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-29  0:15:44
+-- Dump completed on 2020-06-20 11:45:08

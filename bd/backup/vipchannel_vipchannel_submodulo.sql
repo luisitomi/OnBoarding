@@ -16,28 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `vipchannel_tipo_pago`
+-- Table structure for table `vipchannel_submodulo`
 --
 
-DROP TABLE IF EXISTS `vipchannel_tipo_pago`;
+DROP TABLE IF EXISTS `vipchannel_submodulo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `vipchannel_tipo_pago` (
-  `tipoId` int(11) NOT NULL AUTO_INCREMENT,
-  `descripcion` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+CREATE TABLE `vipchannel_submodulo` (
+  `idsubm` int(11) NOT NULL AUTO_INCREMENT,
+  `descripcion` varchar(30) COLLATE utf8_bin NOT NULL,
   `activo` int(11) NOT NULL,
-  PRIMARY KEY (`tipoId`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`idsubm`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `vipchannel_tipo_pago`
+-- Dumping data for table `vipchannel_submodulo`
 --
 
-LOCK TABLES `vipchannel_tipo_pago` WRITE;
-/*!40000 ALTER TABLE `vipchannel_tipo_pago` DISABLE KEYS */;
-INSERT INTO `vipchannel_tipo_pago` VALUES (1,'MENSUALIDAD',1),(2,'CORTE A PEDIDO',1),(3,'RETIRO A PEDIDO',1),(4,'CANCELACION',1),(5,'PUBLICIDAD',1),(6,'INSTALACION',1),(7,'CORTE POR DEUDA',1),(8,'RETIRO POR DEUDA',1);
-/*!40000 ALTER TABLE `vipchannel_tipo_pago` ENABLE KEYS */;
+LOCK TABLES `vipchannel_submodulo` WRITE;
+/*!40000 ALTER TABLE `vipchannel_submodulo` DISABLE KEYS */;
+INSERT INTO `vipchannel_submodulo` VALUES (1,'pago',1),(2,'listado',1),(3,'registro',1),(4,'listado',1),(5,'registro',1),(6,'listado',1),(7,'listado',1),(8,'distribuir',1);
+/*!40000 ALTER TABLE `vipchannel_submodulo` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -49,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-20 11:45:11
+-- Dump completed on 2020-06-20 11:45:22

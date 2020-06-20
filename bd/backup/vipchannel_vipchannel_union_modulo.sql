@@ -16,34 +16,35 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `vipchannel_detalle_cuenta_historial`
+-- Table structure for table `vipchannel_union_modulo`
 --
 
-DROP TABLE IF EXISTS `vipchannel_detalle_cuenta_historial`;
+DROP TABLE IF EXISTS `vipchannel_union_modulo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `vipchannel_detalle_cuenta_historial` (
-  `historialId` int(11) NOT NULL AUTO_INCREMENT,
-  `detalleId` int(11) NOT NULL,
-  `consecutivo` int(11) NOT NULL,
-  `monto` float(8,0) NOT NULL,
-  `monto_restante` float(8,0) NOT NULL,
-  `fecha_inicio` date NOT NULL,
-  `fecha_fin` date NOT NULL,
+CREATE TABLE `vipchannel_union_modulo` (
+  `detalleid` int(11) NOT NULL AUTO_INCREMENT,
+  `idsubm` int(11) NOT NULL,
+  `idmodulo` int(11) NOT NULL,
+  `ruta` varchar(40) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `imagen` varchar(40) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `activo` int(11) NOT NULL,
-  PRIMARY KEY (`historialId`),
-  KEY `Refvipchannel_detalle_cuenta45` (`detalleId`,`consecutivo`),
-  CONSTRAINT `vipchannel_detalle_cuenta_historial_fk` FOREIGN KEY (`detalleId`, `consecutivo`) REFERENCES `vipchannel_detalle_cuenta` (`detalleid`, `consecutivo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='estado = 2';
+  PRIMARY KEY (`detalleid`),
+  KEY `vipchannel_union_modulo_fk` (`idmodulo`),
+  KEY `vipchannel_union_modulo_fk_1` (`idsubm`),
+  CONSTRAINT `vipchannel_union_modulo_fk` FOREIGN KEY (`idmodulo`) REFERENCES `vipchannel_modulo` (`idmodulo`),
+  CONSTRAINT `vipchannel_union_modulo_fk_1` FOREIGN KEY (`idsubm`) REFERENCES `vipchannel_submodulo` (`idsubm`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `vipchannel_detalle_cuenta_historial`
+-- Dumping data for table `vipchannel_union_modulo`
 --
 
-LOCK TABLES `vipchannel_detalle_cuenta_historial` WRITE;
-/*!40000 ALTER TABLE `vipchannel_detalle_cuenta_historial` DISABLE KEYS */;
-/*!40000 ALTER TABLE `vipchannel_detalle_cuenta_historial` ENABLE KEYS */;
+LOCK TABLES `vipchannel_union_modulo` WRITE;
+/*!40000 ALTER TABLE `vipchannel_union_modulo` DISABLE KEYS */;
+INSERT INTO `vipchannel_union_modulo` VALUES (1,1,1,'/cobranza/pago','icon-basket-loaded',1),(2,2,1,'/cobranza/listado','icon-list',1),(3,3,2,'/venta/registro','icon-user-follow',1),(4,4,2,'/venta/listado','icon-list',1),(5,5,3,'/atencion/registro','icon-people',1),(6,6,3,'/atencion/listado','icon-list',1),(7,7,4,'/actividad/listado','icon-bell',1),(8,8,1,'','',1),(9,8,2,'','',1),(10,8,3,'','',1),(11,8,1,'','',0);
+/*!40000 ALTER TABLE `vipchannel_union_modulo` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

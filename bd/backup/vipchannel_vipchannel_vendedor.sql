@@ -28,7 +28,7 @@ CREATE TABLE `vipchannel_vendedor` (
   `activo` int(11) NOT NULL,
   PRIMARY KEY (`vendedorId`),
   KEY `Refvipchannel_persona17` (`documento`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-29  0:15:53
+-- Dump completed on 2020-06-20 11:45:29

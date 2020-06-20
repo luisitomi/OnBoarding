@@ -31,9 +31,10 @@ CREATE TABLE `vipchannel_pago` (
   `total` float(8,0) NOT NULL,
   `activo` int(11) NOT NULL,
   PRIMARY KEY (`pagoId`,`consecutivo`,`cajeroId`),
-  KEY `Refvipchannel_servicios42` (`serviciosId`,`consecutivoId`),
-  KEY `Refvipchannel_cajero33` (`cajeroId`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  KEY `Refvipchannel_cajero33` (`cajeroId`),
+  KEY `vipchannel_pago_fk` (`serviciosId`,`consecutivoId`),
+  CONSTRAINT `vipchannel_pago_fk` FOREIGN KEY (`serviciosId`, `consecutivoId`) REFERENCES `vipchannel_servicios` (`serviciosid`, `consecutivoid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,6 +43,7 @@ CREATE TABLE `vipchannel_pago` (
 
 LOCK TABLES `vipchannel_pago` WRITE;
 /*!40000 ALTER TABLE `vipchannel_pago` DISABLE KEYS */;
+INSERT INTO `vipchannel_pago` VALUES (1,1,2,1,1,10,1),(2,2,2,1,1,10,1);
 /*!40000 ALTER TABLE `vipchannel_pago` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-29  0:15:51
+-- Dump completed on 2020-06-20 11:45:13

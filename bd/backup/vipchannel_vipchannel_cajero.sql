@@ -27,8 +27,10 @@ CREATE TABLE `vipchannel_cajero` (
   `documento` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `numero` int(11) NOT NULL,
   `activo` int(11) DEFAULT NULL,
-  PRIMARY KEY (`cajeroId`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`cajeroId`),
+  KEY `vipchannel_cajero_fk` (`documento`),
+  CONSTRAINT `vipchannel_cajero_fk` FOREIGN KEY (`documento`) REFERENCES `vipchannel_persona` (`documento`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -50,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-29  0:15:52
+-- Dump completed on 2020-06-20 11:45:13

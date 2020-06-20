@@ -30,8 +30,9 @@ CREATE TABLE `vipchannel_correlativo` (
   `valor` int(11) NOT NULL,
   PRIMARY KEY (`correlativoId`),
   KEY `Refvipchannel_cajero43` (`cajeroId`),
-  KEY `Refvipchannel_comprobante44` (`comprobanteid`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+  KEY `vipchannel_correlativo_fk` (`comprobanteid`),
+  CONSTRAINT `vipchannel_correlativo_fk` FOREIGN KEY (`comprobanteid`) REFERENCES `vipchannel_comprobante` (`comprobanteid`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +41,7 @@ CREATE TABLE `vipchannel_correlativo` (
 
 LOCK TABLES `vipchannel_correlativo` WRITE;
 /*!40000 ALTER TABLE `vipchannel_correlativo` DISABLE KEYS */;
-INSERT INTO `vipchannel_correlativo` VALUES (1,1,1,1,1),(2,1,2,1,1),(3,1,3,1,1),(4,2,1,1,1),(5,2,2,1,1),(6,2,3,1,1),(7,3,1,1,1),(8,3,2,1,1),(9,3,3,1,1);
+INSERT INTO `vipchannel_correlativo` VALUES (1,1,1,1,2),(2,1,2,1,1),(3,1,3,1,1),(4,2,1,1,3),(5,2,2,1,1),(6,2,3,1,1),(7,3,1,1,1),(8,3,2,1,1),(9,3,3,1,1);
 /*!40000 ALTER TABLE `vipchannel_correlativo` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-29  0:15:57
+-- Dump completed on 2020-06-20 11:45:33

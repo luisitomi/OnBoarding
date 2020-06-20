@@ -33,9 +33,11 @@ CREATE TABLE `vipchannel_servicios` (
   `hora_instalacion` time NOT NULL,
   `activo` int(11) NOT NULL,
   PRIMARY KEY (`serviciosId`,`consecutivoId`),
-  KEY `Refvipchannel_detalle_cuenta27` (`detalleId`,`consecutivo`),
-  KEY `Refvipchannel_tecnico30` (`tecnicoId`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  KEY `vipchannel_servicios_fk` (`detalleId`,`consecutivo`),
+  KEY `vipchannel_servicios_fk_1` (`tecnicoId`),
+  CONSTRAINT `vipchannel_servicios_fk` FOREIGN KEY (`detalleId`, `consecutivo`) REFERENCES `vipchannel_detalle_cuenta` (`detalleid`, `consecutivo`),
+  CONSTRAINT `vipchannel_servicios_fk_1` FOREIGN KEY (`tecnicoId`) REFERENCES `vipchannel_tecnico` (`tecnicoid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -57,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-29  0:15:49
+-- Dump completed on 2020-06-20 11:45:24

@@ -27,8 +27,9 @@ CREATE TABLE `vipchannel_gestor` (
   `documento` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `activo` int(11) NOT NULL,
   PRIMARY KEY (`gestorId`),
-  KEY `Refvipchannel_persona11` (`documento`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  KEY `vipchannel_gestor_fk` (`documento`),
+  CONSTRAINT `vipchannel_gestor_fk` FOREIGN KEY (`documento`) REFERENCES `vipchannel_persona` (`documento`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +38,7 @@ CREATE TABLE `vipchannel_gestor` (
 
 LOCK TABLES `vipchannel_gestor` WRITE;
 /*!40000 ALTER TABLE `vipchannel_gestor` DISABLE KEYS */;
-INSERT INTO `vipchannel_gestor` VALUES (1,'15639224',1);
+INSERT INTO `vipchannel_gestor` VALUES (1,'15639224',1),(2,'80614525',1);
 /*!40000 ALTER TABLE `vipchannel_gestor` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-29  0:15:49
+-- Dump completed on 2020-06-20 11:45:25

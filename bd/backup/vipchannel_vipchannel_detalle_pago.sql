@@ -39,8 +39,11 @@ CREATE TABLE `vipchannel_detalle_pago` (
   KEY `Refvipchannel_calendario41` (`fechaId`),
   KEY `Refvipchannel_calendario39` (`calendarioId`),
   KEY `Refvipchannel_tipo_pago38` (`tipoId`),
-  KEY `Refvipchannel_pago37` (`pagoId`,`consecutivo`,`cajeroId`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  KEY `Refvipchannel_pago37` (`pagoId`,`consecutivo`,`cajeroId`),
+  CONSTRAINT `vipchannel_detalle_pago_fk` FOREIGN KEY (`pagoId`, `consecutivo`, `cajeroId`) REFERENCES `vipchannel_pago` (`pagoid`, `consecutivo`, `cajeroid`),
+  CONSTRAINT `vipchannel_detalle_pago_fk_1` FOREIGN KEY (`fechaId`) REFERENCES `vipchannel_calendario` (`calendarioid`),
+  CONSTRAINT `vipchannel_detalle_pago_fk_2` FOREIGN KEY (`tipoId`) REFERENCES `vipchannel_tipo_pago` (`tipoid`)
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,6 +52,7 @@ CREATE TABLE `vipchannel_detalle_pago` (
 
 LOCK TABLES `vipchannel_detalle_pago` WRITE;
 /*!40000 ALTER TABLE `vipchannel_detalle_pago` DISABLE KEYS */;
+INSERT INTO `vipchannel_detalle_pago` VALUES (21,1,1,2,1,3,219,1,10,'B002 N 1',0,1),(22,2,2,2,1,3,221,1,10,'B002 N 2',0,1);
 /*!40000 ALTER TABLE `vipchannel_detalle_pago` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -61,4 +65,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-29  0:15:53
+-- Dump completed on 2020-06-20 11:45:15
