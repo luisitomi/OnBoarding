@@ -76,6 +76,7 @@ export class CobranzaComponent implements OnInit{
   pagoActive: boolean = false;
   pagoDeleteActive: boolean = false;
   pagoExitActive: boolean = false;
+  userActive:boolean = false;
 
   submitted: boolean;
   submittedDirection: boolean;
@@ -1038,6 +1039,7 @@ export class CobranzaComponent implements OnInit{
         this.listadoclientesdatabyid();
         this.listadoclientesdata();
         this.limipiarinputs();
+        this.validation();
       break;
       case 2:
         this.listadoclientesdatadirecccion();
@@ -1128,6 +1130,15 @@ export class CobranzaComponent implements OnInit{
       this.paternopersonModel = "";
       this.maternopersonModel = "";
       this.empresapersonModel = "";
+  }
+
+  validation(){
+    if(parseInt(sessionStorage.getItem(AppConstants.Session.USERID)) > 0 &&
+    parseInt(sessionStorage.getItem(AppConstants.Session.USERID)) < 4){
+      this.userActive = true
+    }else{
+      this.userActive = false
+    }
   }
 
 }

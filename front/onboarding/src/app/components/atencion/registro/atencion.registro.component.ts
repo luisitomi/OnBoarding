@@ -74,6 +74,7 @@ export class RegistroAtenciónComponent implements OnInit{
 
   pagoDeleteActive: boolean = false;
   pagoExitActive: boolean = false;
+  userActive:boolean = false;
 
   submitted: boolean;
   submittedDirection: boolean;
@@ -702,6 +703,7 @@ export class RegistroAtenciónComponent implements OnInit{
         this.limipiarinputs();
         this.listadoservice();
         this.listadoreclaim();
+        this.validation();
       break;
       case 2:
         this.listadoclientesdatadirecccion();
@@ -731,6 +733,15 @@ export class RegistroAtenciónComponent implements OnInit{
       case 9:
         this.listadomesesexit();
       break;
+    }
+  }
+
+  validation(){
+    if(parseInt(sessionStorage.getItem(AppConstants.Session.USERID)) > 5 &&
+    parseInt(sessionStorage.getItem(AppConstants.Session.USERID)) < 7){
+      this.userActive = true
+    }else{
+      this.userActive = false
     }
   }
 

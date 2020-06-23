@@ -1,6 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { PersonPayModel, PersonByIdPayModel, PersonByIdPayDirectionModel, PersonByIdPayReferenceModel, PersonByIdPayMangerModel, PersonByIdPayVoucherModel, PersonByIdPayDetailModel, ResponseModel, DirectionListModel, PersonByIdPayDetailExitModel } from '../../../models/personpay.model';
 import { Router, NavigationEnd } from '@angular/router';
+import { DatePipe } from '@angular/common';
 import { PersonPayService } from '../../../services/personpay.service';
 import { ManagerPayService } from '../../../services/managerpay.service';
 import { SellerService } from '../../../services/saller.service';
@@ -14,7 +15,8 @@ import { ToastrService } from 'ngx-toastr';
 import { AppConstants } from '../../../shared/constants/app.constants';
 
 @Component({
-  templateUrl: 'venta.registro.component.html'
+  templateUrl: 'venta.registro.component.html',
+  providers: [DatePipe]
 })
 
 export class RegistroComponent implements OnInit{
@@ -39,6 +41,8 @@ export class RegistroComponent implements OnInit{
   currentPage: number = 1;
 
   busqueda:string;
+  fecha:string;
+  hora:string;
 
   name:string;
   direction:string;
@@ -77,6 +81,7 @@ export class RegistroComponent implements OnInit{
 
   pagoDeleteActive: boolean = false;
   pagoExitActive: boolean = false;
+  userActive:boolean = false;
 
   submitted: boolean;
   submittedDirection: boolean;
@@ -90,6 +95,7 @@ export class RegistroComponent implements OnInit{
     private ManagerPayService: ManagerPayService,
     private MonthPayService: MonthPayService,
     private SellerService: SellerService,
+    private datePipe: DatePipe,
     private router: Router,
     private formBuilder: FormBuilder,
     private toastr: ToastrService
@@ -106,6 +112,15 @@ export class RegistroComponent implements OnInit{
   ngOnInit() {
     this.onReturndata(0);
     this.initForms();
+  }
+
+  validation(){
+    if(parseInt(sessionStorage.getItem(AppConstants.Session.USERID)) > 3 &&
+    parseInt(sessionStorage.getItem(AppConstants.Session.USERID)) < 6){
+      this.userActive = true
+    }else{
+      this.userActive = false
+    }
   }
 
   initForms() {
@@ -467,6 +482,9 @@ export class RegistroComponent implements OnInit{
         registerContrato.empresa = "a"
     }
 
+    this.fecha = this.datePipe.transform(registerContrato.hora, 'yyyy-MM-dd');
+    this.hora = this.datePipe.transform(registerContrato.hora, 'HH-mm');
+
     this.SellerService.postSaveServiceSaleSave( registerContrato.documento.toUpperCase(),
                                                 registerContrato.codigo.toUpperCase(),
                                                 registerContrato.nombre.toUpperCase(),
@@ -479,8 +497,8 @@ export class RegistroComponent implements OnInit{
                                                 registerContrato.numero.toUpperCase(),
                                                 registerContrato.referencia.toUpperCase(),
                                                 registerContrato.vendedor,
-                                                "2020-01-06",
-                                                "20:00",
+                                                this.fecha,
+                                                this.hora,
                                                 registerContrato.servicio,
                                                 registerContrato.inicial,
                                                 registerContrato.mensual,
@@ -881,6 +899,7 @@ export class RegistroComponent implements OnInit{
         this.listadoclientesdatabyid();
         this.listadoclientesdata();
         this.limipiarinputs();
+        this.validation();
       break;
       case 2:
         this.listadoclientesdatadirecccion();

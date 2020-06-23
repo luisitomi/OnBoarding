@@ -100,7 +100,10 @@ export class ListadoActividadComponent implements OnInit{
 
   reconocerFunction(){
     if(sessionStorage.getItem(AppConstants.Session.USERID) == '0'
-      || sessionStorage.getItem(AppConstants.Session.USERNAME) == '4'){
+      || sessionStorage.getItem(AppConstants.Session.USERID) == '4'
+      || sessionStorage.getItem(AppConstants.Session.USERID) == '6'
+      || sessionStorage.getItem(AppConstants.Session.USERID) == '7'
+      || sessionStorage.getItem(AppConstants.Session.USERID) == '8'){
         this.addNotiActive = true;
     }else{
       this.addNotiActive = false;
@@ -139,7 +142,7 @@ export class ListadoActividadComponent implements OnInit{
       );
     return false;
   }
-  console.log(registerUser)
+  
   this.UserService.postNotificationSave(registerUser.modulo,
                                         registerUser.codigo,
                                         registerUser.documento,

@@ -82,6 +82,7 @@ public class postSaveServiceSaleCustomJdbcRepository implements postSaveServiceS
 			inParams.addValue("second", second);
 			inParams.addValue("client", client);
 			inParams.addValue("fech", fech);
+			inParams.addValue("email", email);
 			inParams.addValue("zone", zone);
 			inParams.addValue("number", number);
 			inParams.addValue("descriptionrefe", descriptionrefe);

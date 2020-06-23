@@ -62,6 +62,10 @@ export const routes: Routes = [
       {
         path: 'actividad',
         loadChildren: () => import('./components/actividad/actividad.module').then(m => m.ActividadModule)
+      },
+      {
+        path: 'servicio',
+        loadChildren: () => import('./components/servicio/servicio.module').then(m => m.ServicioModule)
       }
     ]
   },

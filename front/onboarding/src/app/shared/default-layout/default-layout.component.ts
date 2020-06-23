@@ -41,7 +41,9 @@ export class DefaultLayoutComponent implements OnInit{
   ngOnInit(): void {
     this.validation();
     setInterval(() => {
-      this.notificaction(1);
+      if(sessionStorage.getItem(AppConstants.Session.USERNAME) != null){
+        this.notificaction(1);
+      }
     },3000)
   }
 

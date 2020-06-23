@@ -70,11 +70,11 @@
             <div class="card-body">
               <div class="h1 text-muted text-left mb-4">
                 <i class="icon-people" style="color: red;"></i>
-                <button style="background-color: transparent;"
+                <button style="background-color: transparent;" *ngIf="userActive"
                         class="btn" data-toggle="modal" (click)="personamodal()">
                   <i class="fa fa-pencil fa-lg" style="color: green;"></i>
                 </button>
-                <button style="background-color: transparent;"
+                <button style="background-color: transparent;" *ngIf="userActive"
                         class="btn" data-toggle="modal" (click)="reclamoSaveModal.show()">
                   <i class="fa fa-taxi fa-lg" style="color: green;"></i>
                 </button>
@@ -115,7 +115,7 @@
             <div class="card-body">
               <div class="h1 text-muted text-left mb-4">
                 <i class="icon-home" style="color: red;"></i>
-                <button class="btn" style="background-color: transparent;"
+                <button class="btn" style="background-color: transparent;" *ngIf="userActive"
                   class="btn" data-toggle="modal" (click)="directionModal.show()">
                   <i class="fa fa-pencil fa-lg" style="color: green;"></i>
                 </button>
@@ -135,7 +135,7 @@
             <div class="card-body">
               <div class="h1 text-muted text-left mb-4">
                 <i class="icon-target" style="color: red;"></i>
-                <button class="btn" style="background-color: transparent;"
+                <button class="btn" style="background-color: transparent;" *ngIf="userActive"
                   class="btn" data-toggle="modal" (click)="referenceModal.show()">
                   <i class="fa fa-pencil fa-lg" style="color: green;"></i>
                 </button>

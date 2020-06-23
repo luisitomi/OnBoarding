@@ -70,7 +70,7 @@
           <div class="card-body">
             <div class="h1 text-muted text-left mb-4">
               <i class="icon-people" style="color: red;"></i>
-              <button style="background-color: transparent;"
+              <button style="background-color: transparent;" *ngIf="userActive"
                       class="btn" data-toggle="modal" (click)="personamodal()">
                 <i class="fa fa-pencil fa-lg" style="color: green;"></i>
               </button>
@@ -86,7 +86,7 @@
         </div>
       </div>
       <div class="col-sm-6 col-md-3">
-        
+        <div></div>
       </div>
       <div class="col-sm-12 col-md-6">
         <div class="card">
@@ -100,39 +100,41 @@
             </div>
             <div class="text-muted text-uppercase font-weight-bold font-xs">{{service}}</div>
           </div>
-          <div class="row card-body" style="padding: 0px 0px 10px 25px;" *ngIf="pagoActive">
-            <form *ngIf="formularioSavePayActive" [formGroup]="formularioSavePayActive" autocomplete="offs" class="form-register-section">
-              <div asp-validation-summary="All" class="text-danger"></div>
-              <div class="row" style="margin: 10px 0px 0px 0px;">
-                <div class="col-sm-4">
-                  <div>
-                    <label for="amountpaySave">Monto</label>
-                    <input class="form-control form-control-sm" maxlength="6" id="amountpaySave"
-                           formControlName="amountpaySave" [ngClass]="{ 'is-invalid': submittedSaveActive && j.amountpaySave.errors }" placeholder="Ingrese monto" type="text">
-                    <div class="invalid-feedback"> Ingrese valor para monto</div>
+          <div *ngIf="userActive">
+            <div class="row card-body" style="padding: 0px 0px 10px 25px;" *ngIf="pagoActive">
+              <form *ngIf="formularioSavePayActive" [formGroup]="formularioSavePayActive" autocomplete="offs" class="form-register-section">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="row" style="margin: 10px 0px 0px 0px;">
+                  <div class="col-sm-4">
+                    <div>
+                      <label for="amountpaySave">Monto</label>
+                      <input class="form-control form-control-sm" maxlength="6" id="amountpaySave"
+                             formControlName="amountpaySave" [ngClass]="{ 'is-invalid': submittedSaveActive && j.amountpaySave.errors }" placeholder="Ingrese monto" type="text">
+                      <div class="invalid-feedback"> Ingrese valor para monto</div>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div>
+                      <label for="selectpaySave">Gestor</label>
+                      <select class="form-control form-control-sm select-select" id="selectpaySave" placeholder="Seleccione"
+                              formControlName="selectpaySave" [ngClass]="{ 'is-invalid': submittedSaveActive && j.selectpaySave.errors }">
+                        <option value="" select>Seleccione</option>
+                        <option value="0">No</option>
+                        <option value="1">Si</option>
+                      </select>
+                      <div class="invalid-feedback"> Seleccione opcion</div>
+                    </div>
+                  </div>
+                  <div class="col-sm-4" style="padding-top: 25px;">
+                    <div>
+                      <button class="btn btn-success btn-sm" (click)="savepayFunction()" type="button">
+                        GUARDAR PAGO
+                      </button>
+                    </div>
                   </div>
                 </div>
-                <div class="col-sm-4">
-                  <div>
-                    <label for="selectpaySave">Gestor</label>
-                    <select class="form-control form-control-sm select-select" id="selectpaySave" placeholder="Seleccione"
-                            formControlName="selectpaySave" [ngClass]="{ 'is-invalid': submittedSaveActive && j.selectpaySave.errors }">
-                      <option value="" select>Seleccione</option>
-                      <option value="0">No</option>
-                      <option value="1">Si</option>
-                    </select>
-                    <div class="invalid-feedback"> Seleccione opcion</div>
-                  </div>
-                </div>
-                <div class="col-sm-4" style="padding-top: 25px;">
-                  <div>
-                    <button class="btn btn-success btn-sm" (click)="savepayFunction()" type="button">
-                      GUARDAR PAGO
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -143,7 +145,7 @@
           <div class="card-body">
             <div class="h1 text-muted text-left mb-4">
               <i class="icon-home" style="color: red;"></i>
-              <button class="btn" style="background-color: transparent;"
+              <button class="btn" style="background-color: transparent;" *ngIf="userActive"
                 class="btn" data-toggle="modal" (click)="directionModal.show()">
                 <i class="fa fa-pencil fa-lg" style="color: green;"></i>
               </button>
@@ -163,7 +165,7 @@
           <div class="card-body">
             <div class="h1 text-muted text-left mb-4">
               <i class="icon-target" style="color: red;"></i>
-              <button class="btn" style="background-color: transparent;"
+              <button class="btn" style="background-color: transparent;" *ngIf="userActive"
                 class="btn" data-toggle="modal" (click)="referenceModal.show()">
                 <i class="fa fa-pencil fa-lg" style="color: green;"></i>
               </button>
@@ -183,7 +185,7 @@
           <div class="card-body p-6 clearfix">
             <i class="fa fa-calendar bg-warning p-3 font-2xl mr-3 float-left"></i>
             <div class="text-muted text-uppercase font-weight-bold font-xs">{{serviceexit}}
-              <button *ngIf="pagoExitActive" class="btn" style="background-color: transparent;"
+              <button *ngIf="pagoExitActive" class="btn" style="background-color: transparent;" 
                   class="btn" data-toggle="modal" (click)="openMonthExit()">
                   <i class="fa fa-eye fa-lg" style="color: green;"></i>
                 </button>
@@ -191,74 +193,76 @@
             <div class="text-muted text-uppercase font-weight-bold font-xs" style="color: black;">S/ {{amountdetailinternetexit}} "Internet"</div>
             <div class="text-muted text-uppercase font-weight-bold font-xs" style="color: black;">S/ {{amountdetailcableexit}} "Cable"</div>
          </div>
-         <div class="row card-body" style="padding: 0px 0px 10px 10px;" *ngIf="pagoActive">
-          <form *ngIf="formularioSavePayExit" [formGroup]="formularioSavePayExit" autocomplete="offs" class="form-register-section">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="row" style="margin: 10px 0px 0px 0px;">
-              <div class="col-sm-2">
-                <div>
-                  <label for="amountpaySaveE">Monto</label>
-                  <input class="form-control form-control-sm" maxlength="6" id="amountpaySaveE"
-                         formControlName="amountpaySaveE" [ngClass]="{ 'is-invalid': submittedSaveExit && k.amountpaySaveE.errors }" placeholder="Ingrese monto" type="text">
-                  <div class="invalid-feedback"> Ingrese valor para monto</div>
+         <div *ngIf="userActive">
+          <div class="row card-body" style="padding: 0px 0px 10px 10px;" *ngIf="pagoActive">
+            <form *ngIf="formularioSavePayExit" [formGroup]="formularioSavePayExit" autocomplete="offs" class="form-register-section">
+              <div asp-validation-summary="All" class="text-danger"></div>
+              <div class="row" style="margin: 10px 0px 0px 0px;">
+                <div class="col-sm-2">
+                  <div>
+                    <label for="amountpaySaveE">Monto</label>
+                    <input class="form-control form-control-sm" maxlength="6" id="amountpaySaveE"
+                           formControlName="amountpaySaveE" [ngClass]="{ 'is-invalid': submittedSaveExit && k.amountpaySaveE.errors }" placeholder="Ingrese monto" type="text">
+                    <div class="invalid-feedback"> Ingrese valor para monto</div>
+                  </div>
+                </div>
+                <div class="col-sm-2">
+                  <div>
+                    <label for="selectpaySaveE">Gestor</label>
+                    <select class="form-control form-control-sm select-select" id="selectpaySaveE" placeholder="Seleccione"
+                            formControlName="selectpaySaveE" [ngClass]="{ 'is-invalid': submittedSaveExit && k.selectpaySaveE.errors }">
+                      <option value="" select>Seleccione</option>
+                      <option value="0">No</option>
+                      <option value="1">Si</option>
+                    </select>
+                    <div class="invalid-feedback"> Seleccione opcion</div>
+                  </div>
+                </div>
+                <div class="col-sm-2">
+                  <div>
+                    <label for="selectserviceSaveE">Servicio</label>
+                    <select class="form-control form-control-sm select-select" id="selectserviceSaveE" placeholder="Seleccione"
+                            formControlName="selectserviceSaveE" [ngClass]="{ 'is-invalid': submittedSaveExit && k.selectserviceSaveE.errors }">
+                            <option value="" select>Seleccione</option>
+                      <option value="1">Cable</option>
+                      <option value="2">Internet</option>
+                    </select>
+                    <div class="invalid-feedback"> Seleccione opcion</div>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div>
+                    <label for="typesaveE">Tipo</label>
+                    <select class="form-control form-control-sm select-select" id="typesaveE" placeholder="Seleccione"
+                            formControlName="typesaveE" [ngClass]="{ 'is-invalid': submittedSaveExit && k.typesaveE.errors }">
+                      <option value="" select>Seleccione</option>
+                      <option value="2">Corte</option>
+                      <option value="3">Retiro</option>
+                    </select>
+                    <div class="invalid-feedback"> Seleccione opcion</div>
+                  </div>
+                </div>
+                <div class="col-sm-2" style="padding-top: 25px;">
+                  <div>
+                    <button class="btn btn-warning btn-sm" type="button" (click)="saveexitfunction()">
+                      CANCELAR
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div class="col-sm-2">
-                <div>
-                  <label for="selectpaySaveE">Gestor</label>
-                  <select class="form-control form-control-sm select-select" id="selectpaySaveE" placeholder="Seleccione"
-                          formControlName="selectpaySaveE" [ngClass]="{ 'is-invalid': submittedSaveExit && k.selectpaySaveE.errors }">
-                    <option value="" select>Seleccione</option>
-                    <option value="0">No</option>
-                    <option value="1">Si</option>
-                  </select>
-                  <div class="invalid-feedback"> Seleccione opcion</div>
-                </div>
-              </div>
-              <div class="col-sm-2">
-                <div>
-                  <label for="selectserviceSaveE">Servicio</label>
-                  <select class="form-control form-control-sm select-select" id="selectserviceSaveE" placeholder="Seleccione"
-                          formControlName="selectserviceSaveE" [ngClass]="{ 'is-invalid': submittedSaveExit && k.selectserviceSaveE.errors }">
-                          <option value="" select>Seleccione</option>
-                    <option value="1">Cable</option>
-                    <option value="2">Internet</option>
-                  </select>
-                  <div class="invalid-feedback"> Seleccione opcion</div>
-                </div>
-              </div>
-              <div class="col-sm-3">
-                <div>
-                  <label for="typesaveE">Tipo</label>
-                  <select class="form-control form-control-sm select-select" id="typesaveE" placeholder="Seleccione"
-                          formControlName="typesaveE" [ngClass]="{ 'is-invalid': submittedSaveExit && k.typesaveE.errors }">
-                    <option value="" select>Seleccione</option>
-                    <option value="2">Corte</option>
-                    <option value="3">Retiro</option>
-                  </select>
-                  <div class="invalid-feedback"> Seleccione opcion</div>
-                </div>
-              </div>
-              <div class="col-sm-2" style="padding-top: 25px;">
-                <div>
-                  <button class="btn btn-warning btn-sm" type="button" (click)="saveexitfunction()">
-                    CANCELAR
-                  </button>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
+  </div>
   <div class="row">
     <div class="col-sm-6 col-md-3">
       <div class="card">
         <div class="card-body">
           <div class="h1 text-muted text-left mb-4">
             <i class="icon-phone" style="color: red;"></i>
-            <button class="btn" style="background-color: transparent;"
+            <button class="btn" style="background-color: transparent;" *ngIf="userActive"
               class="btn" data-toggle="modal" (click)="managerModal.show()">
                 <i class="fa fa-pencil fa-lg" style="color: green;"></i>
             </button>
@@ -296,13 +300,15 @@
           <div class="h5 mb-0 mt-2" style="color: black;">S/ {{amountgeneraldelete}}</div>
           <div class="text-muted text-uppercase font-weight-bold font-xs">{{servicedelete}}</div>
        </div>
-       <div class="row card-body" style="padding: 10px 1px 10px 25px;" *ngIf="pagoDeleteActive">
-        <div class="col-sm-4">
-          <div class="form-group">
-            <label for="amountpaySaveDelete">Monto</label>
-            <input class="form-control form-control-sm" maxlength="6" id="amountpaySaveDelete" placeholder="Ingrese monto" type="text">
+       <div *ngIf="userActive">
+        <div class="row card-body" style="padding: 10px 1px 10px 25px;" *ngIf="pagoDeleteActive">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="amountpaySaveDelete">Monto</label>
+              <input class="form-control form-control-sm" maxlength="6" id="amountpaySaveDelete" placeholder="Ingrese monto" type="text">
+            </div>
           </div>
-        </div>
+         </div>
        </div>
       </div>
     </div>

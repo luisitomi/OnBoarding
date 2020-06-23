@@ -19,7 +19,7 @@
         
       </div>
       <div class="col-4 text-right">
-        <button class="btn btn-outline" style="background-color: mediumturquoise;" (click)="onReturndata(10)">
+        <button class="btn btn-outline" style="background-color: mediumturquoise;" (click)="onReturndata(10)" *ngIf="userActive">
           <i class="fa fa-plus" style="color: white;"></i> Añadir Cliente Nuevo</button>
       </div>
     </div>
@@ -77,7 +77,7 @@
           <div class="card-body">
             <div class="h1 text-muted text-left mb-4">
               <i class="icon-people" style="color: red;"></i>
-              <button style="background-color: transparent;"
+              <button style="background-color: transparent;" *ngIf="userActive"
                       class="btn" data-toggle="modal" (click)="personamodal()">
                 <i class="fa fa-pencil fa-lg" style="color: green;"></i>
               </button>
@@ -118,11 +118,11 @@
           <div class="card-body">
             <div class="h1 text-muted text-left mb-4">
               <i class="icon-home" style="color: red;"></i>
-              <button class="btn" style="background-color: transparent;"
+              <button class="btn" style="background-color: transparent;" *ngIf="userActive"
                 class="btn" data-toggle="modal" (click)="directionModal.show()">
                 <i class="fa fa-pencil fa-lg" style="color: green;"></i>
               </button>
-              <button class="btn" style="background-color: transparent;"
+              <button class="btn" style="background-color: transparent;" *ngIf="userActive"
                 class="btn" data-toggle="modal" (click)="directionChangeModal.show()">
                 <i class="fa fa-refresh fa-lg" style="color: green;"></i>
               </button>
@@ -142,7 +142,7 @@
           <div class="card-body">
             <div class="h1 text-muted text-left mb-4">
               <i class="icon-target" style="color: red;"></i>
-              <button class="btn" style="background-color: transparent;"
+              <button class="btn" style="background-color: transparent;" *ngIf="userActive"
                 class="btn" data-toggle="modal" (click)="referenceModal.show()">
                 <i class="fa fa-pencil fa-lg" style="color: green;"></i>
               </button>
