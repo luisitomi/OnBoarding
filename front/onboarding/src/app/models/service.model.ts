@@ -28,4 +28,11 @@ export class PendingServiceModel{
 	code:string;
 	dateP:string;
 	asunt:string;
+	district:string;
+	user:string;
+}
+
+export class TecnicoModel{
+	id:number;
+	name:string;
 }

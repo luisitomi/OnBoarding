@@ -10,14 +10,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dev.op.core.dto.ResponseModel;
 import com.dev.op.core.dto.vipchannel.getListServicePendingModel;
+import com.dev.op.core.dto.vipchannel.getListTecniModel;
 import com.dev.op.core.dto.vipchannel.getMaterialAllModel;
 import com.dev.op.core.dto.vipchannel.getMaterialModel;
 import com.dev.op.core.repository.vipchannel.jdbc.getListServicePendingJdbcRepository;
+import com.dev.op.core.repository.vipchannel.jdbc.getListTecniJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getMaterialAllJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getMaterialJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.postMaterialJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.postServiceInstallJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.putMaterialJdbcRepository;
+import com.dev.op.core.repository.vipchannel.jdbc.putTecnInstallJdbcRepository;
 import com.dev.op.core.service.vipchannel.ServiceService;
 import com.dev.op.core.util.vipchannel.GenericUtil;
 
@@ -38,8 +41,16 @@ public class ServiceServiceImpl implements ServiceService {
 	private getMaterialJdbcRepository getMaterialJdbcRepository;
 	
 	@Autowired
+	@Qualifier("getListTecniJdbcRepository")
+	private getListTecniJdbcRepository getListTecniJdbcRepository;
+	
+	@Autowired
 	@Qualifier("putMaterialJdbcRepository")
 	private putMaterialJdbcRepository putMaterialJdbcRepository;
+	
+	@Autowired
+	@Qualifier("putTecnInstallJdbcRepository")
+	private putTecnInstallJdbcRepository putTecnInstallJdbcRepository;
 	
 	@Autowired
 	@Qualifier("postMaterialJdbcRepository")
@@ -50,12 +61,12 @@ public class ServiceServiceImpl implements ServiceService {
 	private postServiceInstallJdbcRepository postServiceInstallJdbcRepository;
 	
 	@Override
-	public List<getListServicePendingModel> getListServicePending() {
+	public List<getListServicePendingModel> getListServicePending(Integer codeUser) {
 		List<getListServicePendingModel> getListServicePending = new ArrayList<getListServicePendingModel>();
 		
 		try {
 			
-			getListServicePending = getListServicePendingJdbcRepository.getListServicePending();
+			getListServicePending = getListServicePendingJdbcRepository.getListServicePending(codeUser);
 			if(GenericUtil.isCollectionEmpty(getListServicePending)) {
 				return null;
 			}
@@ -162,6 +173,46 @@ public class ServiceServiceImpl implements ServiceService {
 			}
 			else {
 				return postServiceInstall;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getListTecniModel> getListTecni() {
+		List<getListTecniModel> getListTecni = new ArrayList<getListTecniModel>();
+		
+		try {
+			
+			getListTecni = getListTecniJdbcRepository.getListTecni();
+			if(GenericUtil.isCollectionEmpty(getListTecni)) {
+				return null;
+			}
+			else {
+				return getListTecni;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ResponseModel> putTecnInstall(Integer optionI, Integer tecn, Integer idP, Integer nextId) {
+		List<ResponseModel> putTecnInstall = new ArrayList<ResponseModel>();
+		
+		try {
+			
+			putTecnInstall = putTecnInstallJdbcRepository.putTecnInstall(optionI, tecn, idP, nextId);
+			if(GenericUtil.isCollectionEmpty(putTecnInstall)) {
+				return null;
+			}
+			else {
+				return putTecnInstall;
 			}
 		}
 		catch(Exception e) {

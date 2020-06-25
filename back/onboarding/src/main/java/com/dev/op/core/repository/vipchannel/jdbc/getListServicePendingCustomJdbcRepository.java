@@ -1,5 +1,6 @@
 package com.dev.op.core.repository.vipchannel.jdbc;
 
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
@@ -29,15 +31,17 @@ public class getListServicePendingCustomJdbcRepository implements getListService
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<getListServicePendingModel> getListServicePending() {
+	public List<getListServicePendingModel> getListServicePending(Integer codeUser) {
 		List<getListServicePendingModel> getListServicePending = new ArrayList<getListServicePendingModel>();
 		
 		try {
 			
 			simpleJdbcCall.withProcedureName(Constantes.GETLISTSERVICEPENDING);
+			simpleJdbcCall.declareParameters(new SqlParameter("codeUser", Types.INTEGER));
 			simpleJdbcCall.returningResultSet("getListServicePending", new getListServicePendingMapper());
 			
 			MapSqlParameterSource inParams = new MapSqlParameterSource();
+			inParams.addValue("codeUser", codeUser);
 			
 			Map<String, Object> result = simpleJdbcCall.execute(inParams);
 			getListServicePending = (List<getListServicePendingModel>) result.get("getListServicePending");

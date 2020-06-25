@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class getListServicePendingModel implements Serializable {
 
 	/**
-	 * call getListServicePending();
+	 * call getListServicePending(:codeUser);
 	 */
 	private static final long serialVersionUID = 7440851506308938680L;
 	
@@ -26,6 +26,10 @@ public class getListServicePendingModel implements Serializable {
 	private String dateP;
 	
 	private String asunt;
+	
+	private String district;
+	
+	private String user;
 	
 	public getListServicePendingModel() {
 		
@@ -101,6 +105,22 @@ public class getListServicePendingModel implements Serializable {
 
 	public void setAsunt(String asunt) {
 		this.asunt = asunt;
+	}
+
+	public String getDistrict() {
+		return district;
+	}
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public void setDistrict(String district) {
+		this.district = district;
 	}
 	
 }

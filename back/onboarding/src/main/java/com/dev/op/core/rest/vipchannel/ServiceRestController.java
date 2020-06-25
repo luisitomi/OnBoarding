@@ -15,6 +15,7 @@ import com.dev.op.core.dto.vipchannel.getMaterialAllModel;
 import com.dev.op.core.dto.vipchannel.getMaterialModel;
 import com.dev.op.core.dto.ResponseModel;
 import com.dev.op.core.dto.vipchannel.getListServicePendingModel;
+import com.dev.op.core.dto.vipchannel.getListTecniModel;
 import com.dev.op.core.facade.vipchannel.ServiceFacade;
 import com.dev.op.core.util.vipchannel.GenericUtil;
 
@@ -26,11 +27,11 @@ public class ServiceRestController {
 	@Qualifier("serviceFacade")
 	private ServiceFacade serviceFacade;
 	
-	@GetMapping("/getListServicePending")
-	public ResponseEntity<List<getListServicePendingModel>> getListServicePending() {
+	@GetMapping("/getListServicePending/{codeUser}")
+	public ResponseEntity<List<getListServicePendingModel>> getListServicePending(@PathVariable(value="codeUser") Integer codeUser) {
 		
 		try{
-			List<getListServicePendingModel> getListServicePending = serviceFacade.getListServicePending();
+			List<getListServicePendingModel> getListServicePending = serviceFacade.getListServicePending(codeUser);
 			if(!GenericUtil.isCollectionEmpty(getListServicePending)) {
 				return new ResponseEntity<List<getListServicePendingModel>>(getListServicePending, HttpStatus.OK);
 			}
@@ -57,6 +58,23 @@ public class ServiceRestController {
 		}
 		catch(Exception e) {
 			return new ResponseEntity<List<getMaterialAllModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/getListTecni")
+	public ResponseEntity<List<getListTecniModel>> getListTecni() {
+		
+		try{
+			List<getListTecniModel> getListTecni = serviceFacade.getListTecni();
+			if(!GenericUtil.isCollectionEmpty(getListTecni)) {
+				return new ResponseEntity<List<getListTecniModel>>(getListTecni, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<getListTecniModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<List<getListTecniModel>>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	
@@ -127,6 +145,27 @@ public class ServiceRestController {
 			List<ResponseModel> putMaterial = serviceFacade.putMaterial(name, idMaterial);
 			if(!GenericUtil.isCollectionEmpty(putMaterial)) {
 				return new ResponseEntity<List<ResponseModel>>(putMaterial, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<ResponseModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {	
+			return new ResponseEntity<List<ResponseModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/putTecnInstall/{optionI}/{tecn}/{idP}/{nextId}")
+	public ResponseEntity<List<ResponseModel>> putTecnInstall(
+			@PathVariable(value="optionI") Integer optionI,
+			@PathVariable(value="tecn") Integer tecn,
+			@PathVariable(value="idP") Integer idP,
+			@PathVariable(value="nextId") Integer nextId) {
+		
+		try{
+			List<ResponseModel> putTecnInstall = serviceFacade.putTecnInstall(optionI, tecn, idP, nextId);
+			if(!GenericUtil.isCollectionEmpty(putTecnInstall)) {
+				return new ResponseEntity<List<ResponseModel>>(putTecnInstall, HttpStatus.OK);
 			}
 			else {
 				return new ResponseEntity<List<ResponseModel>>(HttpStatus.NO_CONTENT);

@@ -19,7 +19,8 @@
                           <th class="text-center" style="background-color: mediumturquoise;" scope="col">Dirección</th>
                           <th class="text-center" style="background-color: mediumturquoise;" scope="col">Fecha</th>
                           <th class="text-center" style="background-color: mediumturquoise;" scope="col">Información</th>
-                          <th class="text-center" style="background-color: mediumturquoise;" scope="col" *ngIf="userActive">Acciones</th>
+                          <th class="text-center" style="background-color: mediumturquoise;" scope="col" *ngIf="userActive">Destinado</th>
+                          <th class="text-center" style="background-color: mediumturquoise;" scope="col" >Acciones</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -28,13 +29,17 @@
                             <tr>
                               <td class="align-middle text-center">{{ item.client }}</td>
                               <td class="align-middle text-center">{{ item.name }}</td>
-                              <td class="align-middle text-center">{{ item.name }}</td>
+                              <td class="align-middle text-center">{{ item.district }}</td>
                               <td class="align-middle text-center">{{ item.dateP }}</td>
                               <td class="align-middle text-center">{{ item.asunt }}</td>
-                              <td class="align-middle text-center" *ngIf="userActive">
+                              <td class="align-middle text-center" *ngIf="userActive">{{ item.user }}</td>
+                              <td class="align-middle text-center" >
                                 <div class="row justify-content-center">
                                   <button id="{{item.detalleId}}" type="button"  class="btn" (click)="change(item.detalleId,item.nextId)">
                                     <i class="fa fa-tv fa-lg" style="color: red;"></i>
+                                  </button>
+                                  <button *ngIf="userActive" id="{{item.id}}" type="button"  class="btn" (click)="changeTec(item.detalleId,item.nextId)">
+                                    <i class="fa fa-sitemap fa-lg" style="color: red;"></i>
                                   </button>
                                 </div>
                               </td>
@@ -64,7 +69,7 @@
                 <div class="card-body p-0 clearfix">
                   <i class="fa fa-home bg-danger p-4 font-2xl mr-3 float-left"></i>
                   <div class="h5 text-danger mb-0 pt-3">Dirección</div>
-                  <div class="text-muted text-uppercase font-weight-bold font-xs"></div>
+                  <div class="text-muted text-uppercase font-weight-bold font-xs">{{direCli}}</div>
                 </div>
               </div>
             </div>
@@ -251,6 +256,50 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary ml-auto" (click)="editSaveModal.hide()">CANCELAR</button>
         <button type="button" class="btn btn-success mr-auto" (click)="edit()">GUARDAR</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div bsModal #tecnicoModal="bs-modal" class="modal fade" tabindex="-1" [config]="{backdrop: 'static'}" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Cambiar Técnico</h4>
+        <button type="button" class="close" (click)="tecnicoModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form *ngIf="formularioTecnico" [formGroup]="formularioTecnico" autocomplete="offs" class="form-register-section">
+          <div asp-validation-summary="All" class="text-danger"></div>
+          <div class="row" >
+            <div class="col-6">
+              <div class="form-group">
+                <label for="nombre">Técnico</label>
+                <select class="form-control form-control-sm select-select" id="nombre" placeholder="Seleccione"
+                      formControlName="nombre" [ngClass]="{ 'is-invalid': submittedT && g.nombre.errors }" required>
+                <option select value="0">Seleccione</option>
+                <option *ngFor="let the of tecnico" [value]="the.id">
+                  <p>{{the.name}}</p>
+                </option>
+              </select>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary ml-auto" (click)="tecnicoModal.hide()">CANCELAR</button>
+        <button type="button" class="btn btn-success mr-auto" (click)="changeTecnico()">GUARDAR</button>
       </div>
     </div>
   </div>

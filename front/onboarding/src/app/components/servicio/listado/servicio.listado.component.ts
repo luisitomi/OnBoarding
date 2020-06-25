@@ -5,7 +5,7 @@ import { AppConstants } from '../../../shared/constants/app.constants';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ModalDirective} from 'ngx-bootstrap/modal';
-import { MaterialModel, PendingServiceModel } from '../../../models/service.model';
+import { MaterialModel, PendingServiceModel, TecnicoModel } from '../../../models/service.model';
 import { ResponseModel } from '../../../models/personpay.model';
 
 @Component({
@@ -17,13 +17,17 @@ export class ServicioComponent implements OnInit{
   materi:MaterialModel[];
   active:MaterialModel[];
   pnd:PendingServiceModel[];
+  tecnico:TecnicoModel[];
 
   saveList = [];
 
   name:string;
   nameCli:string;
+  direCli:string;
   itemnextId:number;
   itemdetalleId:number;
+  itemnextIdT:number;
+  itemdetalleIdT:number;
   valueId:number;
   countiD:number;
   anotacion:string;
@@ -34,12 +38,15 @@ export class ServicioComponent implements OnInit{
 
   submitted: boolean;
   submittedE: boolean;
+  submittedT: boolean;
 
   public formlarioSave: FormGroup;
   public formularioEdit: FormGroup;
+  public formularioTecnico: FormGroup;
 
   value:number;
-
+  
+  @ViewChild('tecnicoModal') public tecnicoModal: ModalDirective;
   @ViewChild('mateSaveModal') public mateSaveModal: ModalDirective;
   @ViewChild('editSaveModal') public editSaveModal: ModalDirective;
 
@@ -75,11 +82,84 @@ export class ServicioComponent implements OnInit{
       nombre: ['', Validators.required],
       codigo: ['']
     });
+    this.formularioTecnico = this.formBuilder.group({
+      nombre: ['0', Validators.required]
+    });
   }
 
   change(id:number,next:number){
     this.onReturndata(1);
     this.ById(id,next);
+  }
+
+  changeTec(id:number,next:number){
+    this.opentecnico(id,next);
+    this.tecnicoModal.show();
+  }
+
+  opentecnico(id:number,next:number){
+    this.itemnextIdT = next;
+    this.itemdetalleIdT = id;
+  }
+
+  changeTecnico(){
+    this.submittedT = true;
+    let registerSaveLed = this.formularioTecnico.value;
+
+    if (!this.formularioTecnico.controls.nombre.valid ||
+      this.formularioTecnico.controls.nombre.value == 0) {
+     this.toastr.warning(
+        AppConstants.MessageModal.REQUIRED_CUSTOM_FIELD,
+        AppConstants.TitleModal.WARNING_TITLE,
+        {closeButton: true}
+      );
+      return false;
+    }
+
+    this.ServiceService.cambiartecnico(1,
+                                      registerSaveLed.nombre,
+                                      this.itemdetalleIdT,
+                                      this.itemnextIdT).subscribe(
+    (resultS: ResponseModel[]) => {
+    try{
+      if(resultS[0].id == 1){
+        this.toastr.success(
+          AppConstants.MessageModal.REGISTER_UPDATED,
+          AppConstants.TitleModal.REGISTER_TITLE,
+          {closeButton: true}
+        );
+        this.onReturndata(0);
+        this.tecnicoModal.hide();
+      }else{
+        this.toastr.warning(
+          AppConstants.MessageModal.REGISTER_NO_CREATED,
+          AppConstants.TitleModal.SERVICE_TITLE,
+          {closeButton: true}
+        );
+        this.submittedT = false;
+        this.onReturndata(0);
+        this.tecnicoModal.hide();
+      }
+    }catch{
+      this.toastr.error(
+        AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+        AppConstants.TitleModal.REGISTER_TITLE,
+        {closeButton: true}
+        );
+        this.onReturndata(0);
+        this.tecnicoModal.hide();
+      }
+    },
+    error => {
+      this.toastr.error(
+        AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+        AppConstants.TitleModal.REGISTER_TITLE,
+        {closeButton: true}
+      );
+      this.onReturndata(0);
+      this.tecnicoModal.hide();
+    })
+
   }
 
   saveData(){
@@ -162,9 +242,6 @@ export class ServicioComponent implements OnInit{
         })
       }
     }
-
-    
-
   }
 
   envio(){
@@ -205,6 +282,7 @@ export class ServicioComponent implements OnInit{
         this.validation();
         this.listActie = true;
         this.saveActive = false;
+        this.listadotecni();
         break;
       case 1:
         this.listActie = false;
@@ -218,6 +296,16 @@ export class ServicioComponent implements OnInit{
     this.ServiceService.listadomateriales().subscribe(
     (result: MaterialModel[]) => {
       this.materi = result
+    },
+    error => {
+    })
+  }
+
+  listadotecni(){
+    this.tecnico = [];
+    this.ServiceService.listadotecnicos().subscribe(
+    (result: TecnicoModel[]) => {
+      this.tecnico = result
     },
     error => {
     })
@@ -287,6 +375,7 @@ export class ServicioComponent implements OnInit{
         }
         if (searchData.length > 0) {
           this.nameCli = searchData[0].name;
+          this.direCli = searchData[0].district;
         }
       }
     )
@@ -409,6 +498,8 @@ export class ServicioComponent implements OnInit{
   }
 
   get f() { return this.formlarioSave.controls; }
+
+  get g() { return this.formularioTecnico.controls; }
 
   get h() { return this.formularioEdit.controls; }
 

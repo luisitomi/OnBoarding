@@ -22,6 +22,8 @@ public class getListServicePendingMapper implements RowMapper<getListServicePend
 		getListServicePending.setCode(rs.getString("codigo"));
 		getListServicePending.setDateP(rs.getString("fecha_pactada"));
 		getListServicePending.setAsunt(rs.getString("motivo_instalacion"));
+		getListServicePending.setDistrict(rs.getString("district"));
+		getListServicePending.setUser(rs.getString("user"));
 		return getListServicePending;
 	}
 }

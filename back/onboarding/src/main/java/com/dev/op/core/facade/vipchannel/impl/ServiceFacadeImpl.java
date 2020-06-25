@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.dev.op.core.dto.ResponseModel;
 import com.dev.op.core.dto.vipchannel.getListServicePendingModel;
+import com.dev.op.core.dto.vipchannel.getListTecniModel;
 import com.dev.op.core.dto.vipchannel.getMaterialAllModel;
 import com.dev.op.core.dto.vipchannel.getMaterialModel;
 import com.dev.op.core.facade.vipchannel.ServiceFacade;
@@ -23,12 +24,12 @@ public class ServiceFacadeImpl implements ServiceFacade{
 	private ServiceService serviceService;
 
 	@Override
-	public List<getListServicePendingModel> getListServicePending() {
+	public List<getListServicePendingModel> getListServicePending(Integer codeUser) {
 		List<getListServicePendingModel> getListServicePending = new ArrayList<getListServicePendingModel>();
 		
 		try {
 			
-			getListServicePending = serviceService.getListServicePending();
+			getListServicePending = serviceService.getListServicePending(codeUser);
 			if(GenericUtil.isEmpty(getListServicePending)) {
 				return null;
 			}
@@ -135,6 +136,46 @@ public class ServiceFacadeImpl implements ServiceFacade{
 			}
 			else {
 				return postServiceInstall;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getListTecniModel> getListTecni() {
+		List<getListTecniModel> getListTecni = new ArrayList<getListTecniModel>();
+		
+		try {
+			
+			getListTecni = serviceService.getListTecni();
+			if(GenericUtil.isEmpty(getListTecni)) {
+				return null;
+			}
+			else {
+				return getListTecni;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ResponseModel> putTecnInstall(Integer optionI, Integer tecn, Integer idP, Integer nextId) {
+		List<ResponseModel> putTecnInstall = new ArrayList<ResponseModel>();
+		
+		try {
+			
+			putTecnInstall = serviceService.putTecnInstall(optionI, tecn, idP, nextId);
+			if(GenericUtil.isEmpty(putTecnInstall)) {
+				return null;
+			}
+			else {
+				return putTecnInstall;
 			}
 		}
 		catch(Exception e) {

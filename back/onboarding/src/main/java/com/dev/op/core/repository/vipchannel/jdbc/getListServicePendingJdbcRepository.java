@@ -5,5 +5,5 @@ import java.util.List;
 import com.dev.op.core.dto.vipchannel.getListServicePendingModel;
 
 public interface getListServicePendingJdbcRepository {
-	List<getListServicePendingModel> getListServicePending();
+	List<getListServicePendingModel> getListServicePending(Integer codeUser);
 }

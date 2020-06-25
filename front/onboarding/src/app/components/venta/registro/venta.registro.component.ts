@@ -891,6 +891,7 @@ export class RegistroComponent implements OnInit{
         this.busqueda="";
         this.listadoclientes();
         this.initForms();
+        this.validation();
       break;
       case 1:
         this.listadoActive = false;
@@ -899,7 +900,6 @@ export class RegistroComponent implements OnInit{
         this.listadoclientesdatabyid();
         this.listadoclientesdata();
         this.limipiarinputs();
-        this.validation();
       break;
       case 2:
         this.listadoclientesdatadirecccion();
