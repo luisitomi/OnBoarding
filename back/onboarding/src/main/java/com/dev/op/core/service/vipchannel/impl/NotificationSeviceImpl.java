@@ -15,6 +15,7 @@ import com.dev.op.core.repository.vipchannel.jdbc.getListUserJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getModuleJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.postNotificationJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.putChangeAsignationJdbcRepository;
+import com.dev.op.core.repository.vipchannel.jdbc.putRptaNotificationJdbcRepository;
 import com.dev.op.core.service.vipchannel.NotificationService;
 import com.dev.op.core.util.vipchannel.GenericUtil;
 
@@ -37,6 +38,10 @@ public class NotificationSeviceImpl implements NotificationService{
 	@Autowired
 	@Qualifier("putChangeAsignationJdbcRepository")
 	private putChangeAsignationJdbcRepository putChangeAsignationJdbcRepository;
+	
+	@Autowired
+	@Qualifier("putRptaNotificationJdbcRepository")
+	private putRptaNotificationJdbcRepository putRptaNotificationJdbcRepository;
 	
 	@Override
 	public List<ResponseModel> postNotification(Integer module,Integer codeUser, String document, String client, String asunt) {
@@ -110,6 +115,26 @@ public class NotificationSeviceImpl implements NotificationService{
 			}
 			else {
 				return putChangeAsignation;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ResponseModel> putRptaNotification(Integer idTarea, String solution) {
+		List<ResponseModel> putRptaNotification = new ArrayList<ResponseModel>();
+		
+		try {
+			
+			putRptaNotification = putRptaNotificationJdbcRepository.putRptaNotification(idTarea, solution);
+			if(GenericUtil.isCollectionEmpty(putRptaNotification)) {
+				return null;
+			}
+			else {
+				return putRptaNotification;
 			}
 		}
 		catch(Exception e) {

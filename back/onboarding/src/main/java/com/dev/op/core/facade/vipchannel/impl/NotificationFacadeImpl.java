@@ -102,4 +102,24 @@ public class NotificationFacadeImpl implements NotificationFacade{
 		return null;
 	}
 
+	@Override
+	public List<ResponseModel> putRptaNotification(Integer idTarea, String solution) {
+		List<ResponseModel> putRptaNotification = new ArrayList<ResponseModel>();
+		
+		try {
+			
+			putRptaNotification = notificationService.putRptaNotification(idTarea, solution);
+			if(GenericUtil.isEmpty(putRptaNotification)) {
+				return null;
+			}
+			else {
+				return putRptaNotification;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

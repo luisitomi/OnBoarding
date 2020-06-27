@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ResponseModel } from '../models/personpay.model';
-import { ServiceModel, MaterialModel, PendingServiceModel, TecnicoModel } from '../models/service.model';
+import { ServiceModel, MaterialModel, PendingServiceModel, TecnicoModel,ReclaimPendingModel } from '../models/service.model';
 
 @Injectable({
     providedIn: "root"
@@ -40,6 +40,11 @@ export class ServiceService {
         detaiId + "/" + nextId + "/" + tec + "/" + description + "/" + mateId +  "/" + counts);
     }
 
+    guardarReclamo(detaiId: number,tec: number,description: string,mateId: number,counts: number): Observable<ResponseModel[]> {
+        return this.httpClient.get<ResponseModel[]>(`${this.BASE_URL}/servicio/postServiceReclaim/`+ 
+        detaiId + "/" + tec + "/" + description + "/" + mateId +  "/" + counts);
+    }
+
     listarserviciospendientes(id:number): Observable<PendingServiceModel[]> {
         return this.httpClient.get<PendingServiceModel[]>(`${this.BASE_URL}/servicio/getListServicePending/` + id);
     }
@@ -51,6 +56,10 @@ export class ServiceService {
     cambiartecnico(optionI: number,tecn: number,idP: number,nextId: number): Observable<ResponseModel[]> {
         return this.httpClient.get<ResponseModel[]>(`${this.BASE_URL}/servicio/putTecnInstall/`+ 
         optionI + "/" + tecn + "/" + idP + "/" + nextId);
+    }
+
+    listarsreclamospendientes(id:number): Observable<ReclaimPendingModel[]> {
+        return this.httpClient.get<ReclaimPendingModel[]>(`${this.BASE_URL}/servicio/getListReclaimService/` + id);
     }
 
 }

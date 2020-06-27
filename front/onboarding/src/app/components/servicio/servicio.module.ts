@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ServicioRoutingModule } from './servicio-routing.module';
 import { ServicioComponent } from './listado/servicio.listado.component';
+import { ServicioReclamoComponent } from './reclamo/servicio.reclamo.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { ServicioComponent } from './listado/servicio.listado.component';
   ],schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   exports: [],
   declarations: [
-    ServicioComponent
+    ServicioComponent,
+    ServicioReclamoComponent
   ],
 })
 export class ServicioModule {

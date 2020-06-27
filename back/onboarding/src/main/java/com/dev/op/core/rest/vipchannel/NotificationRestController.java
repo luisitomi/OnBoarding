@@ -100,4 +100,23 @@ public class NotificationRestController {
 		}
 	}
 	
+	@GetMapping("/putRptaNotification/{idTarea}/{solution}")
+	public ResponseEntity<List<ResponseModel>> putRptaNotification(
+			@PathVariable(value="idTarea") Integer idTarea,
+			@PathVariable(value="solution") String solution) {
+		
+		try{
+			List<ResponseModel> putRptaNotification = notificationFacade.putRptaNotification(idTarea, solution);
+			if(!GenericUtil.isCollectionEmpty(putRptaNotification)) {
+				return new ResponseEntity<List<ResponseModel>>(putRptaNotification, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<ResponseModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {	
+			return new ResponseEntity<List<ResponseModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 }

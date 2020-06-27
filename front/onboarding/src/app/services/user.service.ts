@@ -56,4 +56,9 @@ export class UserService {
         id + "/" + user + "/" + document + "/" + client + "/" + asunt);
     }
 
+    guardarMensaje(idTarea:number,solution:string): Observable<ResponseModel[]> {
+        return this.httpClient.get<ResponseModel[]>(`${this.BASE_URL}/notificacion/putRptaNotification/`+
+        idTarea + "/" + solution);
+    }
+
 }

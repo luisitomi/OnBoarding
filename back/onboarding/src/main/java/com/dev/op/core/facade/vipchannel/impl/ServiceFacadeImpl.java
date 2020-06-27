@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.dev.op.core.dto.ResponseModel;
+import com.dev.op.core.dto.vipchannel.getListReclaimServiceModel;
 import com.dev.op.core.dto.vipchannel.getListServicePendingModel;
 import com.dev.op.core.dto.vipchannel.getListTecniModel;
 import com.dev.op.core.dto.vipchannel.getMaterialAllModel;
@@ -176,6 +177,47 @@ public class ServiceFacadeImpl implements ServiceFacade{
 			}
 			else {
 				return putTecnInstall;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getListReclaimServiceModel> getListReclaimService(Integer codeint) {
+		List<getListReclaimServiceModel> getListReclaimService = new ArrayList<getListReclaimServiceModel>();
+		
+		try {
+			
+			getListReclaimService = serviceService.getListReclaimService(codeint);
+			if(GenericUtil.isEmpty(getListReclaimService)) {
+				return null;
+			}
+			else {
+				return getListReclaimService;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ResponseModel> postServiceReclaim(Integer detaiId, Integer tec, String description, Integer mateId,
+			Integer counts) {
+		List<ResponseModel> postServiceReclaim = new ArrayList<ResponseModel>();
+		
+		try {
+			
+			postServiceReclaim = serviceService.postServiceReclaim(detaiId, tec, description, mateId, counts);
+			if(GenericUtil.isEmpty(postServiceReclaim)) {
+				return null;
+			}
+			else {
+				return postServiceReclaim;
 			}
 		}
 		catch(Exception e) {

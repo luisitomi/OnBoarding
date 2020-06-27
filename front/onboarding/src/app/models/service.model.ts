@@ -36,3 +36,12 @@ export class TecnicoModel{
 	id:number;
 	name:string;
 }
+
+export class ReclaimPendingModel{
+	reclamoD:number;
+	client:string;
+	street:string;
+	fecha:string;
+	descripcion:string;
+	tecn:string;
+}

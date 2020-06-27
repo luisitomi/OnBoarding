@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dev.op.core.dto.vipchannel.getMaterialAllModel;
 import com.dev.op.core.dto.vipchannel.getMaterialModel;
 import com.dev.op.core.dto.ResponseModel;
+import com.dev.op.core.dto.vipchannel.getListReclaimServiceModel;
 import com.dev.op.core.dto.vipchannel.getListServicePendingModel;
 import com.dev.op.core.dto.vipchannel.getListTecniModel;
 import com.dev.op.core.facade.vipchannel.ServiceFacade;
@@ -41,6 +42,23 @@ public class ServiceRestController {
 		}
 		catch(Exception e) {
 			return new ResponseEntity<List<getListServicePendingModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/getListReclaimService/{codeint}")
+	public ResponseEntity<List<getListReclaimServiceModel>> getListReclaimService(@PathVariable(value="codeint") Integer codeint) {
+		
+		try{
+			List<getListReclaimServiceModel> getListReclaimService = serviceFacade.getListReclaimService(codeint);
+			if(!GenericUtil.isCollectionEmpty(getListReclaimService)) {
+				return new ResponseEntity<List<getListReclaimServiceModel>>(getListReclaimService, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<getListReclaimServiceModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<List<getListReclaimServiceModel>>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	
@@ -126,6 +144,28 @@ public class ServiceRestController {
 			List<ResponseModel> postServiceInstall = serviceFacade.postServiceInstall(detaiId, nextId, tec, description, mateId, counts);
 			if(!GenericUtil.isCollectionEmpty(postServiceInstall)) {
 				return new ResponseEntity<List<ResponseModel>>(postServiceInstall, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<ResponseModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {	
+			return new ResponseEntity<List<ResponseModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/postServiceReclaim/{detaiId}/{tec}/{description}/{mateId}/{counts}")
+	public ResponseEntity<List<ResponseModel>> postServiceReclaim(
+			@PathVariable(value="detaiId") Integer detaiId,
+			@PathVariable(value="tec") Integer tec,
+			@PathVariable(value="description") String description,
+			@PathVariable(value="mateId") Integer mateId,
+			@PathVariable(value="counts") Integer counts) {
+		
+		try{
+			List<ResponseModel> postServiceReclaim = serviceFacade.postServiceReclaim(detaiId, tec, description, mateId, counts);
+			if(!GenericUtil.isCollectionEmpty(postServiceReclaim)) {
+				return new ResponseEntity<List<ResponseModel>>(postServiceReclaim, HttpStatus.OK);
 			}
 			else {
 				return new ResponseEntity<List<ResponseModel>>(HttpStatus.NO_CONTENT);

@@ -15,6 +15,7 @@ import { ResponseModel } from '../../../models/personpay.model';
 export class ListadoActividadComponent implements OnInit{
 
   public formularioIntra: FormGroup;
+  public formularioSolution: FormGroup;
   public formularioUser: FormGroup;
 
   itemsPerPageS: number = 3;
@@ -28,10 +29,13 @@ export class ListadoActividadComponent implements OnInit{
 
   submitted: boolean;
   submittedUser:boolean;
+  submittedNoti: boolean;
 
   value:number;
+  valueId:number;
 
   @ViewChild('userModal') public userModal: ModalDirective;
+  @ViewChild('rptaModal') public rptaModal: ModalDirective;
 
   constructor(
     private router: Router,
@@ -69,6 +73,11 @@ export class ListadoActividadComponent implements OnInit{
     this.userModal.show();
   }
 
+  valeuItemId(idL:number){
+    this.valueId= idL;
+    this.rptaModal.show();
+  }
+
   initFC() {
     this.formularioIntra = this.formBuilder.group({
       modulo: ['', Validators.required],
@@ -79,6 +88,9 @@ export class ListadoActividadComponent implements OnInit{
     });
     this.formularioUser = this.formBuilder.group({
       user: ['', Validators.required],
+    });
+    this.formularioSolution = this.formBuilder.group({
+      solution: ['', Validators.required],
     });
   }
 
@@ -91,6 +103,7 @@ export class ListadoActividadComponent implements OnInit{
   }
 
   listadoNoti(){
+    this.actividad = [];
     this.UserService.notificacionlistado(sessionStorage.getItem(AppConstants.Session.USERNAME)).subscribe(
       (result:UserNotiModel[])=>{
         this.actividad = result
@@ -124,6 +137,8 @@ export class ListadoActividadComponent implements OnInit{
 
   get h() { return this.formularioUser.controls; }
 
+  get i() { return this.formularioSolution.controls; }
+
   savenoti(){
     this.submitted = true;
     let registerUser = this.formularioIntra.value;
@@ -140,10 +155,10 @@ export class ListadoActividadComponent implements OnInit{
         AppConstants.TitleModal.WARNING_TITLE,
         {closeButton: true}
       );
-    return false;
-  }
+      return false;
+    }
   
-  this.UserService.postNotificationSave(registerUser.modulo,
+    this.UserService.postNotificationSave(registerUser.modulo,
                                         registerUser.codigo,
                                         registerUser.documento,
                                         registerUser.nombre,
@@ -158,6 +173,7 @@ export class ListadoActividadComponent implements OnInit{
           );
           this.onReturndata(0);
           this.submitted = false;
+          this.listadoNoti();
         }else{
           this.toastr.warning(
             AppConstants.MessageModal.REGISTER_NO_CREATED,
@@ -166,6 +182,7 @@ export class ListadoActividadComponent implements OnInit{
           );
           this.onReturndata(0);
           this.submitted = false;
+          this.listadoNoti();
         }
       }catch{
         this.toastr.error(
@@ -175,6 +192,7 @@ export class ListadoActividadComponent implements OnInit{
         );
         this.onReturndata(0);
         this.submitted = false;
+        this.listadoNoti();
       }
     },
     error => {
@@ -185,8 +203,68 @@ export class ListadoActividadComponent implements OnInit{
       );
       this.onReturndata(0);
       this.submittedUser = false;
+      this.listadoNoti();
     })
 
+  }
+
+  saveSolution(){
+    this.submittedNoti = true;
+    let register = this.formularioSolution.value;
+
+    if (!this.formularioSolution.controls.solution.valid) {
+      this.toastr.warning(
+        AppConstants.MessageModal.REQUIRED_CUSTOM_FIELD,
+        AppConstants.TitleModal.WARNING_TITLE,
+        {closeButton: true}
+      );
+      return false;
+    }
+  
+    this.UserService.guardarMensaje(this.valueId,
+                                    register.solution).subscribe(
+    (result: ResponseModel[]) => {
+      try{
+        if(result[0].id == 1){
+          this.toastr.success(
+            AppConstants.MessageModal.REGISTER_UPDATED,
+            AppConstants.TitleModal.REGISTER_TITLE,
+            {closeButton: true}
+          );
+          this.onReturndata(0);
+          this.rptaModal.hide();
+          this.submittedNoti = false;
+        }else{
+          this.toastr.warning(
+            AppConstants.MessageModal.REGISTER_NO_CREATED,
+            AppConstants.TitleModal.WARNING_TITLE,
+            {closeButton: true}
+          );
+          this.onReturndata(0);
+          this.rptaModal.hide();
+          this.submittedNoti = false;
+        }
+      }catch{
+        this.toastr.error(
+          AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+          AppConstants.TitleModal.ERROR_TITLE,
+          {closeButton: true}
+        );
+        this.onReturndata(0);
+        this.rptaModal.hide();
+        this.submittedNoti = false;
+      }
+    },
+    error => {
+      this.toastr.error(
+        AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+        AppConstants.TitleModal.ERROR_TITLE,
+        {closeButton: true}
+      );
+      this.onReturndata(0);
+      this.rptaModal.hide();
+      this.submittedNoti = false;
+    })
   }
 
   changeUser(){

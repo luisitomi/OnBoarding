@@ -88,6 +88,7 @@
                   <div class="form-group">
                     <label for="selectd">Material </label>
                     <select [(ngModel)]="valueId" class="form-control" name="selectd" id="selectd">
+                      <option value="" selected>Seleccione</option>
                       <option *ngFor="let the of active" required [value]="the.id">
                         <p>{{the.name}}</p>
                       </option>

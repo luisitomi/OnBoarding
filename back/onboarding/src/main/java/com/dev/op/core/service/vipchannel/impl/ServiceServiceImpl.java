@@ -9,16 +9,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dev.op.core.dto.ResponseModel;
+import com.dev.op.core.dto.vipchannel.getListReclaimServiceModel;
 import com.dev.op.core.dto.vipchannel.getListServicePendingModel;
 import com.dev.op.core.dto.vipchannel.getListTecniModel;
 import com.dev.op.core.dto.vipchannel.getMaterialAllModel;
 import com.dev.op.core.dto.vipchannel.getMaterialModel;
+import com.dev.op.core.repository.vipchannel.jdbc.getListReclaimServiceJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getListServicePendingJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getListTecniJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getMaterialAllJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getMaterialJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.postMaterialJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.postServiceInstallJdbcRepository;
+import com.dev.op.core.repository.vipchannel.jdbc.postServiceReclaimJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.putMaterialJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.putTecnInstallJdbcRepository;
 import com.dev.op.core.service.vipchannel.ServiceService;
@@ -31,6 +34,10 @@ public class ServiceServiceImpl implements ServiceService {
 	@Autowired
 	@Qualifier("getListServicePendingJdbcRepository")
 	private getListServicePendingJdbcRepository getListServicePendingJdbcRepository;
+	
+	@Autowired
+	@Qualifier("getListReclaimServiceJdbcRepository")
+	private getListReclaimServiceJdbcRepository getListReclaimServiceJdbcRepository;
 	
 	@Autowired
 	@Qualifier("getMaterialAllJdbcRepository")
@@ -59,6 +66,10 @@ public class ServiceServiceImpl implements ServiceService {
 	@Autowired
 	@Qualifier("postServiceInstallJdbcRepository")
 	private postServiceInstallJdbcRepository postServiceInstallJdbcRepository;
+	
+	@Autowired
+	@Qualifier("postServiceReclaimJdbcRepository")
+	private postServiceReclaimJdbcRepository postServiceReclaimJdbcRepository;
 	
 	@Override
 	public List<getListServicePendingModel> getListServicePending(Integer codeUser) {
@@ -213,6 +224,47 @@ public class ServiceServiceImpl implements ServiceService {
 			}
 			else {
 				return putTecnInstall;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getListReclaimServiceModel> getListReclaimService(Integer codeint) {
+		List<getListReclaimServiceModel> getListReclaimService = new ArrayList<getListReclaimServiceModel>();
+		
+		try {
+			
+			getListReclaimService = getListReclaimServiceJdbcRepository.getListReclaimService(codeint);
+			if(GenericUtil.isCollectionEmpty(getListReclaimService)) {
+				return null;
+			}
+			else {
+				return getListReclaimService;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ResponseModel> postServiceReclaim(Integer detaiId, Integer tec, String description, Integer mateId,
+			Integer counts) {
+		List<ResponseModel> postServiceReclaim = new ArrayList<ResponseModel>();
+		
+		try {
+			
+			postServiceReclaim = postServiceReclaimJdbcRepository.postServiceReclaim(detaiId, tec, description, mateId, counts);
+			if(GenericUtil.isCollectionEmpty(postServiceReclaim)) {
+				return null;
+			}
+			else {
+				return postServiceReclaim;
 			}
 		}
 		catch(Exception e) {

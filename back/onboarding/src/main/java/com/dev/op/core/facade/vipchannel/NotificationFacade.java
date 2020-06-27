@@ -11,4 +11,5 @@ public interface NotificationFacade {
 	List<getModuleModel> getModule();
 	List<getListUserModel> getListUser(Integer codeUser);
 	List<ResponseModel> putChangeAsignation(Integer notiId,Integer aigId);
+	List<ResponseModel> putRptaNotification(Integer idTarea,String solution);
 }

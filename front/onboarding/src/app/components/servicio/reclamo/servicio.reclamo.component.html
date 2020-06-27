@@ -1,0 +1,195 @@
+﻿<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12 mb-4">
+      <tabset>
+        <tab>
+          <ng-template tabHeading><i class="icon-list"></i> Pendientes &nbsp;</ng-template>
+          <div class="row" *ngIf="listActie">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <i class="fa fa-align-justify" style="color: red;"></i> <span style="color: red;">LISTADO DE RECLAMOS</span>
+                </div>
+                <div class="card-body">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr class="t-head-style">
+                          <th class="text-center" style="background-color: mediumturquoise;" scope="col">Cliente</th>
+                          <th class="text-center" style="background-color: mediumturquoise;" scope="col">Dirección</th>
+                          <th class="text-center" style="background-color: mediumturquoise;" scope="col">Fecha</th>
+                          <th class="text-center" style="background-color: mediumturquoise;" scope="col">Información</th>
+                          <th class="text-center" style="background-color: mediumturquoise;" scope="col" *ngIf="userActive">Destinado</th>
+                          <th class="text-center" style="background-color: mediumturquoise;" scope="col" >Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let item of pnd
+                        | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }; let i = index">
+                            <tr>
+                              <td class="align-middle text-center">{{ item.client }}</td>
+                              <td class="align-middle text-center">{{ item.street }}</td>
+                              <td class="align-middle text-center">{{ item.fecha }}</td>
+                              <td class="align-middle text-center">{{ item.descripcion }}</td>
+                              <td class="align-middle text-center" *ngIf="userActive">{{ item.tecn }}</td>
+                              <td class="align-middle text-center" >
+                                <div class="row justify-content-center">
+                                  <button id="{{item.reclamoD}}" type="button"  class="btn" (click)="change(item.reclamoD,item.reclamoD)">
+                                    <i class="fa fa-tv fa-lg" style="color: red;"></i>
+                                  </button>
+                                  <button *ngIf="userActive" id="{{item.reclamoD}}" type="button"  class="btn" (click)="changeTec(item.reclamoD,item.reclamoD)">
+                                    <i class="fa fa-sitemap fa-lg" style="color: red;"></i>
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                  </table>
+                  <pagination-controls class="my-pagination" (pageChange)="currentPage = $event"autoHide="true" responsive="true"
+                    previousLabel="Anterior" nextLabel="Siguiente">
+                  </pagination-controls>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="saveActive">
+            <div class="col-4 col-lg-4">
+              <div class="card">
+                <div class="card-body p-0 clearfix">
+                  <i class="fa fa-address-card-o bg-success p-4 font-2xl mr-3 float-left"></i>
+                  <div class="h5 text-success mb-0 pt-3">Cliente</div>
+                  <div class="text-muted text-uppercase font-weight-bold font-xs">{{nameCli}}</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-4 col-lg-4">
+              <div class="card">
+                <div class="card-body p-0 clearfix">
+                  <i class="fa fa-home bg-danger p-4 font-2xl mr-3 float-left"></i>
+                  <div class="h5 text-danger mb-0 pt-3">Dirección</div>
+                  <div class="text-muted text-uppercase font-weight-bold font-xs">{{direCli}}</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-4 col-lg-4">
+              <div class="card">
+                <div class="card-body p-0 clearfix">
+                  <i class="fa fa-android bg-primary p-4 font-2xl mr-3 float-left"></i>
+                  <div class="h5 text-primary mb-0 pt-3">Teléfono</div>
+                  <div class="text-muted text-uppercase font-weight-bold font-xs"></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-lg-6">
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="selectd">Material </label>
+                    <select [(ngModel)]="valueId" class="form-control" name="selectd" id="selectd">
+                      <option value="" selected>Seleccione</option>
+                      <option *ngFor="let the of active" required [value]="the.id">
+                        <p>{{the.name}}</p>
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="cantidad">Cantidad </label>
+                    <input class="form-control" id="cantidad" [(ngModel)]="countiD" type="number" required>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="sabvee">Acciòn</label>
+                    <button class="btn btn-block btn-info" type="button" (click)="envio()">Enviar</button>
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr class="t-head-style">
+                          <th class="text-center" style="background-color: mediumturquoise;" scope="col">Material</th>
+                          <th class="text-center" style="background-color: mediumturquoise;" scope="col">Cantidad</th>
+                          <th class="text-center" style="background-color: mediumturquoise;" scope="col" >Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <ng-container *ngFor="let item of saveList; let i = index">
+                          <tr>
+                            <td class="align-middle text-center">{{ item.name }}</td>
+                            <td class="align-middle text-center">{{ item.cantidad }}</td>
+                            <td class="align-middle text-center" *ngIf="userActive">
+                              <div class="row justify-content-center">
+                                
+                              </div>
+                            </td>
+                          </tr>
+                      </ng-container>
+                  </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-lg-6">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="anotacion">Anotación </label>
+                  <textarea class="form-control" id="anotacion" [(ngModel)]="anotacion" name="anotacion" placeholder="" rows="3"></textarea>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <button class="btn btn-block btn-success" type="button" (click)="saveData()">GUARDAR</button>
+              </div>
+            </div>
+          </div>
+        </tab>
+      </tabset>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<div bsModal #tecnicoModal="bs-modal" class="modal fade" tabindex="-1" [config]="{backdrop: 'static'}" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Cambiar Técnico</h4>
+        <button type="button" class="close" (click)="tecnicoModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form *ngIf="formularioTecnico" [formGroup]="formularioTecnico" autocomplete="offs" class="form-register-section">
+          <div asp-validation-summary="All" class="text-danger"></div>
+          <div class="row" >
+            <div class="col-6">
+              <div class="form-group">
+                <label for="nombre">Técnico</label>
+                <select class="form-control form-control-sm select-select" id="nombre" placeholder="Seleccione"
+                      formControlName="nombre" [ngClass]="{ 'is-invalid': submittedT && g.nombre.errors }" required>
+                <option select value="0">Seleccione</option>
+                <option *ngFor="let the of tecnico" [value]="the.id">
+                  <p>{{the.name}}</p>
+                </option>
+              </select>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary ml-auto" (click)="tecnicoModal.hide()">CANCELAR</button>
+        <button type="button" class="btn btn-success mr-auto" (click)="changeTecnico()">GUARDAR</button>
+      </div>
+    </div>
+  </div>
+</div>

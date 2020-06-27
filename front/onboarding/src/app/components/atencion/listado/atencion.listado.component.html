@@ -63,13 +63,13 @@
                               <td class="align-middle text-center">{{ item.descripcion }}</td>
                               <td class="align-middle text-center">
                                 <div class="row justify-content-center">
-                                  <div *ngIf="item.status == 0">
+                                  <div *ngIf="item.status == 1">
                                     <span class="badge badge-warning">Pendiente</span>
                                   </div>
-                                  <div *ngIf="item.status == 1">
+                                  <div *ngIf="item.status == 2">
                                     <span class="badge badge-success">Solucionado</span>
                                   </div>
-                                  <div *ngIf="item.status == 2">
+                                  <div *ngIf="item.status == 0">
                                     <span class="badge badge-danger">Anulado</span>
                                   </div>
                                 </div>

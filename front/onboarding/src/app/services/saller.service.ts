@@ -23,6 +23,8 @@ export class SellerService {
 
     private BASE_URL: string = "/api/v2";
     private BASE_URL_SEND: string = "/api/v1";
+    private BASE_URL_DNI: string = "https://dniruc.apisperu.com/api/v1/dni";
+    private BASE_URL_RUC: string = "https://api.migoperu.pe/api/v1/ruc";
     
     listadovendedores(): Observable<SellerModel[]> {
         return this.httpService.get<SellerModel[]>(`${this.BASE_URL}/venta/getListSeller`);
@@ -87,6 +89,14 @@ export class SellerService {
 
     createSendEmail(model: any) {
         return this.httpService.post(`${this.BASE_URL_SEND}/send_emails`,model,this.httpOptions);
+    }
+
+    recuperardni(){
+        return this.httpService.get(`${this.BASE_URL_DNI}/75134791?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFyaWVzXzI1MDM5N0Bob3RtYWlsLmNvbSJ9.QssyDvbk3hh7cp6LesjULBwEzUbWj3EQKoa0iZzJj4w`);
+    }
+
+    recuperarruc(model: any){
+        return this.httpService.post(`${this.BASE_URL_RUC}?token=09728f7e-5e7e-451d-a5a0-1ee1e878c65e-7236e233-79ac-4f1a-a253-0d6f08f93a40`,model);
     }
 
 }

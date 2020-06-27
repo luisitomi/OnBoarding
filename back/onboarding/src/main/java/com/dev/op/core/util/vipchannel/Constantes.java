@@ -46,6 +46,7 @@ public class Constantes {
 	public static final String GETMATERIAL = "getMaterial";
 	public static final String GETMATERIALALL = "getMaterialAll";
 	public static final String GETLISTTECNI = "getListTecni";
+	public static final String GETLISTRECLAIMSERVICE = "getListReclaimService";
 	public static final String PATCHMANAGERBYID = "patchManagerById";
 	public static final String PATCHVOUCHERBYID = "patchVoucherById";
 	public static final String PATCHUPDATEPASSWORD = "patchUpdatePassword";
@@ -56,6 +57,7 @@ public class Constantes {
 	public static final String PUTCHANGEASIGNATION = "putChangeAsignation";
 	public static final String PUTMATERIAL = "putMaterial";
 	public static final String PUTTECNINSTALL = "putTecnInstall";
+	public static final String PUTRPTANOTIFICATION = "putRptaNotification";
 	public static final String POSTPAYSERVICE = "postPayService";
 	public static final String POSTPAYSERVICEEXIT = "postPayServiceExit";
 	public static final String POSTPAYSERVICEDETAILDELETE = "postPayServiceDetailDelete";
@@ -65,6 +67,7 @@ public class Constantes {
 	public static final String POSTNOTIFICATION = "postNotification";
 	public static final String POSTMATERIAL = "postMaterial";
 	public static final String POSTSERVICEINSTALL = "postServiceInstall";
+	public static final String POSTSERVICERECLAIM = "postServiceReclaim";
 	public static final String DELETEDETAILCOUNT = "deleteDetailCount";
 	public static final String DELETEPAYSERVICE = "deletePayService";
 	public static final String DELETEPREINSTALLSALE = "deletePreInstallSale";
