@@ -47,6 +47,11 @@ public class Constantes {
 	public static final String GETMATERIALALL = "getMaterialAll";
 	public static final String GETLISTTECNI = "getListTecni";
 	public static final String GETLISTRECLAIMSERVICE = "getListReclaimService";
+	public static final String GETPRODUCT = "getProdct";
+	public static final String GETPRODUCTPROVIDER = "getProductProvider";
+	public static final String GETPROVIDER = "getProvider";
+	public static final String GETLISTREMISION = "getListRemision";
+	public static final String GETLISTREMISIONBYID = "getListRemisionById";
 	public static final String PATCHMANAGERBYID = "patchManagerById";
 	public static final String PATCHVOUCHERBYID = "patchVoucherById";
 	public static final String PATCHUPDATEPASSWORD = "patchUpdatePassword";
@@ -58,6 +63,8 @@ public class Constantes {
 	public static final String PUTMATERIAL = "putMaterial";
 	public static final String PUTTECNINSTALL = "putTecnInstall";
 	public static final String PUTRPTANOTIFICATION = "putRptaNotification";
+	public static final String PUTSAVEPROVIDE = "putSaveProvide";
+	public static final String PUTSAVEPRODUCT = "putSaveProduct";
 	public static final String POSTPAYSERVICE = "postPayService";
 	public static final String POSTPAYSERVICEEXIT = "postPayServiceExit";
 	public static final String POSTPAYSERVICEDETAILDELETE = "postPayServiceDetailDelete";
@@ -68,6 +75,10 @@ public class Constantes {
 	public static final String POSTMATERIAL = "postMaterial";
 	public static final String POSTSERVICEINSTALL = "postServiceInstall";
 	public static final String POSTSERVICERECLAIM = "postServiceReclaim";
+	public static final String POSTPRODUCTP = "postProductP";
+	public static final String POSTSAVEPROVIDE = "postSaveProvide";
+	public static final String POSTSAVEPRODUC = "postSaveProduc";
+	public static final String POSTREMISION = "postRemision";
 	public static final String DELETEDETAILCOUNT = "deleteDetailCount";
 	public static final String DELETEPAYSERVICE = "deletePayService";
 	public static final String DELETEPREINSTALLSALE = "deletePreInstallSale";

@@ -21,8 +21,6 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(){
-    this.dni();
-    this.ruc();
   }
 
   dni(){

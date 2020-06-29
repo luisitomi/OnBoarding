@@ -1,1 +1,72 @@
 // Here you can add other styles
+
+/* Table */
+
+.table-border{
+    border-radius: 10px 10px 0 0;
+    
+  }
+  
+  .table-shadow{
+    -webkit-box-shadow: 10px 5px 5px 0px rgba(189,189,189,0.5);
+    -moz-box-shadow: 10px 5px 5px 0px rgba(189,189,189,0.5);
+    box-shadow: 10px 5px 5px 0px rgba(189,189,189,0.5);
+  }
+  
+  .t-head-style{
+    background-color: #ff8e3d !important;
+    color: white;
+    font-size: 16px;
+  }
+  
+  .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+    background-color: #F4F9F9;
+    color: #858B90;
+  }
+  
+  td{
+    font-size: 14px;
+  }
+  
+  .table-actions{
+    margin: 20px 0;
+  }
+  
+  .right-0{
+    right: 0;
+  }
+  
+  .bottom-0{
+    bottom: 0;
+  }
+  .ngx-pagination{
+    padding-left: 0px !important;
+  }
+
+  @media screen and (max-width: 600px) {
+    table {
+        width:100%;
+    }
+    thead {
+        display: none;
+    }
+    tr:nth-of-type(2n) {
+        background-color: inherit;
+    }
+    tr td:first-child {
+        background: #f0f0f0;
+        font-weight:bold;
+        font-size:1.3em;
+    }
+    tbody td {
+        display: block;
+        text-align:center;
+    }
+    tbody td:before {
+        content: attr(data-th);
+        display: block;
+        text-align:center;
+    }
+}
+  
+  /* End Table */
