@@ -502,7 +502,7 @@ export class RegistroComponent implements OnInit{
                                                 registerContrato.servicio,
                                                 registerContrato.inicial,
                                                 registerContrato.mensual,
-                                                registerContrato.detalle).subscribe(
+                                                registerContrato.detalle.toUpperCase()).subscribe(
       (result: ResponseModel[]) => {
         try{
           if(result[0].id == 1){

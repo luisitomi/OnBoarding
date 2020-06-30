@@ -85,12 +85,12 @@ public class StorageFacadeImpl implements StorageFacade{
 	}
 
 	@Override
-	public List<getProductProviderModel> getProductProvider() {
+	public List<getProductProviderModel> getProductProvider(Integer optio,Integer productoE) {
 		List<getProductProviderModel> getProductProvider = new ArrayList<getProductProviderModel>();
 		
 		try {
 			
-			getProductProvider = storageService.getProductProvider();
+			getProductProvider = storageService.getProductProvider(optio,productoE);
 			if(GenericUtil.isEmpty(getProductProvider)) {
 				return null;
 			}
@@ -197,6 +197,47 @@ public class StorageFacadeImpl implements StorageFacade{
 			}
 			else {
 				return postRemision;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ResponseModel> putSaveProvide(String name, Integer provideId) {
+		List<ResponseModel> putSaveProvide = new ArrayList<ResponseModel>();
+		
+		try {
+			
+			putSaveProvide = storageService.putSaveProvide(name, provideId);
+			if(GenericUtil.isEmpty(putSaveProvide)) {
+				return null;
+			}
+			else {
+				return putSaveProvide;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ResponseModel> putSaveProduct(Integer producId, String name, String code, String description,
+			String codeP, String medi) {
+		List<ResponseModel> putSaveProduct = new ArrayList<ResponseModel>();
+		
+		try {
+			
+			putSaveProduct = storageService.putSaveProduct(producId, name, code, description, codeP, medi);
+			if(GenericUtil.isEmpty(putSaveProduct)) {
+				return null;
+			}
+			else {
+				return putSaveProduct;
 			}
 		}
 		catch(Exception e) {

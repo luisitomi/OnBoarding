@@ -15,6 +15,10 @@ public class getProductProviderModel implements Serializable {
 	
 	private String price;
 	
+	private Integer proU;
+	
+	private Integer proV;
+	
 	
 	public String getId() {
 		return id;
@@ -48,6 +52,26 @@ public class getProductProviderModel implements Serializable {
 
 	public getProductProviderModel() {
 		
+	}
+
+
+	public Integer getProU() {
+		return proU;
+	}
+
+
+	public void setProU(Integer proU) {
+		this.proU = proU;
+	}
+
+
+	public Integer getProV() {
+		return proV;
+	}
+
+
+	public void setProV(Integer proV) {
+		this.proV = proV;
 	}
 	
 }

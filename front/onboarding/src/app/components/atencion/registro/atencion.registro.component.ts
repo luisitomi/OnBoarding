@@ -166,7 +166,7 @@ export class RegistroAtenciónComponent implements OnInit{
                                               this.code,
                                               registerReclamo.servicioreclamo,
                                               registerReclamo.idreclamo,
-                                              registerReclamo.descripcionreclamo).subscribe(
+                                              registerReclamo.descripcionreclamo.toUpperCase()).subscribe(
     (result: ResponseModel[]) => {
        try{
         if(result[0].id == 1){

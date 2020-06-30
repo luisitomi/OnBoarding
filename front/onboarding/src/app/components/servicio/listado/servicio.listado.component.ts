@@ -178,7 +178,7 @@ export class ServicioComponent implements OnInit{
           this.itemdetalleId,
           this.itemnextId,
           parseInt(sessionStorage.getItem(AppConstants.Session.USERID)),
-          this.anotacion,
+          this.anotacion.toUpperCase(),
           this.saveList[itc].materialId,
           this.saveList[itc].cantidad
         ).subscribe(
@@ -222,7 +222,7 @@ export class ServicioComponent implements OnInit{
           this.itemdetalleId,
           this.itemnextId,
           parseInt(sessionStorage.getItem(AppConstants.Session.USERID)),
-          this.anotacion,
+          this.anotacion.toUpperCase(),
           this.saveList[itc].materialId,
           this.saveList[itc].cantidad
         ).subscribe(

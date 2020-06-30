@@ -5,5 +5,5 @@ import java.util.List;
 import com.dev.op.core.dto.vipchannel.getProductProviderModel;
 
 public interface getProductProviderJdbcRepository {
-	List<getProductProviderModel> getProductProvider();
+	List<getProductProviderModel> getProductProvider(Integer optio,Integer productoE);
 }

@@ -14,12 +14,12 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
-import com.dev.op.core.dto.vipchannel.getProductProviderModel;
-import com.dev.op.core.mapper.vipchannel.getProductProviderMapper;
+import com.dev.op.core.dto.ResponseModel;
+import com.dev.op.core.mapper.vipchannel.putSaveProvideMapper;
 import com.dev.op.core.util.vipchannel.Constantes;
 
-@Repository("getProductProviderJdbcRepository")
-public class getProductProviderCustomJdbcRepository implements getProductProviderJdbcRepository {
+@Repository("putSaveProvideJdbcRepository")
+public class putSaveProvideCustomJdbcRepository implements putSaveProvideJdbcRepository {
 
 	private SimpleJdbcCall simpleJdbcCall;
 	
@@ -31,23 +31,23 @@ public class getProductProviderCustomJdbcRepository implements getProductProvide
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<getProductProviderModel> getProductProvider(Integer optio,Integer productoE) {
-		List<getProductProviderModel> getProductProvider = new ArrayList<getProductProviderModel>();
+	public List<ResponseModel> putSaveProvide(String name,Integer provideId) {
+		List<ResponseModel> putSaveProvide = new ArrayList<ResponseModel>();
 
 		try {
 			
-			simpleJdbcCall.withProcedureName(Constantes.GETPRODUCTPROVIDER);
-			simpleJdbcCall.declareParameters(new SqlParameter("optio", Types.INTEGER),
-					 						 new SqlParameter("productoE", Types.INTEGER));
-			simpleJdbcCall.returningResultSet("getProductProvider", new getProductProviderMapper());
+			simpleJdbcCall.withProcedureName(Constantes.PUTSAVEPROVIDE);
+			simpleJdbcCall.declareParameters(new SqlParameter("name", Types.VARCHAR),
+											 new SqlParameter("provideId", Types.INTEGER));
+			simpleJdbcCall.returningResultSet("putSaveProvide", new putSaveProvideMapper());
 			
 			MapSqlParameterSource inParams = new MapSqlParameterSource();
-			inParams.addValue("optio", optio);
-			inParams.addValue("productoE", productoE);
+			inParams.addValue("name", name);
+			inParams.addValue("provideId", provideId);
 			
 			Map<String, Object> result = simpleJdbcCall.execute(inParams);
-			getProductProvider = (List<getProductProviderModel>) result.get("getProductProvider");
-			return getProductProvider;
+			putSaveProvide = (List<ResponseModel>) result.get("putSaveProvide");
+			return putSaveProvide;
 		}
 		catch(Exception e) {
 			e.printStackTrace();

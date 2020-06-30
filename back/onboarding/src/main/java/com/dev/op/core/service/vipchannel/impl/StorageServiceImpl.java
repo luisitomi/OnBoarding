@@ -23,6 +23,8 @@ import com.dev.op.core.repository.vipchannel.jdbc.postProductPJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.postRemisionJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.postSaveProducJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.postSaveProvideJdbcRepository;
+import com.dev.op.core.repository.vipchannel.jdbc.putSaveProductJdbcRepository;
+import com.dev.op.core.repository.vipchannel.jdbc.putSaveProvideJdbcRepository;
 import com.dev.op.core.service.vipchannel.StorageService;
 import com.dev.op.core.util.vipchannel.GenericUtil;
 
@@ -65,6 +67,14 @@ public class StorageServiceImpl implements StorageService{
 	@Autowired
 	@Qualifier("postRemisionJdbcRepository")
 	private postRemisionJdbcRepository postRemisionJdbcRepository;
+	
+	@Autowired
+	@Qualifier("putSaveProvideJdbcRepository")
+	private putSaveProvideJdbcRepository putSaveProvideJdbcRepository;
+	
+	@Autowired
+	@Qualifier("putSaveProductJdbcRepository")
+	private putSaveProductJdbcRepository putSaveProductJdbcRepository;
 
 	@Override
 	public List<getProdctModel> getProdct() {
@@ -127,12 +137,12 @@ public class StorageServiceImpl implements StorageService{
 	}
 
 	@Override
-	public List<getProductProviderModel> getProductProvider() {
+	public List<getProductProviderModel> getProductProvider(Integer optio,Integer productoE) {
 		List<getProductProviderModel> getProductProvider = new ArrayList<getProductProviderModel>();
 		
 		try {
 			
-			getProductProvider = getProductProviderJdbcRepository.getProductProvider();
+			getProductProvider = getProductProviderJdbcRepository.getProductProvider(optio,productoE);
 			if(GenericUtil.isCollectionEmpty(getProductProvider)) {
 				return null;
 			}
@@ -239,6 +249,47 @@ public class StorageServiceImpl implements StorageService{
 			}
 			else {
 				return postRemision;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ResponseModel> putSaveProvide(String name, Integer provideId) {
+		List<ResponseModel> putSaveProvide = new ArrayList<ResponseModel>();
+		
+		try {
+			
+			putSaveProvide = putSaveProvideJdbcRepository.putSaveProvide(name, provideId);
+			if(GenericUtil.isCollectionEmpty(putSaveProvide)) {
+				return null;
+			}
+			else {
+				return putSaveProvide;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ResponseModel> putSaveProduct(Integer producId, String name, String code, String description,
+			String codeP, String medi) {
+		List<ResponseModel> putSaveProduct = new ArrayList<ResponseModel>();
+		
+		try {
+			
+			putSaveProduct = putSaveProductJdbcRepository.putSaveProduct(producId, name, code, description, codeP, medi);
+			if(GenericUtil.isCollectionEmpty(putSaveProduct)) {
+				return null;
+			}
+			else {
+				return putSaveProduct;
 			}
 		}
 		catch(Exception e) {

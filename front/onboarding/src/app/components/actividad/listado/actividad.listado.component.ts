@@ -161,8 +161,8 @@ export class ListadoActividadComponent implements OnInit{
     this.UserService.postNotificationSave(registerUser.modulo,
                                         registerUser.codigo,
                                         registerUser.documento,
-                                        registerUser.nombre,
-                                        registerUser.asunto).subscribe(
+                                        registerUser.nombre.toUpperCase(),
+                                        registerUser.asunto.toUpperCase()).subscribe(
     (result: ResponseModel[]) => {
       try{
         if(result[0].id == 1){
@@ -222,7 +222,7 @@ export class ListadoActividadComponent implements OnInit{
     }
   
     this.UserService.guardarMensaje(this.valueId,
-                                    register.solution).subscribe(
+                                    register.solution.toUpperCase()).subscribe(
     (result: ResponseModel[]) => {
       try{
         if(result[0].id == 1){

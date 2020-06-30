@@ -13,10 +13,12 @@ public interface StorageService {
 	List<getProdctModel> getProdct();
 	List<getProviderModel> getProvider();
 	List<getListRemisionModel> getListRemision();
-	List<getProductProviderModel> getProductProvider();
+	List<getProductProviderModel> getProductProvider(Integer optio,Integer productoE);
 	List<getListRemisionByIdModel> getListRemisionById(Integer remisId);
 	List<ResponseModel> postProductP(Integer productId,Integer provideId,String price);
 	List<ResponseModel> postSaveProvide(String name);
 	List<ResponseModel> postSaveProduc(String name,String code,String description,String codeP,String medi);
 	List<ResponseModel> postRemision(Integer options,Integer typeRemi,Integer producId,Integer providerId,Integer counts,String conditions,String autorize,Integer codeuser);
+	List<ResponseModel> putSaveProvide(String name,Integer provideId);
+	List<ResponseModel> putSaveProduct(Integer producId,String name,String code,String description,String codeP,String medi);
 }

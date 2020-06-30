@@ -66,7 +66,11 @@ export const routes: Routes = [
       {
         path: 'servicio',
         loadChildren: () => import('./components/servicio/servicio.module').then(m => m.ServicioModule)
-      }
+      },
+      {
+        path: 'almacen',
+        loadChildren: () => import('./components/almacen/almacen.module').then(m => m.ActividadModule)
+      },
     ]
   },
   { path: '**', component: P404Component , data: { title: "Página No Encontrada" }}

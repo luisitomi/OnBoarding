@@ -45,11 +45,13 @@ public class StorageRestController {
 		}
 	}
 	
-	@GetMapping("/getProductProvider")
-	public ResponseEntity<List<getProductProviderModel>> getProductProvider() {
+	@GetMapping("/getProductProvider/{optio}/{productoE}")
+	public ResponseEntity<List<getProductProviderModel>> getProductProvider(
+			@PathVariable(value="optio") Integer optio,
+			@PathVariable(value="productoE") Integer productoE) {
 		
 		try{
-			List<getProductProviderModel> getProductProvider = storageFacade.getProductProvider();
+			List<getProductProviderModel> getProductProvider = storageFacade.getProductProvider(optio, productoE);
 			if(!GenericUtil.isCollectionEmpty(getProductProvider)) {
 				return new ResponseEntity<List<getProductProviderModel>>(getProductProvider, HttpStatus.OK);
 			}
@@ -188,6 +190,48 @@ public class StorageRestController {
 			List<ResponseModel> postRemision = storageFacade.postRemision(options, typeRemi, producId, providerId, counts, conditions, autorize, codeuser);
 			if(!GenericUtil.isCollectionEmpty(postRemision)) {
 				return new ResponseEntity<List<ResponseModel>>(postRemision, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<ResponseModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {	
+			return new ResponseEntity<List<ResponseModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/putSaveProvide/{name}/{provideId}")
+	public ResponseEntity<List<ResponseModel>> putSaveProvide(
+			@PathVariable(value="name") String name,
+			@PathVariable(value="provideId") Integer provideId) {
+		
+		try{
+			List<ResponseModel> putSaveProvide = storageFacade.putSaveProvide(name, provideId);
+			if(!GenericUtil.isCollectionEmpty(putSaveProvide)) {
+				return new ResponseEntity<List<ResponseModel>>(putSaveProvide, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<ResponseModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {	
+			return new ResponseEntity<List<ResponseModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/putSaveProduct/{producId}/{name}/{code}/{description}/{codeP}/{medi}")
+	public ResponseEntity<List<ResponseModel>> putSaveProduct(
+			@PathVariable(value="producId") Integer producId,
+			@PathVariable(value="name") String name,
+			@PathVariable(value="code") String code,
+			@PathVariable(value="description") String description,
+			@PathVariable(value="codeP") String codeP,
+			@PathVariable(value="medi") String medi) {
+		
+		try{
+			List<ResponseModel> putSaveProduct = storageFacade.putSaveProduct(producId, name, code, description, codeP, medi);
+			if(!GenericUtil.isCollectionEmpty(putSaveProduct)) {
+				return new ResponseEntity<List<ResponseModel>>(putSaveProduct, HttpStatus.OK);
 			}
 			else {
 				return new ResponseEntity<List<ResponseModel>>(HttpStatus.NO_CONTENT);

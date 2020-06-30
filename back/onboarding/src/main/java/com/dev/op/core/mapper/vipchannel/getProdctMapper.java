@@ -13,7 +13,7 @@ public class getProdctMapper implements RowMapper<getProdctModel> {
 	public getProdctModel mapRow(ResultSet rs, int rowNum) throws SQLException {
 		
 		getProdctModel getProdct = new getProdctModel();
-		getProdct.setId(rs.getInt("proveedorId"));
+		getProdct.setId(rs.getInt("productoId"));
 		getProdct.setName(rs.getString("nombre"));
 		getProdct.setCode(rs.getString("codigo"));
 		getProdct.setDescription(rs.getString("descripcion"));

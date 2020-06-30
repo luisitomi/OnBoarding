@@ -15,6 +15,9 @@ public class getProductProviderMapper implements RowMapper<getProductProviderMod
 		getProductProviderModel getProductProvider = new getProductProviderModel();
 		getProductProvider.setId(rs.getString("product"));
 		getProductProvider.setName(rs.getString("nombre"));
+		getProductProvider.setPrice(rs.getString("precioUni"));
+		getProductProvider.setProU(rs.getInt("productoId"));
+		getProductProvider.setProV(rs.getInt("proveedorId"));
 		return getProductProvider;
 	}
 }

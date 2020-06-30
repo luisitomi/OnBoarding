@@ -52,6 +52,7 @@ public class Constantes {
 	public static final String GETPROVIDER = "getProvider";
 	public static final String GETLISTREMISION = "getListRemision";
 	public static final String GETLISTREMISIONBYID = "getListRemisionById";
+	public static final String GETLISTONU = "getListOnu";
 	public static final String PATCHMANAGERBYID = "patchManagerById";
 	public static final String PATCHVOUCHERBYID = "patchVoucherById";
 	public static final String PATCHUPDATEPASSWORD = "patchUpdatePassword";
@@ -65,6 +66,7 @@ public class Constantes {
 	public static final String PUTRPTANOTIFICATION = "putRptaNotification";
 	public static final String PUTSAVEPROVIDE = "putSaveProvide";
 	public static final String PUTSAVEPRODUCT = "putSaveProduct";
+	public static final String PUTSTATUSONU = "putStatusOnu";
 	public static final String POSTPAYSERVICE = "postPayService";
 	public static final String POSTPAYSERVICEEXIT = "postPayServiceExit";
 	public static final String POSTPAYSERVICEDETAILDELETE = "postPayServiceDetailDelete";
