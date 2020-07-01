@@ -1,6 +1,6 @@
 {
   "/api/v2/*": {
-    "target": "http://localhost:8050",
+    "target": "http://192.168.88.240",
     "secure": false,
     "logLevel":"debug"
   },
