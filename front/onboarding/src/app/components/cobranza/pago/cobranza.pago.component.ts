@@ -10,6 +10,7 @@ import { MonthPayService } from '../../../services/monthpay.service';
 import { MonthPayModel } from '../../../models/monthpay.model';
 import { AppConstants } from '../../../shared/constants/app.constants';
 import { ToastrService } from 'ngx-toastr';
+import { SellerService } from '../../../services/saller.service';
 
 @Component({
   selector: 'app-pago',
@@ -62,6 +63,7 @@ export class CobranzaComponent implements OnInit{
   amountdetailcableexit:number;
   amountdetailinternetexit:number;
   amountgeneralexit:string;
+  clientele:string;
 
   nombrepersonModel:string;
   maternopersonModel:string;
@@ -91,7 +93,8 @@ export class CobranzaComponent implements OnInit{
     private MonthPayService: MonthPayService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private SellerService: SellerService,
   ) {
     this.router.events.subscribe(evt => {
       if (evt instanceof NavigationEnd) {
@@ -247,6 +250,52 @@ export class CobranzaComponent implements OnInit{
                   this.onReturndata(8);
                   this.onReturndata(5);
                   this.submittedSaveExit = false;
+
+                  if(parseInt(registerSaveLed.typesaveE) == 2){
+                    let envioData = {};
+                    envioData = {
+                      "from": {
+                        "email": "Luismiguel.larosa@gestionysistemas.com",
+                        "name": "Cable Color - Internet Color!!!"
+                      },
+                      "to": [
+                        {
+                          "email": "martinmejia@internetcolor.net",
+                          "name": "Corte del Servicio de Internet"
+                        },
+                        {
+                          "email": "aries_250397@hotmail.com",
+                          "name": "Corte del Servicio de Internet"
+                        }
+                      ],
+                      "subject": "Envio de contrato",
+                      "html_part":  "<h2 style='color:red'>AVISO...!</h2><br /> <p>Cortar servicio del cliente "+this.clientele+"</p>",
+                      "text_part": "My first Mailjet emai",
+                      "text_part_auto": false,
+                      "CustomID": "AppGettingStartedTest",
+                      "headers": {},
+                      "smtp_tags": [
+                        "string"
+                      ]
+                    };
+                    this.SellerService.createSendEmail(envioData).subscribe(
+                      (result: any) => {
+                        this.toastr.success(
+                          AppConstants.MessageModal.EMAIL_MESSAGE,
+                          AppConstants.TitleModal.ENVIAR_TITLE,
+                          {closeButton: true}
+                        );
+                      }
+                    ),
+                    error => {
+                      this.toastr.error(
+                        AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+                        AppConstants.TitleModal.ERROR_TITLE,
+                        {closeButton: true}
+                      );
+                    }
+                  }
+
                 }else{
                   this.toastr.warning(
                     AppConstants.MessageModal.REGISTER_NO_CREATED,
@@ -1100,9 +1149,10 @@ export class CobranzaComponent implements OnInit{
     this.personModal.show();
   }
 
-  openRedirection(documento:string,codigo:string){
+  openRedirection(documento:string,codigo:string,clienteElegid:string){
     this.document= documento;
     this.code = codigo;
+    this.clientele = clienteElegid
     this.onReturndata(1);
     this.onReturndata(2);
     this.onReturndata(3);

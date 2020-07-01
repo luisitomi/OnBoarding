@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dev.op.core.dto.ResponseModel;
+import com.dev.op.core.dto.vipchannel.getListCountOnuModel;
 import com.dev.op.core.dto.vipchannel.getListOnuModel;
+import com.dev.op.core.repository.vipchannel.jdbc.getListCountOnuJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getListOnuJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.putStatusOnuJdbcRepository;
 import com.dev.op.core.service.vipchannel.ActivacionService;
@@ -22,6 +24,10 @@ public class ActivacionServiceImpl implements ActivacionService {
 	@Autowired
 	@Qualifier("getListOnuJdbcRepository")
 	private getListOnuJdbcRepository getListOnuJdbcRepository;
+	
+	@Autowired
+	@Qualifier("getListCountOnuJdbcRepository")
+	private getListCountOnuJdbcRepository getListCountOnuJdbcRepository;
 	
 	@Autowired
 	@Qualifier("putStatusOnuJdbcRepository")
@@ -60,6 +66,26 @@ public class ActivacionServiceImpl implements ActivacionService {
 			}
 			else {
 				return putStatusOnu;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getListCountOnuModel> getListCountOnu(Integer detalleIds, Integer nextids) {
+		List<getListCountOnuModel> getListCountOnu = new ArrayList<getListCountOnuModel>();
+		
+		try {
+			
+			getListCountOnu = getListCountOnuJdbcRepository.getListCountOnu(detalleIds, nextids);
+			if(GenericUtil.isCollectionEmpty(getListCountOnu)) {
+				return null;
+			}
+			else {
+				return getListCountOnu;
 			}
 		}
 		catch(Exception e) {

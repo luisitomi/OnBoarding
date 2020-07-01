@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ResponseModel } from '../models/personpay.model';
-import { ServiceModel, MaterialModel, PendingServiceModel, TecnicoModel,ReclaimPendingModel } from '../models/service.model';
+import { ServiceModel, MaterialModel, PendingServiceModel, TecnicoModel,ReclaimPendingModel, CountOnuMdel } from '../models/service.model';
+import { OnuModel } from '../models/activation.model';
 
 @Injectable({
     providedIn: "root"
@@ -60,6 +61,20 @@ export class ServiceService {
 
     listarsreclamospendientes(id:number): Observable<ReclaimPendingModel[]> {
         return this.httpClient.get<ReclaimPendingModel[]>(`${this.BASE_URL}/servicio/getListReclaimService/` + id);
+    }
+
+    listaronusactivos(): Observable<OnuModel[]> {
+        return this.httpClient.get<OnuModel[]>(`${this.BASE_URL}/activacion/getListOnu`);
+    }
+
+    guardarOnu(idOnu: number,optio: number,idPk: number,nextId: number,description: string,statusOnu:number): Observable<ResponseModel[]> {
+        return this.httpClient.get<ResponseModel[]>(`${this.BASE_URL}/activacion/putStatusOnu/`+ 
+        idOnu + "/" + optio + "/" + idPk + "/" + nextId +  "/" + description+  "/" + "/" + statusOnu);
+    }
+
+    listarId(det:number,next:number): Observable<CountOnuMdel[]> {
+        return this.httpClient.get<CountOnuMdel[]>(`${this.BASE_URL}/activacion/getListCountOnu/`
+        + det + "/" + next);
     }
 
 }

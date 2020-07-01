@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.op.core.dto.ResponseModel;
+import com.dev.op.core.dto.vipchannel.getListCountOnuModel;
 import com.dev.op.core.dto.vipchannel.getListOnuModel;
 import com.dev.op.core.facade.vipchannel.ActivacionFacade;
 import com.dev.op.core.util.vipchannel.GenericUtil;
@@ -38,6 +39,25 @@ public class ActivacionRestController {
 		}
 		catch(Exception e) {
 			return new ResponseEntity<List<getListOnuModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/getListCountOnu/{detalleIds}/{nextids}")
+	public ResponseEntity<List<getListCountOnuModel>> getListCountOnu(
+			@PathVariable(value="detalleIds") Integer detalleIds,
+			@PathVariable(value="nextids") Integer nextids) {
+		
+		try{
+			List<getListCountOnuModel> getListCountOnu = activacionFacade.getListCountOnu(detalleIds, nextids);
+			if(!GenericUtil.isCollectionEmpty(getListCountOnu)) {
+				return new ResponseEntity<List<getListCountOnuModel>>(getListCountOnu, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<getListCountOnuModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<List<getListCountOnuModel>>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	

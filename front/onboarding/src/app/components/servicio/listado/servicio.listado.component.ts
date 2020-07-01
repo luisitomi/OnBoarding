@@ -5,8 +5,9 @@ import { AppConstants } from '../../../shared/constants/app.constants';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ModalDirective} from 'ngx-bootstrap/modal';
-import { MaterialModel, PendingServiceModel, TecnicoModel } from '../../../models/service.model';
+import { MaterialModel, PendingServiceModel, TecnicoModel, CountOnuMdel } from '../../../models/service.model';
 import { ResponseModel } from '../../../models/personpay.model';
+import { OnuModel } from '../../../models/activation.model';
 
 @Component({
   templateUrl: 'servicio.listado.component.html'
@@ -18,6 +19,7 @@ export class ServicioComponent implements OnInit{
   active:MaterialModel[];
   pnd:PendingServiceModel[];
   tecnico:TecnicoModel[];
+  onu:OnuModel[];
 
   saveList = [];
 
@@ -31,24 +33,34 @@ export class ServicioComponent implements OnInit{
   valueId:number;
   countiD:number;
   anotacion:string;
+  valueOnu:number;
+  nameOnu:string;
+  itemnextIdOnu:number;
+  onuId:number;
 
   userActive:boolean = false;
   listActie:boolean = true;
   saveActive:boolean = false;
+  valorActive :boolean = true;
 
   submitted: boolean;
   submittedE: boolean;
   submittedT: boolean;
+  submittedO: boolean;
 
   public formlarioSave: FormGroup;
   public formularioEdit: FormGroup;
   public formularioTecnico: FormGroup;
+  public formularioOnu: FormGroup;
 
   value:number;
+
+  listSelect = [{id:1,name:'SI'},{id:0,name:'NO'}];
   
   @ViewChild('tecnicoModal') public tecnicoModal: ModalDirective;
   @ViewChild('mateSaveModal') public mateSaveModal: ModalDirective;
   @ViewChild('editSaveModal') public editSaveModal: ModalDirective;
+  @ViewChild('onuModal') public onuModal: ModalDirective;
 
   itemsPerPageS: number = 3;
   currentPageS: number = 1;
@@ -84,6 +96,11 @@ export class ServicioComponent implements OnInit{
     });
     this.formularioTecnico = this.formBuilder.group({
       nombre: ['0', Validators.required]
+    });
+    this.formularioOnu = this.formBuilder.group({
+      nombre: ['0', Validators.required],
+      descripcion: [''],
+      status:['']
     });
   }
 
@@ -283,6 +300,7 @@ export class ServicioComponent implements OnInit{
         this.listActie = true;
         this.saveActive = false;
         this.listadotecni();
+        this.listarOnus();
         break;
       case 1:
         this.listActie = false;
@@ -331,6 +349,37 @@ export class ServicioComponent implements OnInit{
     })
   }
 
+  listarOnus(){
+    this.onu = [];
+    this.ServiceService.listaronusactivos().subscribe(
+    (result: OnuModel[]) => {
+      this.onu = result;
+    },
+    error => {
+    })
+  }
+
+  bydiOnus(id:number,next:number){
+    this.ServiceService.listarId(id,next).subscribe(
+      (result: CountOnuMdel[]) => {
+        this.onuId = result[0].id
+        if(this.onuId == 0){
+          this.valorActive = false;
+        }else{
+          this.valorActive = true;
+        }
+      }
+    )
+  }
+
+  open(id:number,next:number){
+    this.valueOnu = id;
+    this.itemnextIdOnu = next;
+    this.byidonu(id.toString());
+    this.onuModal.show();
+    this.bydiOnus(id,next);
+  }
+
   abrir(id:number){
     this.value = id;
     this.bydi(id.toString());
@@ -344,6 +393,22 @@ export class ServicioComponent implements OnInit{
     }else{
       this.userActive = false
     }
+  }
+
+  byidonu(id:string){
+    this.ServiceService.listaronusactivos().subscribe(
+      (result: OnuModel[]) => {
+        const searchData = [];
+        for (const l of this.onu) {
+          if (l.id.toString().indexOf(id) > -1) {
+            searchData.push(l)
+          }
+        }
+        if (searchData.length > 0) {
+          this.nameOnu = searchData[0].name;
+        }
+      }
+    )
   }
 
   bydi(id:string){
@@ -497,10 +562,98 @@ export class ServicioComponent implements OnInit{
      })
   }
 
+  changeOnnu(){
+    this.submittedO = true;
+    let value :number;
+    let register = this.formularioOnu.value;
+
+    if(this.onuId == 0){
+
+      if (!this.formularioOnu.controls.nombre.valid) {
+        this.toastr.warning(
+          AppConstants.MessageModal.REQUIRED_CUSTOM_FIELD,
+          AppConstants.TitleModal.WARNING_TITLE,
+          {closeButton: true}
+        );
+        return false;
+      }
+
+      register.descripcion = "inicio";
+      value = 0;
+
+    }else{
+      
+      if (!this.formularioOnu.controls.nombre.valid
+        || !this.formularioOnu.controls.descripcion.valid
+        || !this.formularioOnu.controls.status.valid) {
+        this.toastr.warning(
+          AppConstants.MessageModal.REQUIRED_CUSTOM_FIELD,
+          AppConstants.TitleModal.WARNING_TITLE,
+          {closeButton: true}
+        );
+        return false;
+      }
+
+      register.descripcion = register.descripcion ;
+      value = register.status;
+    }
+
+    this.ServiceService.guardarOnu(register.nombre,
+                                   this.onuId,
+                                   this.valueOnu,
+                                   this.itemnextIdOnu,
+                                   register.descripcion,
+                                   value).subscribe(
+    (result: ResponseModel[]) => {
+       try{
+        if(result[0].id == 1){
+          this.toastr.success(
+            AppConstants.MessageModal.REGISTER_CREATED,
+            AppConstants.TitleModal.REGISTER_TITLE,
+            {closeButton: true}
+          );
+          this.onuModal.hide();
+          this.onReturndata(0);
+          this.submittedO = false;
+        }else{
+          this.toastr.warning(
+            AppConstants.MessageModal.REGISTER_NO_CREATED,
+            AppConstants.TitleModal.WARNING_TITLE,
+            {closeButton: true}
+          );
+          this.onuModal.hide();
+          this.onReturndata(0);
+          this.submittedO = false;
+        }
+       }catch{
+        this.toastr.error(
+          AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+          AppConstants.TitleModal.ERROR_TITLE,
+          {closeButton: true}
+        );
+          this.onuModal.hide();
+          this.onReturndata(0);
+          this.submittedO = false;
+       }
+     },
+     error => {
+      this.toastr.error(
+        AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+        AppConstants.TitleModal.ERROR_TITLE,
+        {closeButton: true}
+      );
+      this.onuModal.hide();
+      this.onReturndata(0);
+      this.submittedO = false;
+     })
+  }
+
   get f() { return this.formlarioSave.controls; }
 
   get g() { return this.formularioTecnico.controls; }
 
   get h() { return this.formularioEdit.controls; }
+
+  get i() { return this.formularioOnu.controls; }
 
 }

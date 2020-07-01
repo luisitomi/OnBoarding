@@ -31,6 +31,8 @@ public class getListServicePendingModel implements Serializable {
 	
 	private String user;
 	
+	private String serie;
+	
 	public getListServicePendingModel() {
 		
 	}
@@ -121,6 +123,14 @@ public class getListServicePendingModel implements Serializable {
 
 	public void setDistrict(String district) {
 		this.district = district;
+	}
+
+	public String getSerie() {
+		return serie;
+	}
+
+	public void setSerie(String serie) {
+		this.serie = serie;
 	}
 	
 }

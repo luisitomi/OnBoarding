@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.dev.op.core.dto.ResponseModel;
+import com.dev.op.core.dto.vipchannel.getListCountOnuModel;
 import com.dev.op.core.dto.vipchannel.getListOnuModel;
 import com.dev.op.core.facade.vipchannel.ActivacionFacade;
 import com.dev.op.core.service.vipchannel.ActivacionService;
@@ -53,6 +54,26 @@ public class ActivacionFacadeImpl implements ActivacionFacade{
 			}
 			else {
 				return putStatusOnu;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getListCountOnuModel> getListCountOnu(Integer detalleIds, Integer nextids) {
+		List<getListCountOnuModel> getListCountOnu = new ArrayList<getListCountOnuModel>();
+		
+		try {
+			
+			getListCountOnu = activacionService.getListCountOnu(detalleIds, nextids);
+			if(GenericUtil.isEmpty(getListCountOnu)) {
+				return null;
+			}
+			else {
+				return getListCountOnu;
 			}
 		}
 		catch(Exception e) {

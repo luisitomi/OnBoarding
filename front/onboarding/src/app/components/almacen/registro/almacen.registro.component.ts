@@ -143,8 +143,7 @@ export class AlmacenComponent implements OnInit{
   }
 
   validacionUser(){
-    if(sessionStorage.getItem(AppConstants.Session.USERID) == '0'
-      || sessionStorage.getItem(AppConstants.Session.USERID) == '10'){
+    if(sessionStorage.getItem(AppConstants.Session.USERID) == '10'){
         this.addNotiActive = true;
     }else{
       this.addNotiActive = false;
@@ -152,7 +151,8 @@ export class AlmacenComponent implements OnInit{
   }
 
   validacionUserView(){
-    if(sessionStorage.getItem(AppConstants.Session.USERID) == '10'){
+    if(sessionStorage.getItem(AppConstants.Session.USERID) == '0'
+      || sessionStorage.getItem(AppConstants.Session.USERID) == '10'){
         this.addNotiActiveView = true;
     }else{
       this.addNotiActiveView = false;

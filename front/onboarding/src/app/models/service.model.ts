@@ -30,6 +30,7 @@ export class PendingServiceModel{
 	asunt:string;
 	district:string;
 	user:string;
+	serie:string;
 }
 
 export class TecnicoModel{
@@ -44,4 +45,8 @@ export class ReclaimPendingModel{
 	fecha:string;
 	descripcion:string;
 	tecn:string;
+}
+
+export class CountOnuMdel{
+	id:number;
 }

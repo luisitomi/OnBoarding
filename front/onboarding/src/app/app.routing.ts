@@ -71,6 +71,10 @@ export const routes: Routes = [
         path: 'almacen',
         loadChildren: () => import('./components/almacen/almacen.module').then(m => m.ActividadModule)
       },
+      {
+        path: 'activacion',
+        loadChildren: () => import('./components/activacion/activacion.module').then(m => m.ActivacionModule)
+      },
     ]
   },
   { path: '**', component: P404Component , data: { title: "Página No Encontrada" }}
