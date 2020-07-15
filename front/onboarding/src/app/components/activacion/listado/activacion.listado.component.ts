@@ -60,6 +60,7 @@ export class ListadoActivacionComponent implements OnInit{
     switch(id){
       case 0:
         this.validate();
+        this.validateUser();
         this.initFC();
         break;
     }
@@ -72,6 +73,14 @@ export class ListadoActivacionComponent implements OnInit{
       this.addNotiActive = true;
     }else{
       this.activacion = [];
+      this.addNotiActive = false;
+    }
+  }
+
+  validateUser(){
+    if(parseInt(sessionStorage.getItem(AppConstants.Session.USERID)) == 8){
+      this.addNotiActive = true;
+    }else{
       this.addNotiActive = false;
     }
   }
@@ -103,6 +112,56 @@ export class ListadoActivacionComponent implements OnInit{
       );
       return false;
     }
+
+    this.ActivationService.postActivation(this.valueId,
+                                          register.solution).subscribe(
+    (result: ResponseModel[]) => {
+    try{
+      if(result[0].id == 1){
+        this.toastr.success(
+          AppConstants.MessageModal.REGISTER_UPDATED,
+          AppConstants.TitleModal.REGISTER_TITLE,
+          {closeButton: true}
+        );
+        this.onReturndata(0);
+        this.submittedNoti = false;
+        this.listado();
+        this.rptaModal.hide();
+      }else{
+        this.toastr.warning(
+          AppConstants.MessageModal.REGISTER_NO_CREATED,
+          AppConstants.TitleModal.WARNING_TITLE,
+          {closeButton: true}
+        );
+        this.onReturndata(0);
+        this.submittedNoti = false;
+        this.listado();
+        this.rptaModal.hide();
+    }
+}catch{
+  this.toastr.error(
+    AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+    AppConstants.TitleModal.ERROR_TITLE,
+    {closeButton: true}
+  );
+    this.onReturndata(0);
+    this.submittedNoti = false;
+    this.listado();
+    this.rptaModal.hide();
+  }
+},
+error => {
+  this.toastr.error(
+    AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+    AppConstants.TitleModal.ERROR_TITLE,
+    {closeButton: true}
+  );
+  this.onReturndata(0);
+  this.submittedNoti = false;
+  this.listado();
+  this.rptaModal.hide();
+})
+
   }
 
   get i() { return this.formularioSolution.controls; }

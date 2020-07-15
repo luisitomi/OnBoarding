@@ -102,4 +102,41 @@ public class ActivacionRestController {
 		}
 	}
 	
+	@GetMapping("/patchActivationService/{activationId}/{dateinfo}")
+	public ResponseEntity<List<ResponseModel>> patchActivationService(
+			@PathVariable(value="activationId") Integer activationId,
+			@PathVariable(value="dateinfo") String dateinfo) {
+		
+		try{
+			List<ResponseModel> patchActivationService = activacionFacade.patchActivationService(activationId, dateinfo);
+			if(!GenericUtil.isCollectionEmpty(patchActivationService)) {
+				return new ResponseEntity<List<ResponseModel>>(patchActivationService, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<ResponseModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {	
+			return new ResponseEntity<List<ResponseModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/patchStorageValidate/{idRemision}")
+	public ResponseEntity<List<ResponseModel>> patchStorageValidate(
+			@PathVariable(value="idRemision") Integer idRemision) {
+		
+		try{
+			List<ResponseModel> patchStorageValidate = activacionFacade.patchStorageValidate(idRemision);
+			if(!GenericUtil.isCollectionEmpty(patchStorageValidate)) {
+				return new ResponseEntity<List<ResponseModel>>(patchStorageValidate, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<ResponseModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {	
+			return new ResponseEntity<List<ResponseModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 }

@@ -102,4 +102,44 @@ public class ActivacionFacadeImpl implements ActivacionFacade{
 		}
 		return null;
 	}
+
+	@Override
+	public List<ResponseModel> patchActivationService(Integer activationId, String dateinfo) {
+		List<ResponseModel> patchActivationService = new ArrayList<ResponseModel>();
+		
+		try {
+			
+			patchActivationService = activacionService.patchActivationService(activationId, dateinfo);
+			if(GenericUtil.isEmpty(patchActivationService)) {
+				return null;
+			}
+			else {
+				return patchActivationService;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ResponseModel> patchStorageValidate(Integer idRemision) {
+		List<ResponseModel> patchStorageValidate = new ArrayList<ResponseModel>();
+		
+		try {
+			
+			patchStorageValidate = activacionService.patchStorageValidate(idRemision);
+			if(GenericUtil.isEmpty(patchStorageValidate)) {
+				return null;
+			}
+			else {
+				return patchStorageValidate;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

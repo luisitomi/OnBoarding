@@ -70,4 +70,8 @@ export class StorageService {
         return this.httpClient.get<AlmacenModel[]>(`${this.BASE_URL}/almacen/getListRemisionById/` + id);
     }
 
+    postPay(idRemision: number): Observable<ResponseModel[]> {
+        return this.httpClient.get<ResponseModel[]>(`${this.BASE_URL}/activacion/patchStorageValidate/`+ idRemision);
+    }
+
 }

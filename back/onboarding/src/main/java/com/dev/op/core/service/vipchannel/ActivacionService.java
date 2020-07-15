@@ -12,4 +12,6 @@ public interface ActivacionService {
 	List<getListCountOnuModel> getListCountOnu(Integer detalleIds,Integer nextids);
 	List<ResponseModel> putStatusOnu(Integer idOnu,Integer optio,Integer idPk,Integer nextId, String description,Integer statusOnu);
 	List<getListActivationModel> getListActivation();
+	List<ResponseModel> patchActivationService(Integer activationId,String dateinfo);
+	List<ResponseModel> patchStorageValidate(Integer idRemision);
 }

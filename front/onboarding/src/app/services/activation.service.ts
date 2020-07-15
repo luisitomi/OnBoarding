@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ActivacionModel, OnuModel } from '../models/activation.model';
 import { environment } from '../../environments/environment';
+import { ResponseModel } from '../models/personpay.model';
 
 @Injectable({
     providedIn: "root"
@@ -27,6 +28,10 @@ export class ActivationService {
 
     listadoactivacion(): Observable<ActivacionModel[]> {
         return this.httpClient.get<ActivacionModel[]>(`${this.BASE_URL}/activacion/getListActivation`);
+    }
+
+    postActivation(activationId: number,dateinfo: string): Observable<ResponseModel[]> {
+        return this.httpClient.get<ResponseModel[]>(`${this.BASE_URL}/activacion/patchActivationService/`+ activationId + "/" + dateinfo);
     }
 
 }

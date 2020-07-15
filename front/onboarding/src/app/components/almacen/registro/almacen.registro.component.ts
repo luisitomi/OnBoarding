@@ -40,6 +40,7 @@ export class AlmacenComponent implements OnInit{
   nombreProveedor:string;
   ppproducto:number;
   ppproveedor:number;
+  validateId:number;
 
   submittedProductoSave:boolean;
   submittedProductoEdit:boolean;
@@ -233,6 +234,46 @@ export class AlmacenComponent implements OnInit{
       this.onReturndata(0);
       this.submittedProductoSave = false;
       this.saveProduct.hide();
+    })
+
+  }
+
+  savePatch(){
+  
+    this.StorageService.postPay(this.validateId).subscribe(
+    (result: ResponseModel[]) => {
+      try{
+        if(result[0].id == 1){
+          this.toastr.success(
+            AppConstants.MessageModal.REGISTER_UPDATED,
+            AppConstants.TitleModal.REGISTER_TITLE,
+            {closeButton: true}
+          );
+          this.onReturndata(0);
+        }else{
+          this.toastr.warning(
+            AppConstants.MessageModal.REGISTER_NO_CREATED,
+            AppConstants.TitleModal.WARNING_TITLE,
+            {closeButton: true}
+          );
+          this.onReturndata(0);
+        }
+      }catch{
+        this.toastr.error(
+          AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+          AppConstants.TitleModal.ERROR_TITLE,
+          {closeButton: true}
+        );
+        this.onReturndata(0);
+      }
+    },
+    error => {
+      this.toastr.error(
+        AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+        AppConstants.TitleModal.ERROR_TITLE,
+        {closeButton: true}
+      );
+      this.onReturndata(0);
     })
 
   }
@@ -579,7 +620,8 @@ export class AlmacenComponent implements OnInit{
   }
 
   byIdValidate(id:number){
-    alert(id);
+    this.validateId = id;
+    this.savePatch();
   }
 
   listarremisionByid(id:number){

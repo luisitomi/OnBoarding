@@ -235,10 +235,12 @@
                                     (click)="returnRemisiones(item.id)" *ngIf="addNotiActiveView">
                                     <i class="fa fa-file-text fa-lg" style="color: red;"></i>
                                   </button>
-                                  <button id="{{item.id}}" type="button"  class="btn"
-                                    (click)="byIdValidate(item.id)" *ngIf="addNotiActiveViewInfo">
-                                    <i class="fa fa-handshake-o fa-lg" style="color: green;"></i>
-                                  </button>
+                                  <div *ngIf="item.validate== 0">
+                                    <button id="{{item.id}}" type="button"  class="btn"
+                                      (click)="byIdValidate(item.id)" *ngIf="addNotiActiveViewInfo">
+                                      <i class="fa fa-handshake-o fa-lg" style="color: green;"></i>
+                                    </button>
+                                  </div>
                                 </div>
                               </td>
                             </tr>

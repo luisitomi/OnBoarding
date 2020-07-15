@@ -15,6 +15,8 @@ import com.dev.op.core.dto.vipchannel.getListOnuModel;
 import com.dev.op.core.repository.vipchannel.jdbc.getListActivationJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getListCountOnuJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getListOnuJdbcRepository;
+import com.dev.op.core.repository.vipchannel.jdbc.patchActivationServiceJdbcRepository;
+import com.dev.op.core.repository.vipchannel.jdbc.patchStorageValidateJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.putStatusOnuJdbcRepository;
 import com.dev.op.core.service.vipchannel.ActivacionService;
 import com.dev.op.core.util.vipchannel.GenericUtil;
@@ -38,6 +40,14 @@ public class ActivacionServiceImpl implements ActivacionService {
 	@Autowired
 	@Qualifier("getListActivationJdbcRepository")
 	private getListActivationJdbcRepository getListActivationJdbcRepository;
+	
+	@Autowired
+	@Qualifier("patchActivationServiceJdbcRepository")
+	private patchActivationServiceJdbcRepository patchActivationServiceJdbcRepository;
+	
+	@Autowired
+	@Qualifier("patchStorageValidateJdbcRepository")
+	private patchStorageValidateJdbcRepository patchStorageValidateJdbcRepository;
 	
 	@Override
 	public List<getListOnuModel> getListOnu() {
@@ -112,6 +122,46 @@ public class ActivacionServiceImpl implements ActivacionService {
 			}
 			else {
 				return getListActivation;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ResponseModel> patchActivationService(Integer activationId, String dateinfo) {
+		List<ResponseModel> patchActivationService = new ArrayList<ResponseModel>();
+		
+		try {
+			
+			patchActivationService = patchActivationServiceJdbcRepository.patchActivationService(activationId, dateinfo);
+			if(GenericUtil.isCollectionEmpty(patchActivationService)) {
+				return null;
+			}
+			else {
+				return patchActivationService;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<ResponseModel> patchStorageValidate(Integer idRemision) {
+		List<ResponseModel> patchStorageValidate = new ArrayList<ResponseModel>();
+		
+		try {
+			
+			patchStorageValidate = patchStorageValidateJdbcRepository.patchStorageValidate(idRemision);
+			if(GenericUtil.isCollectionEmpty(patchStorageValidate)) {
+				return null;
+			}
+			else {
+				return patchStorageValidate;
 			}
 		}
 		catch(Exception e) {
