@@ -568,15 +568,18 @@ public class CobranzaRestController {
 		}
 	}
 	
-	@GetMapping("/postPayServiceDetailDelete/{document}/{code}/{amount}/{user}")
+	@GetMapping("/postPayServiceDetailDelete/{document}/{code}/{amount}/{managerId}/{serviceId}/{typeId}/{user}")
 	public ResponseEntity<List<ResponseModel>> postPayServiceDetailDelete(
 			@PathVariable(value="document") String document,
 			@PathVariable(value="code") String code,
 			@PathVariable(value="amount") BigDecimal amount,
+			@PathVariable(value="managerId") Integer managerId,
+			@PathVariable(value="serviceId") Integer serviceId,
+			@PathVariable(value="typeId") Integer typeId,
 			@PathVariable(value="user") Integer user) {
 		
 		try{
-			List<ResponseModel> postPayServiceDetailDelete = cobranzaFacade.postPayServiceDetailDelete(document, code, amount, user);
+			List<ResponseModel> postPayServiceDetailDelete = cobranzaFacade.postPayServiceDetailDelete(document, code, amount, managerId, serviceId, typeId, user);;
 			if(!GenericUtil.isCollectionEmpty(postPayServiceDetailDelete)) {
 				return new ResponseEntity<List<ResponseModel>>(postPayServiceDetailDelete, HttpStatus.OK);
 			}

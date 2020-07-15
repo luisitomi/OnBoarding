@@ -92,6 +92,7 @@ export class CobranzaComponent implements OnInit{
   submittedReference: boolean;
   submittedSaveActive: boolean;
   submittedSaveExit: boolean;
+  submittedSaveDelete: boolean;
 
   constructor(
     private PersonPayService: PersonPayService,
@@ -172,11 +173,104 @@ export class CobranzaComponent implements OnInit{
       amountpaySaveE: ['0', Validators.required],
       userSaveE: [''],
       selectpaySaveE: ['', Validators.required],
+      typesaveE: ['', Validators.required],
       selectserviceSaveE: ['', Validators.required]
     });
   }
 
   savedeletefunction(){
+    this.submittedSaveDelete = true;
+    let registerSaveLed = this.formularioSavePayDelete.value;
+
+    registerSaveLed.amountpaySaveE = parseFloat(registerSaveLed.amountpaySaveE).toFixed(2);
+    registerSaveLed.selectpaySaveE = parseInt(registerSaveLed.selectpaySaveE);
+    registerSaveLed.documentosaveE = this.document
+    registerSaveLed.userSaveE = parseInt(sessionStorage.getItem(AppConstants.Session.USERID))
+    registerSaveLed.codesaveE = this.code
+    registerSaveLed.typesaveE = parseInt(registerSaveLed.typesaveE);
+    registerSaveLed.selectserviceSaveE = parseInt(registerSaveLed.selectserviceSaveE);
+
+    if (!this.formularioSavePayDelete.controls.amountpaySaveE.valid ||
+      !this.formularioSavePayDelete.controls.selectpaySaveE.valid ||
+      !this.formularioSavePayDelete.controls.typesaveE.valid ||
+      !this.formularioSavePayDelete.controls.selectserviceSaveE.valid) {
+     this.toastr.warning(
+        AppConstants.MessageModal.REQUIRED_CUSTOM_FIELD,
+        AppConstants.TitleModal.WARNING_TITLE,
+        {closeButton: true}
+      );
+      return false;
+    }
+
+    if (registerSaveLed.amountpaySaveE == 0) {
+      this.toastr.warning(
+        "El monto debe ser mayor a 0",
+        AppConstants.TitleModal.WARNING_TITLE,
+        {closeButton: true}
+      );
+      return false;
+
+    }
+
+    if (registerSaveLed.typesaveE == 1 && registerSaveLed.amountpaySaveE <= 10) {
+      this.toastr.warning(
+        "El monto no cumple como mínimo saldo para reconectar",
+        AppConstants.TitleModal.WARNING_TITLE,
+        {closeButton: true}
+      );
+      return false;
+
+    }
+
+    if (registerSaveLed.typesaveE == 1 && registerSaveLed.amountpaySaveE > 10) {
+      registerSaveLed.amountpaySaveE = parseFloat(registerSaveLed.amountpaySaveE) - 10
+    }
+
+    this.MonthPayService.postPayServiceDelete(this.document,
+                                              this.code,
+                                              registerSaveLed.amountpaySaveE,
+                                              registerSaveLed.selectpaySaveE,
+                                              registerSaveLed.selectserviceSaveE,
+                                              registerSaveLed.typesaveE,
+                                              registerSaveLed.userSaveE).subscribe(
+    (resultS: ResponseModel[]) => {
+      try{
+        if(resultS[0].id == 1){
+          this.toastr.success(
+            AppConstants.MessageModal.REGISTER_CREATED,
+            AppConstants.TitleModal.REGISTER_TITLE,
+            {closeButton: true}
+          );
+        }else{
+          if(resultS[0].id == 2){
+            this.toastr.warning(
+              AppConstants.MessageModal.REGISTER_NO_CREATED,
+              "Monto para reconectar inválido",
+              {closeButton: true}
+            );
+          }else{
+            this.toastr.warning(
+              AppConstants.MessageModal.REGISTER_NO_CREATED,
+              AppConstants.TitleModal.REGISTER_TITLE,
+              {closeButton: true}
+            );
+          }
+        }
+      }catch{
+        this.toastr.error(
+          AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+          AppConstants.TitleModal.REGISTER_TITLE,
+          {closeButton: true}
+        );
+      }
+    },
+    error => {
+      this.toastr.error(
+        AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+        AppConstants.TitleModal.REGISTER_TITLE,
+        {closeButton: true}
+      );
+    })
 
   }
 
@@ -726,6 +820,8 @@ export class CobranzaComponent implements OnInit{
   get j() { return this.formularioSavePayActive.controls; }
 
   get k() { return this.formularioSavePayExit.controls; }
+
+  get l() { return this.formularioSavePayDelete.controls; }
 
   listadoclientes(){
     this.personpay = [];

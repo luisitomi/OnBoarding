@@ -588,12 +588,12 @@ public class CobranzaFacadeImpl implements CobranzaFacade {
 
 	@Override
 	public List<ResponseModel> postPayServiceDetailDelete(String document, String code, BigDecimal amount,
-			Integer user) {
+			Integer managerId,Integer serviceId,Integer typeId,Integer user) {
 		List<ResponseModel> postPayServiceDetailDelete = new ArrayList<ResponseModel>();
 		
 		try {
 			
-			postPayServiceDetailDelete = cobranzaService.postPayServiceDetailDelete(document, code, amount, user);
+			postPayServiceDetailDelete = cobranzaService.postPayServiceDetailDelete(document, code, amount, managerId, serviceId, typeId, user);;
 			if(GenericUtil.isEmpty(postPayServiceDetailDelete)) {
 				return null;
 			}

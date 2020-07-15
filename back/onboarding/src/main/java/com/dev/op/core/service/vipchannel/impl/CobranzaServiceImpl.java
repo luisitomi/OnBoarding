@@ -755,12 +755,12 @@ public class CobranzaServiceImpl implements CobranzaService {
 
 	@Override
 	public List<ResponseModel> postPayServiceDetailDelete(String document, String code, BigDecimal amount,
-			Integer user) {
+			Integer managerId,Integer serviceId,Integer typeId,Integer user) {
 		List<ResponseModel> postPayServiceDetailDelete = new ArrayList<ResponseModel>();
 		
 		try {
 			
-			postPayServiceDetailDelete = postPayServiceDetailDeleteJdbcRepository.postPayServiceDetailDelete(document, code, amount, user);
+			postPayServiceDetailDelete = postPayServiceDetailDeleteJdbcRepository.postPayServiceDetailDelete(document, code, amount, managerId, serviceId, typeId, user);
 			if(GenericUtil.isCollectionEmpty(postPayServiceDetailDelete)) {
 				return null;
 			}

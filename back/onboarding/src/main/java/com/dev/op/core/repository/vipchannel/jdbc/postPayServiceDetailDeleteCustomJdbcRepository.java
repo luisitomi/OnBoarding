@@ -32,7 +32,7 @@ public class postPayServiceDetailDeleteCustomJdbcRepository implements postPaySe
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ResponseModel> postPayServiceDetailDelete(String document,String code,BigDecimal amount,Integer user) {
+	public List<ResponseModel> postPayServiceDetailDelete(String document,String code,BigDecimal amount,Integer managerId,Integer serviceId,Integer typeId,Integer user) {
 		List<ResponseModel> postPayServiceDetailDelete = new ArrayList<ResponseModel>();
 
 		try {
@@ -41,6 +41,9 @@ public class postPayServiceDetailDeleteCustomJdbcRepository implements postPaySe
 			simpleJdbcCall.declareParameters(new SqlParameter("document", Types.VARCHAR),
 											 new SqlParameter("code", Types.VARCHAR),
 											 new SqlParameter("amount", Types.DECIMAL),
+											 new SqlParameter("managerId", Types.INTEGER),
+											 new SqlParameter("serviceId", Types.INTEGER),
+											 new SqlParameter("typeId", Types.INTEGER),
 											 new SqlParameter("user", Types.INTEGER));
 			simpleJdbcCall.returningResultSet("postPayServiceDetailDelete", new postPayServiceDetailDeleteMapper());
 			
@@ -48,6 +51,9 @@ public class postPayServiceDetailDeleteCustomJdbcRepository implements postPaySe
 			inParams.addValue("document", document);
 			inParams.addValue("code", code);
 			inParams.addValue("amount", amount);
+			inParams.addValue("managerId", managerId);
+			inParams.addValue("serviceId", serviceId);
+			inParams.addValue("typeId", typeId);
 			inParams.addValue("user", user);
 			
 			Map<String, Object> result = simpleJdbcCall.execute(inParams);

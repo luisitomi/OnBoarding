@@ -311,19 +311,19 @@
           <form *ngIf="formularioSavePayDelete" [formGroup]="formularioSavePayDelete" autocomplete="offs" class="form-register-section">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="row" style="margin: 10px 0px 0px 0px;">
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <div>
                   <label for="amountpaySaveE">Monto</label>
                   <input class="form-control form-control-sm" maxlength="6" id="amountpaySaveE"
-                         formControlName="amountpaySaveE" [ngClass]="{ 'is-invalid': submittedSaveExit && k.amountpaySaveE.errors }" placeholder="Ingrese monto" type="text">
+                         formControlName="amountpaySaveE" [ngClass]="{ 'is-invalid': submittedSaveDelete && l.amountpaySaveE.errors }" placeholder="Ingrese monto" type="text">
                   <div class="invalid-feedback"> Ingrese valor para monto</div>
                 </div>
               </div>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <div>
                   <label for="selectpaySaveE">Gestor</label>
                   <select class="form-control form-control-sm select-select" id="selectpaySaveE" placeholder="Seleccione"
-                          formControlName="selectpaySaveE" [ngClass]="{ 'is-invalid': submittedSaveExit && k.selectpaySaveE.errors }">
+                          formControlName="selectpaySaveE" [ngClass]="{ 'is-invalid': submittedSaveDelete && l.selectpaySaveE.errors }">
                     <option value="" select>Seleccione</option>
                     <option value="0">No</option>
                     <option value="1">Si</option>
@@ -335,7 +335,7 @@
                 <div>
                   <label for="selectserviceSaveE">Servicio</label>
                   <select class="form-control form-control-sm select-select" id="selectserviceSaveE" placeholder="Seleccione"
-                          formControlName="selectserviceSaveE" [ngClass]="{ 'is-invalid': submittedSaveExit && k.selectserviceSaveE.errors }">
+                          formControlName="selectserviceSaveE" [ngClass]="{ 'is-invalid': submittedSaveDelete && l.selectserviceSaveE.errors }">
                           <option value="" select>Seleccione</option>
                     <option *ngFor="let the of servicioview" [value]="the.id">
                       <p>{{the.name}}</p>
@@ -344,7 +344,19 @@
                   <div class="invalid-feedback"> Seleccione opcion</div>
                 </div>
               </div>
-              <div class="col-sm-3" style="padding-top: 25px;">
+              <div class="col-sm-2">
+                <div>
+                  <label for="typesaveE">Reconectar</label>
+                  <select class="form-control form-control-sm select-select" id="typesaveE" placeholder="Seleccione"
+                          formControlName="typesaveE" [ngClass]="{ 'is-invalid': submittedSaveDelete && l.typesaveE.errors }">
+                    <option value="" select>Seleccione</option>
+                    <option value="0">No</option>
+                    <option value="1">Si</option>
+                  </select>
+                  <div class="invalid-feedback"> Seleccione opcion</div>
+                </div>
+              </div>
+              <div class="col-sm-2" style="padding-top: 25px;">
                 <div>
                   <button class="btn btn-danger btn-sm" type="button" (click)="savedeletefunction()">
                     REGISTRAR

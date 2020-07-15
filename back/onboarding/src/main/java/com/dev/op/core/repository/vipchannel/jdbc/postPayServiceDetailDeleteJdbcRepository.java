@@ -6,5 +6,5 @@ import java.util.List;
 import com.dev.op.core.dto.ResponseModel;
 
 public interface postPayServiceDetailDeleteJdbcRepository {
-	List<ResponseModel> postPayServiceDetailDelete(String document,String code,BigDecimal amount,Integer user);
+	List<ResponseModel> postPayServiceDetailDelete(String document,String code,BigDecimal amount,Integer managerId,Integer serviceId,Integer typeId,Integer user);
 }

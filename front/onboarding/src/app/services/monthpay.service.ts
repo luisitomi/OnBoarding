@@ -44,6 +44,11 @@ export class MonthPayService {
                 id + "/" + code + "/" + amount + "/" + user + "/" + manager + "/" + type + "/" + service);
     }
 
+    postPayServiceDelete(id: string,code:string,amount:number,manager:number,service:number,type:number,user:number): Observable<ResponseModel[]> {
+        return this.httpClient.get<ResponseModel[]>(`${this.BASE_URL}/cobranza/postPayServiceDetailDelete/`+
+                id + "/" + code + "/" + amount + "/" + manager + "/" + service + "/" + type + "/" + user);
+    }
+
     deleteDetailCountExit(id: string,code:string,status:number): Observable<ResponseModel[]> {
         return this.httpClient.get<ResponseModel[]>(`${this.BASE_URL}/cobranza/deleteDetailCount/`+
                 id + "/" + code + "/" + status);

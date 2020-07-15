@@ -62,6 +62,6 @@ public interface CobranzaFacade {
 	List<ResponseModel> deleteDetailCount(String document,String code,Integer status);
 	List<ResponseModel> postChangeAmount(String document,String code,Integer service,BigDecimal amount,Date dateformat,Integer user);
 	List<ResponseModel> postPayService(String document,String code,BigDecimal amount,Integer user, Integer manager);
-	List<ResponseModel> postPayServiceDetailDelete(String document,String code,BigDecimal amount,Integer user);
+	List<ResponseModel> postPayServiceDetailDelete(String document,String code,BigDecimal amount,Integer managerId,Integer serviceId,Integer typeId,Integer user);
 	List<ResponseModel> postPayServiceExit(String document,String code,BigDecimal amount,Integer user, Integer managerId,Integer type, Integer serviceSelect);
 }
