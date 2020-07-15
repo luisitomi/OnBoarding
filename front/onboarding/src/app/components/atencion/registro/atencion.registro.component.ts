@@ -29,12 +29,14 @@ export class RegistroAtenciónComponent implements OnInit{
   @ViewChild('referenceModal') public referenceModal: ModalDirective;
   @ViewChild('serviceaexitModal') public serviceaexitModal: ModalDirective;
   @ViewChild('reclamoSaveModal') public reclamoSaveModal: ModalDirective;
+  @ViewChild('servicedeleteModal') public servicedeleteModal: ModalDirective;
   
   personpay: PersonPayModel[];
   personpaydata: PersonByIdPayModel[];
   monthexit:MonthPayModel[];
+  monthdelete:MonthPayModel[];
 
-  itemsPerPage: number = 5;
+  itemsPerPage: number = 4;
   currentPage: number = 1;
 
   busqueda:string;
@@ -733,7 +735,29 @@ export class RegistroAtenciónComponent implements OnInit{
       case 9:
         this.listadomesesexit();
       break;
+      case 10:
+      break;
+      case 11:
+        this.listadomesesdelete();
+      break;
     }
+  }
+
+  openMonthDelete(){
+    this.itemsPerPage = 4;
+    this.currentPage = 1;
+    this.servicedeleteModal.show();
+    this.onReturndata(11);
+  }
+
+  listadomesesdelete(){
+    this.monthdelete = [];
+    this.MonthPayService.getlistadodelete(this.document,this.code).subscribe(
+    (result: MonthPayModel[]) => {
+      this.monthdelete = result
+    },
+    error => {
+    })
   }
 
   validation(){
@@ -746,9 +770,9 @@ export class RegistroAtenciónComponent implements OnInit{
   }
 
   openMonthExit(){
-    this.itemsPerPage = 5;
+    this.itemsPerPage = 4;
     this.currentPage = 1;
-    this.serviceaexitModal.show(),
+    this.serviceaexitModal.show();
     this.onReturndata(9);
   }
 

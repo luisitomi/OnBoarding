@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ManagerPayModel } from '../models/managerpay.model';
 import { ResponseModel } from '../models/personpay.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
     providedIn: "root"
@@ -13,7 +14,13 @@ export class ManagerPayService {
 
     constructor(private httpClient: HttpClient) { }
 
-    private BASE_URL: string = "/api/v2";
+    httpOptions = {
+        headers: new HttpHeaders({
+            
+        })
+      }
+      
+    private BASE_URL: string = environment.serverLocal;
     
     getgestoreslistado(): Observable<ManagerPayModel[]> {
         return this.httpClient.get<ManagerPayModel[]>(`${this.BASE_URL}/cobranza/getListManger`);

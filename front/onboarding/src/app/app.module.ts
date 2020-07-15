@@ -49,6 +49,7 @@ import { RouterModule } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { HttpService } from './shared/services/http.service';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
 
 @NgModule({
   imports: [
@@ -94,8 +95,9 @@ import { HttpService } from './shared/services/http.service';
   ],
   providers: [
     {
-      provide: LocationStrategy,
-      useClass: HashLocationStrategy,
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
     },
     AuthGuard,
     HttpService

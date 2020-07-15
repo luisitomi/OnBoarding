@@ -32,12 +32,13 @@ export class RegistroComponent implements OnInit{
   @ViewChild('referenceModal') public referenceModal: ModalDirective;
   @ViewChild('serviceaexitModal') public serviceaexitModal: ModalDirective;
   @ViewChild('directionChangeModal') public directionChangeModal: ModalDirective;
+  @ViewChild('servicedeleteModal') public servicedeleteModal: ModalDirective;
   
   personpay: PersonPayModel[];
   personpaydata: PersonByIdPayModel[];
   monthexit:MonthPayModel[];
 
-  itemsPerPage: number = 5;
+  itemsPerPage: number = 4;
   currentPage: number = 1;
 
   busqueda:string;
@@ -74,6 +75,7 @@ export class RegistroComponent implements OnInit{
   callesview:SellerModel[];
   vendedoresview:SellerModel[];
   servicioview:SellerServiceModel[];
+  monthdelete:MonthPayModel[];
 
   listadoActive: boolean = false;
   detalleActive: boolean = false;
@@ -554,6 +556,8 @@ export class RegistroComponent implements OnInit{
 
   get k() { return this.formularioContrato.controls; }
 
+
+
   listadoclientes(){
     this.personpay = [];
     this.PersonPayService.getpersonaslistado("&").subscribe(
@@ -938,13 +942,33 @@ export class RegistroComponent implements OnInit{
         this.listvendedores();
         this.listdistritos();
       break;
+      case 11:
+        this.listadomesesdelete();
+      break;
     }
   }
 
-  openMonthExit(){
-    this.itemsPerPage = 5;
+  listadomesesdelete(){
+    this.monthdelete = [];
+    this.MonthPayService.getlistadodelete(this.document,this.code).subscribe(
+    (result: MonthPayModel[]) => {
+      this.monthdelete = result
+    },
+    error => {
+    })
+  }
+
+  openMonthDelete(){
+    this.itemsPerPage = 4;
     this.currentPage = 1;
-    this.serviceaexitModal.show(),
+    this.servicedeleteModal.show();
+    this.onReturndata(11);
+  }
+
+  openMonthExit(){
+    this.itemsPerPage = 4;
+    this.currentPage = 1;
+    this.serviceaexitModal.show();
     this.onReturndata(9);
   }
 

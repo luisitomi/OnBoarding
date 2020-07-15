@@ -1,0 +1,14 @@
+{
+  "/web/api/v2/*": {
+    "target": "http://209.45.62.156:4444",
+    "secure": false,
+    "pathRewrite": {"^/web/api/v2" : "http://209.45.62.156:4444/web/api/v2"},
+    "changeOrigin": true
+  },
+  "/api/v1/*": {
+    "target": "https://gestionysistemas.ipzmarketing.com",
+    "secure": false,
+    "pathRewrite": {"^/api/v1" : "https://gestionysistemas.ipzmarketing.com/api/v1"},
+    "changeOrigin": true
+  }
+}

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ResponseModel } from '../models/personpay.model';
 import { ServiceModel, MaterialModel, PendingServiceModel, TecnicoModel,ReclaimPendingModel, CountOnuMdel } from '../models/service.model';
 import { OnuModel } from '../models/activation.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
     providedIn: "root"
@@ -14,7 +15,13 @@ export class ServiceService {
 
     constructor(private httpClient: HttpClient) { }
 
-    private BASE_URL: string = "/api/v2";
+    httpOptions = {
+        headers: new HttpHeaders({
+            
+        })
+      }
+
+    private BASE_URL: string = environment.serverLocal;
 
     listadoPendientes(): Observable<ServiceModel[]> {
         return this.httpClient.get<ServiceModel[]>(`${this.BASE_URL}/servicio/getListServicePending`);

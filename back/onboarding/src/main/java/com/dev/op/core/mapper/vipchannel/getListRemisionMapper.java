@@ -20,6 +20,7 @@ public class getListRemisionMapper implements RowMapper<getListRemisionModel> {
 		getListRemision.setImpor(rs.getString("import"));
 		getListRemision.setIgv(rs.getString("igv"));
 		getListRemision.setSumation(rs.getString("sumation"));
+		getListRemision.setValidate(rs.getInt("validado"));
 		return getListRemision;
 	}
 }

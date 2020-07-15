@@ -209,6 +209,7 @@
                     <thead>
                       <tr class="t-head-style">
                         <th class="text-center" style="background-color: mediumturquoise;" scope="col">#</th>
+                        <th class="text-center" style="background-color: mediumturquoise;" scope="col">Autorizado</th>
                         <th class="text-center" style="background-color: mediumturquoise;" scope="col">Tipo</th>
                         <th class="text-center" style="background-color: mediumturquoise;" scope="col">N° Items</th>
                         <th class="text-center" style="background-color: mediumturquoise;" scope="col">Importe</th>
@@ -222,6 +223,7 @@
                         | paginate: { itemsPerPage: itemsPerPageL, currentPage: currentPageL }; let i = index">
                             <tr>
                               <td class="align-middle text-center">{{ item.id }}</td>
+                              <td class="align-middle text-center">{{ item.autorizhe }}</td>
                               <td class="align-middle text-center">{{ item.name }}</td>
                               <td class="align-middle text-center">{{ item.item }}</td>
                               <td class="align-middle text-center">{{ item.impor }}</td>
@@ -232,6 +234,10 @@
                                   <button id="{{item.id}}" type="button"  class="btn"
                                     (click)="returnRemisiones(item.id)" *ngIf="addNotiActiveView">
                                     <i class="fa fa-file-text fa-lg" style="color: red;"></i>
+                                  </button>
+                                  <button id="{{item.id}}" type="button"  class="btn"
+                                    (click)="byIdValidate(item.id)" *ngIf="addNotiActiveViewInfo">
+                                    <i class="fa fa-handshake-o fa-lg" style="color: green;"></i>
                                   </button>
                                 </div>
                               </td>
@@ -462,7 +468,7 @@
   <div class="modal-dialog modal-warning" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Listado Meses Deudas</h4>
+        <h4 class="modal-title">Detalle de la Compra</h4>
         <button type="button" class="close" (click)="ListModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

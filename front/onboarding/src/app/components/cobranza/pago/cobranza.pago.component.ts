@@ -11,6 +11,8 @@ import { MonthPayModel } from '../../../models/monthpay.model';
 import { AppConstants } from '../../../shared/constants/app.constants';
 import { ToastrService } from 'ngx-toastr';
 import { SellerService } from '../../../services/saller.service';
+import { CallCenterModel } from '../../../models/callcenter.model';
+import { CallCenterService } from '../../../services/callcenter.service';
 
 @Component({
   selector: 'app-pago',
@@ -25,6 +27,7 @@ export class CobranzaComponent implements OnInit{
   public formularioReference: FormGroup;
   public formularioSavePayActive: FormGroup;
   public formularioSavePayExit: FormGroup;
+  public formularioSavePayDelete: FormGroup;
   
   @ViewChild('personModal') public personModal: ModalDirective;
   @ViewChild('directionModal') public directionModal: ModalDirective;
@@ -32,13 +35,16 @@ export class CobranzaComponent implements OnInit{
   @ViewChild('managerModal') public managerModal: ModalDirective;
   @ViewChild('serviceactiveModal') public serviceactiveModal: ModalDirective;
   @ViewChild('serviceaexitModal') public serviceaexitModal: ModalDirective;
+  @ViewChild('servicedeleteModal') public servicedeleteModal: ModalDirective;
   
   personpay: PersonPayModel[];
   personpaydata: PersonByIdPayModel[];
   monthactive:MonthPayModel[];
   monthexit:MonthPayModel[];
+  monthdelete:MonthPayModel[];
+  servicioview:CallCenterModel[];
 
-  itemsPerPage: number = 5;
+  itemsPerPage: number = 4;
   currentPage: number = 1;
 
   busqueda:string;
@@ -95,6 +101,7 @@ export class CobranzaComponent implements OnInit{
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private SellerService: SellerService,
+    private CallCenterService: CallCenterService,
   ) {
     this.router.events.subscribe(evt => {
       if (evt instanceof NavigationEnd) {
@@ -156,6 +163,21 @@ export class CobranzaComponent implements OnInit{
       typesaveE: ['', Validators.required],
       selectserviceSaveE: ['', Validators.required]
     });
+  }
+
+  formsaveDelete(){
+    this.formularioSavePayDelete = this.formBuilder.group({
+      documentosaveE: [''],
+      codesaveE: [''],
+      amountpaySaveE: ['0', Validators.required],
+      userSaveE: [''],
+      selectpaySaveE: ['', Validators.required],
+      selectserviceSaveE: ['', Validators.required]
+    });
+  }
+
+  savedeletefunction(){
+
   }
 
   saveexitfunction(){
@@ -1047,6 +1069,16 @@ export class CobranzaComponent implements OnInit{
     })
   }
 
+  listadomesesdelete(){
+    this.monthdelete = [];
+    this.MonthPayService.getlistadodelete(this.document,this.code).subscribe(
+    (result: MonthPayModel[]) => {
+      this.monthdelete = result
+    },
+    error => {
+    })
+  }
+
   listadogestores(){
     this.managerview = [];
     this.ManagerPayService.getgestoreslistado().subscribe(
@@ -1089,6 +1121,7 @@ export class CobranzaComponent implements OnInit{
         this.listadoclientesdata();
         this.limipiarinputs();
         this.validation();
+        this.listadoservice();
       break;
       case 2:
         this.listadoclientesdatadirecccion();
@@ -1111,6 +1144,7 @@ export class CobranzaComponent implements OnInit{
         this.listadoclientesdatapago();        
         this.formsave();
         this.formsaveExit();
+        this.formsaveDelete();
         this.listadoclientesdatapagoDelete();
         this.listadoclientesdatapagoExit();
       break;
@@ -1119,8 +1153,10 @@ export class CobranzaComponent implements OnInit{
       break;
       case 8:
         this.listadoclientesdatapago();   
-        this.listadoclientesdatapagoExit();     
+        this.listadoclientesdatapagoExit();  
+        this.listadoclientesdatapagoDelete();   
         this.formsave();
+        this.listadomesesdelete();
       break;
       case 9:
         this.listadomesesexit();
@@ -1128,20 +1164,40 @@ export class CobranzaComponent implements OnInit{
       case 10:
         this.formsaveExit();
       break;
+      case 11:
+        this.listadomesesdelete();
+      break;
     }
   }
 
   openMonthActive(){
-    this.itemsPerPage = 5;
+    this.itemsPerPage = 4;
     this.currentPage = 1;
-    this.serviceactiveModal.show(),
+    this.serviceactiveModal.show();
     this.onReturndata(7);
   }
 
-  openMonthExit(){
-    this.itemsPerPage = 5;
+  listadoservice(){
+    this.servicioview = [];
+    this.CallCenterService.listadoServiciobyid(this.document,this.code).subscribe(
+    (result: CallCenterModel[]) => {
+      this.servicioview = result
+    },
+    error => {
+    })
+  }
+
+  openMonthDelete(){
+    this.itemsPerPage = 4;
     this.currentPage = 1;
-    this.serviceaexitModal.show(),
+    this.servicedeleteModal.show();
+    this.onReturndata(11);
+  }
+
+  openMonthExit(){
+    this.itemsPerPage = 4;
+    this.currentPage = 1;
+    this.serviceaexitModal.show();
     this.onReturndata(9);
   }
 

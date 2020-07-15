@@ -54,6 +54,7 @@ public class Constantes {
 	public static final String GETLISTREMISIONBYID = "getListRemisionById";
 	public static final String GETLISTONU = "getListOnu";
 	public static final String GETLISTCOUNTONU = "getListCountOnu";
+	public static final String GETLISTACTIVATION = "getListActivation";
 	public static final String PATCHMANAGERBYID = "patchManagerById";
 	public static final String PATCHVOUCHERBYID = "patchVoucherById";
 	public static final String PATCHUPDATEPASSWORD = "patchUpdatePassword";

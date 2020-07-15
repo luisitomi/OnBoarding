@@ -5,7 +5,7 @@ import { AppConstants } from '../../../shared/constants/app.constants';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ModalDirective} from 'ngx-bootstrap/modal';
-import { MaterialModel, PendingServiceModel, TecnicoModel, ReclaimPendingModel } from '../../../models/service.model';
+import { MaterialModel, TecnicoModel, ReclaimPendingModel } from '../../../models/service.model';
 import { ResponseModel } from '../../../models/personpay.model';
 
 @Component({

@@ -1,5 +1,85 @@
 ﻿<div class="animated fadeIn">
   <div class="row">
-    
+    <div class="col-md-12 mb-4">
+      <div >
+        <div class="card">
+          <div class="card-header">
+            <i class="fa fa-align-justify" style="color: red;"></i> <span style="color: red;">LISTADO DE ACTIVACIONES</span>
+          </div>
+          <div class="card-body">
+            <table class="table table-bordered">
+              <thead>
+                <tr class="t-head-style">
+                    <th class="text-center" style="background-color: mediumturquoise;" scope="col">Cliente</th>
+                    <th class="text-center" style="background-color: mediumturquoise;" scope="col">Dirección</th>
+                    <th class="text-center" style="background-color: mediumturquoise;" scope="col">Técnico</th>
+                    <th class="text-center" style="background-color: mediumturquoise;" scope="col">Serie</th>
+                    <th class="text-center" style="background-color: mediumturquoise;" scope="col" >Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <ng-container *ngFor="let item of activacion
+                  | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }; let i = index">
+                      <tr>
+                        <td class="align-middle text-center">{{ item.client }}</td>
+                        <td class="align-middle text-center">{{ item.direction }}</td>
+                        <td class="align-middle text-center">{{ item.tec }}</td>
+                        <td class="align-middle text-center">{{ item.serie }}</td>
+                        <td class="align-middle text-center" >
+                          <div class="row justify-content-center">
+                            <button id="{{item.id}}" type="button"  class="btn"
+                              (click)="openModal(item.id)" *ngIf="addNotiActive">
+                              <i class="fa fa-hand-pointer-o fa-lg" style="color: red;"></i>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                  </ng-container>
+              </tbody>
+            </table>
+            <pagination-controls class="my-pagination" (pageChange)="currentPage = $event"autoHide="true" responsive="true"
+              previousLabel="Anterior" nextLabel="Siguiente">
+            </pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div bsModal #rptaModal="bs-modal" class="modal fade" tabindex="-1" [config]="{backdrop: 'static'}" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Activar Servicio</h4>
+        <button type="button" class="close" (click)="rptaModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form *ngIf="formularioSolution" [formGroup]="formularioSolution" autocomplete="offs" class="form-register-section">
+          <div asp-validation-summary="All" class="text-danger"></div>
+          <div class="row" >
+            <div class="col-12">
+              <div class="form-group">
+                <label for="solution">Fecha - Hora</label>
+                <input type="datetime-local" class="form-control form-control-sm" id="solution"
+                  formControlName="solution" [ngClass]="{ 'is-invalid': submittedNoti && i.solution.errors }"/>
+                <div class="invalid-feedback"> Escoga valor para fecha y hora </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary ml-auto" (click)="rptaModal.hide()">CANCELAR</button>
+        <button type="button" class="btn btn-success mr-auto" (click)="saveSolution()">GUARDAR</button>
+      </div>
+    </div>
   </div>
 </div>

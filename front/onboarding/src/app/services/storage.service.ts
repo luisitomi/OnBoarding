@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AlmacenModel, ProductoModel, ProveedorModel, ProductoProveedorModel } from '../models/storage.model';
 import { ResponseModel } from '../models/personpay.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
     providedIn: "root"
@@ -13,7 +14,13 @@ export class StorageService {
 
     constructor(private httpClient: HttpClient) { }
 
-    private BASE_URL: string = "/api/v2";
+    httpOptions = {
+        headers: new HttpHeaders({
+            
+        })
+      }
+
+    private BASE_URL: string = environment.serverLocal;
 
     listarproducto(): Observable<ProductoModel[]> {
         return this.httpClient.get<ProductoModel[]>(`${this.BASE_URL}/almacen/getProdct`);

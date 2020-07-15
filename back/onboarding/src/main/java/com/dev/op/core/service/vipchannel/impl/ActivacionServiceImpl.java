@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dev.op.core.dto.ResponseModel;
+import com.dev.op.core.dto.vipchannel.getListActivationModel;
 import com.dev.op.core.dto.vipchannel.getListCountOnuModel;
 import com.dev.op.core.dto.vipchannel.getListOnuModel;
+import com.dev.op.core.repository.vipchannel.jdbc.getListActivationJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getListCountOnuJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getListOnuJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.putStatusOnuJdbcRepository;
@@ -32,6 +34,10 @@ public class ActivacionServiceImpl implements ActivacionService {
 	@Autowired
 	@Qualifier("putStatusOnuJdbcRepository")
 	private putStatusOnuJdbcRepository putStatusOnuJdbcRepository;
+	
+	@Autowired
+	@Qualifier("getListActivationJdbcRepository")
+	private getListActivationJdbcRepository getListActivationJdbcRepository;
 	
 	@Override
 	public List<getListOnuModel> getListOnu() {
@@ -86,6 +92,26 @@ public class ActivacionServiceImpl implements ActivacionService {
 			}
 			else {
 				return getListCountOnu;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getListActivationModel> getListActivation() {
+		List<getListActivationModel> getListActivation = new ArrayList<getListActivationModel>();
+		
+		try {
+			
+			getListActivation = getListActivationJdbcRepository.getListActivation();
+			if(GenericUtil.isCollectionEmpty(getListActivation)) {
+				return null;
+			}
+			else {
+				return getListActivation;
 			}
 		}
 		catch(Exception e) {

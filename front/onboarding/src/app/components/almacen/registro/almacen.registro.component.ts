@@ -50,6 +50,7 @@ export class AlmacenComponent implements OnInit{
 
   addNotiActive:boolean;
   addNotiActiveView:boolean;
+  addNotiActiveViewInfo:boolean;
 
   public formularioSaveProducto: FormGroup;
   public formularioeditProducto: FormGroup;
@@ -129,6 +130,7 @@ export class AlmacenComponent implements OnInit{
         this.listarProveedor();
         this.validacionUser();
         this.validacionUserView();
+        this.validacionConfirm();
         this.listarProveedorProducto();
         this.form();
         this.listarremision();
@@ -143,7 +145,7 @@ export class AlmacenComponent implements OnInit{
   }
 
   validacionUser(){
-    if(sessionStorage.getItem(AppConstants.Session.USERID) == '10'){
+    if(sessionStorage.getItem(AppConstants.Session.USERID) == '11'){
         this.addNotiActive = true;
     }else{
       this.addNotiActive = false;
@@ -152,10 +154,19 @@ export class AlmacenComponent implements OnInit{
 
   validacionUserView(){
     if(sessionStorage.getItem(AppConstants.Session.USERID) == '0'
-      || sessionStorage.getItem(AppConstants.Session.USERID) == '10'){
+      || sessionStorage.getItem(AppConstants.Session.USERID) == '10'
+      || sessionStorage.getItem(AppConstants.Session.USERID) == '11'){
         this.addNotiActiveView = true;
     }else{
       this.addNotiActiveView = false;
+    }
+  }
+
+  validacionConfirm(){
+    if(sessionStorage.getItem(AppConstants.Session.USERID) == '10'){
+        this.addNotiActiveViewInfo = true;
+    }else{
+      this.addNotiActiveViewInfo = false;
     }
   }
 
@@ -565,6 +576,10 @@ export class AlmacenComponent implements OnInit{
         this.remisiones = result
       }
     )
+  }
+
+  byIdValidate(id:number){
+    alert(id);
   }
 
   listarremisionByid(id:number){

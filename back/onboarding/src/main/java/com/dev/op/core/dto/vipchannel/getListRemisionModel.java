@@ -22,6 +22,8 @@ public class getListRemisionModel implements Serializable {
 	private String igv;
 	
 	private String sumation;
+	
+	private Integer validate;
 
 	public getListRemisionModel() {
 		
@@ -81,6 +83,14 @@ public class getListRemisionModel implements Serializable {
 
 	public void setSumation(String sumation) {
 		this.sumation = sumation;
+	}
+
+	public Integer getValidate() {
+		return validate;
+	}
+
+	public void setValidate(Integer validate) {
+		this.validate = validate;
 	}
 	
 }

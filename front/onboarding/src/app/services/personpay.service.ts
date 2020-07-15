@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { PersonPayModel, PersonByIdPayModel, PersonByIdPayDirectionModel, PersonByIdPayReferenceModel, PersonByIdPayMangerModel, PersonByIdPayVoucherModel, PersonByIdPayDetailModel, ResponseModel, DirectionListModel, PersonByIdPayDetailExitModel } from '../models/personpay.model';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
     providedIn: "root"
@@ -12,7 +13,13 @@ export class PersonPayService {
 
     constructor(private httpClient: HttpClient) { }
 
-    private BASE_URL: string = "/api/v2";
+    httpOptions = {
+        headers: new HttpHeaders({
+            
+        })
+      }
+
+    private BASE_URL: string = environment.serverLocal;
     
     getpersonaslistado(id: string): Observable<PersonPayModel[]> {
         return this.httpClient.get<PersonPayModel[]>(`${this.BASE_URL}/cobranza/getPersonByDocument/`+ id);
@@ -55,7 +62,7 @@ export class PersonPayService {
     }
 
     getpersonasdatadetalleDelete(id: string,code: string): Observable<PersonByIdPayDetailModel[]> {
-        return this.httpClient.get<PersonByIdPayDetailModel[]>(`${this.BASE_URL}/cobranza/getPayServiceDetailDelete/`+ id + "/" + code + "/99");
+        return this.httpClient.get<PersonByIdPayDetailModel[]>(`${this.BASE_URL}/cobranza/getPayServiceDetailDelete/`+ id + "/" + code);
     }
 
     putPersonByIddetalle(document: string,name: string,last: string,second: string,customer: string): Observable<ResponseModel[]> {

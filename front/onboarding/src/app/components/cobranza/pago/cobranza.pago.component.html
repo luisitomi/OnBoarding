@@ -224,8 +224,9 @@
                     <select class="form-control form-control-sm select-select" id="selectserviceSaveE" placeholder="Seleccione"
                             formControlName="selectserviceSaveE" [ngClass]="{ 'is-invalid': submittedSaveExit && k.selectserviceSaveE.errors }">
                             <option value="" select>Seleccione</option>
-                      <option value="1">Cable</option>
-                      <option value="2">Internet</option>
+                      <option *ngFor="let the of servicioview" [value]="the.id">
+                        <p>{{the.name}}</p>
+                      </option>
                     </select>
                     <div class="invalid-feedback"> Seleccione opcion</div>
                   </div>
@@ -297,19 +298,63 @@
       <div class="card">
         <div class="card-body p-6 clearfix">
           <i class="fa fa-drivers-license-o bg-danger p-3 font-2xl mr-3 float-left"></i>
-          <div class="h5 mb-0 mt-2" style="color: black;">S/ {{amountgeneraldelete}}</div>
+          <div class="h5 mb-0 mt-2" style="color: black;">S/ {{amountgeneraldelete}}
+            <button *ngIf="pagoExitActive" class="btn" style="background-color: transparent;" 
+              class="btn" data-toggle="modal" (click)="openMonthDelete()">
+              <i class="fa fa-eye fa-lg" style="color: green;"></i>
+            </button>
+          </div>
           <div class="text-muted text-uppercase font-weight-bold font-xs">{{servicedelete}}</div>
        </div>
        <div *ngIf="userActive">
-        <div class="row card-body" style="padding: 10px 1px 10px 25px;" *ngIf="pagoDeleteActive">
-          <div class="col-sm-4">
-            <div class="form-group">
-              <label for="amountpaySaveDelete">Monto</label>
-              <input class="form-control form-control-sm" maxlength="6" id="amountpaySaveDelete" placeholder="Ingrese monto" type="text">
+        <div class="row card-body" style="padding: 0px 0px 10px 10px;" *ngIf="pagoActive">
+          <form *ngIf="formularioSavePayDelete" [formGroup]="formularioSavePayDelete" autocomplete="offs" class="form-register-section">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="row" style="margin: 10px 0px 0px 0px;">
+              <div class="col-sm-3">
+                <div>
+                  <label for="amountpaySaveE">Monto</label>
+                  <input class="form-control form-control-sm" maxlength="6" id="amountpaySaveE"
+                         formControlName="amountpaySaveE" [ngClass]="{ 'is-invalid': submittedSaveExit && k.amountpaySaveE.errors }" placeholder="Ingrese monto" type="text">
+                  <div class="invalid-feedback"> Ingrese valor para monto</div>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div>
+                  <label for="selectpaySaveE">Gestor</label>
+                  <select class="form-control form-control-sm select-select" id="selectpaySaveE" placeholder="Seleccione"
+                          formControlName="selectpaySaveE" [ngClass]="{ 'is-invalid': submittedSaveExit && k.selectpaySaveE.errors }">
+                    <option value="" select>Seleccione</option>
+                    <option value="0">No</option>
+                    <option value="1">Si</option>
+                  </select>
+                  <div class="invalid-feedback"> Seleccione opcion</div>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div>
+                  <label for="selectserviceSaveE">Servicio</label>
+                  <select class="form-control form-control-sm select-select" id="selectserviceSaveE" placeholder="Seleccione"
+                          formControlName="selectserviceSaveE" [ngClass]="{ 'is-invalid': submittedSaveExit && k.selectserviceSaveE.errors }">
+                          <option value="" select>Seleccione</option>
+                    <option *ngFor="let the of servicioview" [value]="the.id">
+                      <p>{{the.name}}</p>
+                    </option>
+                  </select>
+                  <div class="invalid-feedback"> Seleccione opcion</div>
+                </div>
+              </div>
+              <div class="col-sm-3" style="padding-top: 25px;">
+                <div>
+                  <button class="btn btn-danger btn-sm" type="button" (click)="savedeletefunction()">
+                    REGISTRAR
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-         </div>
-       </div>
+          </form>
+        </div>
+      </div>
       </div>
     </div>
   </div>
@@ -635,6 +680,54 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary ml-auto" (click)="serviceaexitModal.hide()">CANCELAR</button>
         <button type="button" class="btn btn-warning mr-auto" style="color: transparent;" (click)="serviceaexitModal.hide()">GUARDAR</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div bsModal #servicedeleteModal="bs-modal" class="modal fade" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Listado Meses Deudas</h4>
+        <button type="button" class="close" (click)="servicedeleteModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th class="text-center" style="background-color: mediumturquoise;" scope="col">Servicio</th>
+                      <th class="text-center" style="background-color: mediumturquoise;" scope="col">Mes</th>
+                      <th class="text-center" style="background-color: mediumturquoise;" scope="col">Monto</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngFor="let item of monthdelete
+                    | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }; let i = index">
+                      <tr>
+                        <td class="align-middle text-center">{{ item.service }}</td>
+                        <td class="align-middle text-center">{{ item.information }}</td>
+                        <td class="align-middle text-center">{{ item.amount }}</td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+                <pagination-controls class="my-pagination" (pageChange)="currentPage = $event"autoHide="true" responsive="true"
+                  previousLabel="Anterior" nextLabel="Siguiente">
+                </pagination-controls>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary ml-auto" (click)="servicedeleteModal.hide()">CANCELAR</button>
+        <button type="button" class="btn btn-danger mr-auto" style="color: transparent;" (click)="servicedeleteModal.hide()">GUARDAR</button>
       </div>
     </div>
   </div>
