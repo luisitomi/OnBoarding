@@ -337,7 +337,7 @@
                   <select class="form-control form-control-sm select-select" id="selectserviceSaveE" placeholder="Seleccione"
                           formControlName="selectserviceSaveE" [ngClass]="{ 'is-invalid': submittedSaveDelete && l.selectserviceSaveE.errors }">
                           <option value="" select>Seleccione</option>
-                    <option *ngFor="let the of servicioview" [value]="the.id">
+                    <option *ngFor="let the of servicioviews" [value]="the.id">
                       <p>{{the.name}}</p>
                     </option>
                   </select>

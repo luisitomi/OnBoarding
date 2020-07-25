@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { SellerService } from '../../services/saller.service';
 import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
@@ -9,7 +8,6 @@ import { Router, NavigationEnd } from '@angular/router';
 export class DashboardComponent implements OnInit {
   
   constructor(
-    private SellerService: SellerService,
     private router: Router,
   ) {
     this.router.events.subscribe(evt => {
@@ -21,26 +19,6 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(){
-  }
-
-  dni(){
-    this.SellerService.recuperardni().subscribe(
-      (result: any) => {
-        console.log(result);
-      }
-    )
-  }
-
-  ruc(){
-    let reg = {
-      ruc:"10751347915"
-    };
-    this.SellerService.recuperarruc(reg).subscribe(
-      (result: any) => {
-        console.log(result);
-      }
-    )
-
   }
 
 }

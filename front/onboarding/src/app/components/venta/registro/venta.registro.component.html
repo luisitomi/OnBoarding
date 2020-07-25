@@ -187,11 +187,19 @@
               <div class="row">
                 <div class="col-sm-6">
                   <div class="form-group">
-                    <label for="documento">N° Documento</label>
-                    <input type="text" maxlength="11" class="form-control"
-                    formControlName="documento" [ngClass]="{ 'is-invalid': submittedSaveActive && k.documento.errors }"
-                    id="documento" placeholder="">
-                    <div class="invalid-feedback"> Ingrese valor para documento</div>
+                    <div class="input-group">
+                      <input type="text" maxlength="11" class="form-control" [(ngModel)]="documentSearch"
+                        formControlName="documento" [ngClass]="{ 'is-invalid': submittedSaveActive && k.documento.errors }"
+                        id="documento" placeholder="">
+                      <div class="invalid-feedback"> Ingrese valor para documento</div>
+                      <div class="input-group-append">
+                        <span class="input-group-text" style="background-color: transparent;">
+                          <button (click)="seachDocment()" class="btn" style="background-color: transparent;" >
+                            <i class="fa fa-search"></i>
+                          </button>
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="col-sm-6">

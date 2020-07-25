@@ -80,22 +80,33 @@
                         </div>
                         <div class="col-sm-6">
                           <div class="form-group">
-                            <label for="documento">N° Documento</label>
-                            <input type="text" maxlength="8" class="form-control"
-                            formControlName="documento" [ngClass]="{ 'is-invalid': submitted && f.documento.errors }"
-                            id="documento" placeholder="">
-                            <div class="invalid-feedback"> Ingrese valor para documento</div>
+                            <label for="nombre">Documento </label>
+                            <div class="input-group">
+                              <input type="text" maxlength="11" class="form-control" [(ngModel)]="documentSearch"
+                                formControlName="documento" [ngClass]="{ 'is-invalid': submitted && f.documento.errors }"
+                                id="documento" placeholder="">
+                              <div class="invalid-feedback"> Ingrese valor para documento</div>
+                              <div class="input-group-append">
+                                <span class="input-group-text" style="background-color: transparent;">
+                                  <button (click)="seachDocment()" class="btn" style="background-color: transparent;" >
+                                    <i class="fa fa-search"></i>
+                                  </button>
+                                </span>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-sm-12">
                           <div class="form-group">
-                            <label for="nombre">Nombres </label>
-                            <input type="text" maxlength="100"
-                            formControlName="nombre" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }"
-                            class="form-control" id="nombre" placeholder="">
-                            <div class="invalid-feedback"> Ingrese valor para nombre </div>
+                            <div class="input-group">
+                              <label for="nombre">Nombres </label>
+                              <input type="text" maxlength="100" disabled
+                              formControlName="nombre" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }"
+                              class="form-control" id="nombre" placeholder="">
+                              <div class="invalid-feedback"> Ingrese valor para nombre </div>
+                            </div>
                           </div>
                         </div>
                       </div>

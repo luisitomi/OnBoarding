@@ -26,6 +26,10 @@ export class CallCenterService {
         return this.httpClient.get<CallCenterModel[]>(`${this.BASE_URL}/atencion/getListServiceActive/`+ id + "/" + code);
     }
 
+    listadoServiciobyidNot(id:string,code:string): Observable<CallCenterModel[]> {
+        return this.httpClient.get<CallCenterModel[]>(`${this.BASE_URL}/atencion/getListServiceNotActive/`+ id + "/" + code);
+    }
+
     listadoreclamo(): Observable<CallCenterModel[]> {
         return this.httpClient.get<CallCenterModel[]>(`${this.BASE_URL}/atencion/getListReclaim`);
     }

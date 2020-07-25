@@ -7,6 +7,8 @@ import { AppConstants } from '../../../shared/constants/app.constants';
 import { ModalDirective} from 'ngx-bootstrap/modal';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { ResponseModel } from '../../../models/personpay.model';
+import { ActivationService } from '../../../services/activation.service';
+import { OnuViewModel } from '../../../models/activation.model';
 
 @Component({
   templateUrl: 'almacen.registro.component.html'
@@ -22,6 +24,8 @@ export class AlmacenComponent implements OnInit{
   currentPageL: number = 1;
   itemsPerPageRe: number = 8;
   currentPageRe: number = 1;
+  itemsPerPageO: number = 3;
+  currentPageO: number = 1;
 
   product:ProductoModel[];
   provider:ProveedorModel[];
@@ -29,6 +33,7 @@ export class AlmacenComponent implements OnInit{
   listpp:ProductoProveedorModel[];
   remisiones:AlmacenModel[];
   Idremisiones:AlmacenModel[];
+  onusview:OnuViewModel[];
 
   idProducto:number;  
   nombreProducto:string;
@@ -41,6 +46,7 @@ export class AlmacenComponent implements OnInit{
   ppproducto:number;
   ppproveedor:number;
   validateId:number;
+  busqueda:string;
 
   submittedProductoSave:boolean;
   submittedProductoEdit:boolean;
@@ -48,6 +54,7 @@ export class AlmacenComponent implements OnInit{
   submittedProviderEdit:boolean;
   submitted:boolean;
   submittedRemision:boolean;
+  submittedNoti: boolean;
 
   addNotiActive:boolean;
   addNotiActiveView:boolean;
@@ -59,18 +66,21 @@ export class AlmacenComponent implements OnInit{
   public formularioEditProvider: FormGroup;
   public formulario: FormGroup;
   public formularioRevision : FormGroup;
+  public formularioOnuNew: FormGroup;
   
   @ViewChild('saveProduct') public saveProduct: ModalDirective;
   @ViewChild('editProduct') public editProduct: ModalDirective;
   @ViewChild('saveProvider') public saveProvider: ModalDirective;
   @ViewChild('editProvider') public editProvider: ModalDirective;
   @ViewChild('ListModal') public ListModal: ModalDirective;
+  @ViewChild('newModal') public newModal: ModalDirective;
 
   constructor(
     private router: Router,
     private StorageService:StorageService,
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
+    private ActivationService:ActivationService,
   ) {
     this.router.events.subscribe(evt => {
       if (evt instanceof NavigationEnd) {
@@ -114,6 +124,9 @@ export class AlmacenComponent implements OnInit{
       proveedorId: ['', Validators.required],
       precioId: ['', Validators.required]
     });
+    this.formularioOnuNew= this.formBuilder.group({
+      serie: ['', Validators.required]
+    });
   }
 
   form(){
@@ -135,6 +148,7 @@ export class AlmacenComponent implements OnInit{
         this.listarProveedorProducto();
         this.form();
         this.listarremision();
+        this.listadoviewmodel();
         break;
       case 1:
         this.openModalProductSave();
@@ -523,6 +537,16 @@ export class AlmacenComponent implements OnInit{
     })
   }
 
+  listadoviewmodel(){
+    this.onusview = [];
+    this.ActivationService.mgetListOnuState().subscribe(
+    (result: OnuViewModel[]) => {
+      this.onusview = result
+    },
+    error => {
+    })
+  }
+
   returnProducto(id:number){
     this.idProducto = id;
     this.editProduct.show();
@@ -540,12 +564,74 @@ export class AlmacenComponent implements OnInit{
     this.ListModal.show();
   }
 
+  save(){
+    this.submitted = true;
+    let register = this.formularioOnuNew.value;
+
+    if (!this.formularioOnuNew.controls.serie.valid) {
+      this.toastr.warning(
+        AppConstants.MessageModal.REQUIRED_CUSTOM_FIELD,
+        AppConstants.TitleModal.WARNING_TITLE,
+        {closeButton: true}
+      );
+      return false;
+    }
+
+    this.ActivationService.mpostCreateOnu(register.serie,
+                                          "a",
+                                          "a",
+                                          "a").subscribe(
+    (result: ResponseModel[]) => {
+    try{
+      if(result[0].id == 1){
+        this.toastr.success(
+          AppConstants.MessageModal.REGISTER_UPDATED,
+          AppConstants.TitleModal.REGISTER_TITLE,
+          {closeButton: true}
+        );
+        this.onReturndata(0);
+        this.submittedNoti = false;
+        this.newModal.hide();
+      }else{
+        this.toastr.warning(
+          AppConstants.MessageModal.REGISTER_NO_CREATED,
+          AppConstants.TitleModal.WARNING_TITLE,
+          {closeButton: true}
+        );
+        this.onReturndata(0);
+        this.submittedNoti = false;
+        this.newModal.hide();
+      }
+    }
+    catch{
+      this.toastr.error(
+        AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+        AppConstants.TitleModal.ERROR_TITLE,
+        {closeButton: true}
+      );
+        this.onReturndata(0);
+        this.submittedNoti = false;
+        this.newModal.hide();
+      }
+    },
+    error => {
+      this.toastr.error(
+        AppConstants.MessageModal.INTERNAL_ERROR_MESSAGE,
+        AppConstants.TitleModal.ERROR_TITLE,
+        {closeButton: true}
+      );
+      this.onReturndata(0);
+      this.submittedNoti = false;
+      this.newModal.hide();
+    })
+  }
+
   get f() { return this.formularioSaveProducto.controls; }
   get g() { return this.formularioeditProducto.controls; }
   get h() { return this.formularioSaveProvider.controls; }
   get i() { return this.formularioEditProvider.controls; }
-
   get k() { return this.formulario.controls; }
+  get l() { return this.formularioOnuNew.controls; }
 
   byidProducto(idP:number){
     this.StorageService.listarproducto().subscribe(
@@ -631,6 +717,10 @@ export class AlmacenComponent implements OnInit{
         this.Idremisiones = result
       }
     )
+  }
+
+  newOnuModal(){
+    this.newModal.show();
   }
 
   openModalProductSave(){

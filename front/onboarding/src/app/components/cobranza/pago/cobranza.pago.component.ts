@@ -43,6 +43,7 @@ export class CobranzaComponent implements OnInit{
   monthexit:MonthPayModel[];
   monthdelete:MonthPayModel[];
   servicioview:CallCenterModel[];
+  servicioviews:CallCenterModel[];
 
   itemsPerPage: number = 4;
   currentPage: number = 1;
@@ -1218,6 +1219,7 @@ export class CobranzaComponent implements OnInit{
         this.limipiarinputs();
         this.validation();
         this.listadoservice();
+        this.listadoserviceNot();
       break;
       case 2:
         this.listadoclientesdatadirecccion();
@@ -1278,6 +1280,16 @@ export class CobranzaComponent implements OnInit{
     this.CallCenterService.listadoServiciobyid(this.document,this.code).subscribe(
     (result: CallCenterModel[]) => {
       this.servicioview = result
+    },
+    error => {
+    })
+  }
+
+  listadoserviceNot(){
+    this.servicioviews = [];
+    this.CallCenterService.listadoServiciobyidNot(this.document,this.code).subscribe(
+    (result: CallCenterModel[]) => {
+      this.servicioviews = result
     },
     error => {
     })

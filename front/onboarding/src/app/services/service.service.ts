@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ResponseModel } from '../models/personpay.model';
-import { ServiceModel, MaterialModel, PendingServiceModel, TecnicoModel,ReclaimPendingModel, CountOnuMdel } from '../models/service.model';
+import { ServiceModel, MaterialModel, PendingServiceModel, TecnicoModel,ReclaimPendingModel, CountOnuMdel, ServiceViewModel } from '../models/service.model';
 import { OnuModel } from '../models/activation.model';
 import { environment } from '../../environments/environment';
 
@@ -48,6 +48,11 @@ export class ServiceService {
         detaiId + "/" + nextId + "/" + tec + "/" + description + "/" + mateId +  "/" + counts);
     }
 
+    guardarInstalacion2(detaiId: number,nextId: number,tec: number,description: string,mateId: number,counts: number): Observable<ResponseModel[]> {
+        return this.httpClient.get<ResponseModel[]>(`${this.BASE_URL}/servicio/postServiceInstall/`+ 
+        detaiId + "/" + nextId + "/" + tec + "/" + description + "/" + mateId +  "/" + counts);
+    }
+
     guardarReclamo(detaiId: number,tec: number,description: string,mateId: number,counts: number): Observable<ResponseModel[]> {
         return this.httpClient.get<ResponseModel[]>(`${this.BASE_URL}/servicio/postServiceReclaim/`+ 
         detaiId + "/" + tec + "/" + description + "/" + mateId +  "/" + counts);
@@ -82,6 +87,11 @@ export class ServiceService {
     listarId(det:number,next:number): Observable<CountOnuMdel[]> {
         return this.httpClient.get<CountOnuMdel[]>(`${this.BASE_URL}/activacion/getListCountOnu/`
         + det + "/" + next);
+    }
+
+    listarServiceRange(datei:string,datef:string): Observable<ServiceViewModel[]> {
+        return this.httpClient.get<ServiceViewModel[]>(`${this.BASE_URL}/servicio/getListServiceRange/`
+        + datei + "/" + datef);
     }
 
 }

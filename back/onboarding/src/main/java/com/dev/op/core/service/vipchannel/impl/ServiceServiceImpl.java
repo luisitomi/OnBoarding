@@ -11,11 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dev.op.core.dto.ResponseModel;
 import com.dev.op.core.dto.vipchannel.getListReclaimServiceModel;
 import com.dev.op.core.dto.vipchannel.getListServicePendingModel;
+import com.dev.op.core.dto.vipchannel.getListServiceRangeModel;
 import com.dev.op.core.dto.vipchannel.getListTecniModel;
 import com.dev.op.core.dto.vipchannel.getMaterialAllModel;
 import com.dev.op.core.dto.vipchannel.getMaterialModel;
 import com.dev.op.core.repository.vipchannel.jdbc.getListReclaimServiceJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getListServicePendingJdbcRepository;
+import com.dev.op.core.repository.vipchannel.jdbc.getListServiceRangeJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getListTecniJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getMaterialAllJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getMaterialJdbcRepository;
@@ -50,6 +52,10 @@ public class ServiceServiceImpl implements ServiceService {
 	@Autowired
 	@Qualifier("getListTecniJdbcRepository")
 	private getListTecniJdbcRepository getListTecniJdbcRepository;
+	
+	@Autowired
+	@Qualifier("getListServiceRangeJdbcRepository")
+	private getListServiceRangeJdbcRepository getListServiceRangeJdbcRepository;
 	
 	@Autowired
 	@Qualifier("putMaterialJdbcRepository")
@@ -265,6 +271,26 @@ public class ServiceServiceImpl implements ServiceService {
 			}
 			else {
 				return postServiceReclaim;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getListServiceRangeModel> getListServiceRange(String datei, String datef) {
+		List<getListServiceRangeModel> getListServiceRange = new ArrayList<getListServiceRangeModel>();
+		
+		try {
+			
+			getListServiceRange = getListServiceRangeJdbcRepository.getListServiceRange(datei, datef);
+			if(GenericUtil.isCollectionEmpty(getListServiceRange)) {
+				return null;
+			}
+			else {
+				return getListServiceRange;
 			}
 		}
 		catch(Exception e) {

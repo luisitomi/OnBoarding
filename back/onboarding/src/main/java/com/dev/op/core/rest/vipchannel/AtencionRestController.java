@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dev.op.core.dto.ResponseModel;
 import com.dev.op.core.dto.vipchannel.getListReclaimModel;
 import com.dev.op.core.dto.vipchannel.getListServiceActiveModel;
+import com.dev.op.core.dto.vipchannel.getListServiceNotActiveModel;
 import com.dev.op.core.dto.vipchannel.getReclaimStatusModel;
 import com.dev.op.core.facade.vipchannel.AtencionFacade;
 import com.dev.op.core.util.vipchannel.GenericUtil;
@@ -58,6 +59,24 @@ public class AtencionRestController {
 		}
 		catch(Exception e) {
 			return new ResponseEntity<List<getListServiceActiveModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/getListServiceNotActive/{document}/{code}")
+	public ResponseEntity<List<getListServiceNotActiveModel>> getListServiceNotActive(@PathVariable(value="document") String document
+			,@PathVariable(value="code") String code) {
+		
+		try{
+			List<getListServiceNotActiveModel> getListServiceNotActive = atencionFacade.getListServiceNotActive(document, code);
+			if(!GenericUtil.isCollectionEmpty(getListServiceNotActive)) {
+				return new ResponseEntity<List<getListServiceNotActiveModel>>(getListServiceNotActive, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<getListServiceNotActiveModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<List<getListServiceNotActiveModel>>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	

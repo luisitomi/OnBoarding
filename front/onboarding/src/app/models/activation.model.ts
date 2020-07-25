@@ -12,3 +12,20 @@ export class OnuModel{
 	id:number;
 	name:string;
 }
+
+export class OnuViewModel{
+	id:number;
+	serie:string;
+	mac:string;
+	ssid:string;
+	pass:string;
+	activo:number;
+}
+
+export class ActivationViewModel{
+	document:string;
+	code:string;
+	client:string;
+	direction:string;
+	fech:string;
+}

@@ -193,7 +193,8 @@ export class ListadoVentaComponent implements OnInit{
     let valor = "http://localhost:8050/contrato/"+id1+"/"+id2;
     this.SellerService.recuperardatosPdf(id1,id2).subscribe(
       (result: ClientPdfModel[]) => {
-        envioData = {
+        window.open(valor,"_blank");
+        /*envioData = {
           "from": {
             "email": "Luismiguel.larosa@gestionysistemas.com",
             "name": "Cable Color - Internet Color!!!"
@@ -213,8 +214,8 @@ export class ListadoVentaComponent implements OnInit{
           "smtp_tags": [
             "string"
           ]
-        };
-        this.SellerService.createSendEmail(envioData).subscribe(
+        };*/
+        /*this.SellerService.createSendEmail(envioData).subscribe(
           (result: any) => {
             this.toastr.success(
               AppConstants.MessageModal.EMAIL_MESSAGE,
@@ -230,7 +231,7 @@ export class ListadoVentaComponent implements OnInit{
             AppConstants.TitleModal.ERROR_TITLE,
             {closeButton: true}
           );
-        }
+        }*/
       }
     ),
     error => {

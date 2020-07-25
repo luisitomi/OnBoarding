@@ -44,6 +44,8 @@ export class RegistroComponent implements OnInit{
   busqueda:string;
   fecha:string;
   hora:string;
+  documentSearch:string;
+  ventaCondition:number;
 
   name:string;
   direction:string;
@@ -454,29 +456,55 @@ export class RegistroComponent implements OnInit{
     registerContrato.servicio = parseInt(registerContrato.servicio);
     registerContrato.vendedor = parseInt(registerContrato.vendedor);
 
-    if (!this.formularioContrato.controls.documento.valid ||
-      !this.formularioContrato.controls.codigo.valid ||
-      !this.formularioContrato.controls.nombre.valid ||
-      !this.formularioContrato.controls.paterno.valid ||
-      !this.formularioContrato.controls.fecha.valid ||
-      !this.formularioContrato.controls.email.valid ||
-      !this.formularioContrato.controls.materno.valid ||
-      !this.formularioContrato.controls.vendedor.valid ||
-      !this.formularioContrato.controls.distrito.valid ||
-      !this.formularioContrato.controls.calle.valid ||
-      !this.formularioContrato.controls.numero.valid ||
-      !this.formularioContrato.controls.referencia.valid ||
-      !this.formularioContrato.controls.detalle.valid ||
-      !this.formularioContrato.controls.servicio.valid ||
-      !this.formularioContrato.controls.hora.valid ||
-      !this.formularioContrato.controls.inicial.valid ||
-      !this.formularioContrato.controls.mensual.valid) {
-        this.toastr.warning(
-          AppConstants.MessageModal.REQUIRED_CUSTOM_FIELD,
-          AppConstants.TitleModal.WARNING_TITLE,
-          {closeButton: true}
-        );
-      return false;
+    if(this.ventaCondition == 8 || this.ventaCondition == 11){
+      if (!this.formularioContrato.controls.documento.valid ||
+        !this.formularioContrato.controls.codigo.valid ||
+        !this.formularioContrato.controls.paterno.valid ||
+        !this.formularioContrato.controls.fecha.valid ||
+        !this.formularioContrato.controls.email.valid ||
+        !this.formularioContrato.controls.materno.valid ||
+        !this.formularioContrato.controls.vendedor.valid ||
+        !this.formularioContrato.controls.distrito.valid ||
+        !this.formularioContrato.controls.calle.valid ||
+        !this.formularioContrato.controls.numero.valid ||
+        !this.formularioContrato.controls.referencia.valid ||
+        !this.formularioContrato.controls.detalle.valid ||
+        !this.formularioContrato.controls.servicio.valid ||
+        !this.formularioContrato.controls.hora.valid ||
+        !this.formularioContrato.controls.inicial.valid ||
+        !this.formularioContrato.controls.mensual.valid) {
+          this.toastr.warning(
+            AppConstants.MessageModal.REQUIRED_CUSTOM_FIELD,
+            AppConstants.TitleModal.WARNING_TITLE,
+            {closeButton: true}
+          );
+        return false;
+      }
+    }else{
+      if (!this.formularioContrato.controls.documento.valid ||
+        !this.formularioContrato.controls.codigo.valid ||
+        !this.formularioContrato.controls.nombre.valid ||
+        !this.formularioContrato.controls.paterno.valid ||
+        !this.formularioContrato.controls.fecha.valid ||
+        !this.formularioContrato.controls.email.valid ||
+        !this.formularioContrato.controls.materno.valid ||
+        !this.formularioContrato.controls.vendedor.valid ||
+        !this.formularioContrato.controls.distrito.valid ||
+        !this.formularioContrato.controls.calle.valid ||
+        !this.formularioContrato.controls.numero.valid ||
+        !this.formularioContrato.controls.referencia.valid ||
+        !this.formularioContrato.controls.detalle.valid ||
+        !this.formularioContrato.controls.servicio.valid ||
+        !this.formularioContrato.controls.hora.valid ||
+        !this.formularioContrato.controls.inicial.valid ||
+        !this.formularioContrato.controls.mensual.valid) {
+          this.toastr.warning(
+            AppConstants.MessageModal.REQUIRED_CUSTOM_FIELD,
+            AppConstants.TitleModal.WARNING_TITLE,
+            {closeButton: true}
+          );
+        return false;
+      }
     }
 
     if(registerContrato.empresa == null || registerContrato.empresa == undefined ||
@@ -970,6 +998,46 @@ export class RegistroComponent implements OnInit{
     this.currentPage = 1;
     this.serviceaexitModal.show();
     this.onReturndata(9);
+  }
+
+  seachDocment(){
+    if(this.documentSearch.length == 8 || this.documentSearch.length == 11){
+      if(this.documentSearch.length == 8){
+        let reg = {
+          dni:this.documentSearch
+        };
+        this.SellerService.recuperardni(reg.dni).subscribe(
+          (result: any) => {
+            this.formularioContrato.patchValue({
+              nombre: result.nombres,
+              paterno: result.apellidoPaterno,
+              materno: result.apellidoMaterno
+            });
+            this.ventaCondition =  8;
+          }
+        )
+      }else{
+        let reg = {
+          ruc:this.documentSearch
+        };
+        this.SellerService.recuperarruc(reg).subscribe(
+          (result: any) => {
+            this.formularioContrato.patchValue({
+              empresa: result.nombre_o_razon_social
+            });
+            this.ventaCondition =  11;
+          }
+        )
+      }
+    }else{
+      this.toastr.warning(
+        "Documento necesita un valor de 8 o 11 carácteres",
+        AppConstants.TitleModal.WARNING_TITLE,
+        {closeButton: true}
+      );
+      return false;
+    }
+    
   }
 
   personamodal(){

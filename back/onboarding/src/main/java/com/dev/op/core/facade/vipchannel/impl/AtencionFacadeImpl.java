@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.dev.op.core.dto.ResponseModel;
 import com.dev.op.core.dto.vipchannel.getListReclaimModel;
 import com.dev.op.core.dto.vipchannel.getListServiceActiveModel;
+import com.dev.op.core.dto.vipchannel.getListServiceNotActiveModel;
 import com.dev.op.core.dto.vipchannel.getReclaimStatusModel;
 import com.dev.op.core.facade.vipchannel.AtencionFacade;
 import com.dev.op.core.service.vipchannel.AtencionService;
@@ -95,6 +96,26 @@ public class AtencionFacadeImpl implements AtencionFacade{
 			}
 			else {
 				return getReclaimStatus;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getListServiceNotActiveModel> getListServiceNotActive(String document, String code) {
+		List<getListServiceNotActiveModel> getListServiceNotActive = new ArrayList<getListServiceNotActiveModel>();
+		
+		try {
+			
+			getListServiceNotActive = atencionService.getListServiceNotActive(document, code);
+			if(GenericUtil.isEmpty(getListServiceNotActive)) {
+				return null;
+			}
+			else {
+				return getListServiceNotActive;
 			}
 		}
 		catch(Exception e) {

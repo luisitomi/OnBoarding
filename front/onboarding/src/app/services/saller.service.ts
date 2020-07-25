@@ -97,8 +97,8 @@ export class SellerService {
         return this.httpService.post(`${this.BASE_URL_SEND}/send_emails`,model,this.httpOptions);
     }
 
-    recuperardni(){
-        return this.httpService.get(`${this.BASE_URL_DNI}/75134791?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFyaWVzXzI1MDM5N0Bob3RtYWlsLmNvbSJ9.QssyDvbk3hh7cp6LesjULBwEzUbWj3EQKoa0iZzJj4w`,this.httpOption);
+    recuperardni(id:string){
+        return this.httpService.get(`${this.BASE_URL_DNI}/`+id+`?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFyaWVzXzI1MDM5N0Bob3RtYWlsLmNvbSJ9.QssyDvbk3hh7cp6LesjULBwEzUbWj3EQKoa0iZzJj4w`,this.httpOption);
     }
 
     recuperarruc(model: any){

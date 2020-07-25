@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dev.op.core.dto.vipchannel.getMaterialAllModel;
 import com.dev.op.core.dto.vipchannel.getMaterialModel;
+import com.dev.op.core.dto.vipchannel.getListServiceRangeModel;
 import com.dev.op.core.dto.ResponseModel;
 import com.dev.op.core.dto.vipchannel.getListReclaimServiceModel;
 import com.dev.op.core.dto.vipchannel.getListServicePendingModel;
@@ -110,6 +111,25 @@ public class ServiceRestController {
 		}
 		catch(Exception e) {
 			return new ResponseEntity<List<getMaterialModel>>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/getListServiceRange/{datei}/{datef}")
+	public ResponseEntity<List<getListServiceRangeModel>> getListServiceRange(
+			@PathVariable(value="datei") String datei,
+			@PathVariable(value="datef") String datef) {
+		
+		try{
+			List<getListServiceRangeModel> getListServiceRange = serviceFacade.getListServiceRange(datei, datef);
+			if(!GenericUtil.isCollectionEmpty(getListServiceRange)) {
+				return new ResponseEntity<List<getListServiceRangeModel>>(getListServiceRange, HttpStatus.OK);
+			}
+			else {
+				return new ResponseEntity<List<getListServiceRangeModel>>(HttpStatus.NO_CONTENT);
+			}
+		}
+		catch(Exception e) {
+			return new ResponseEntity<List<getListServiceRangeModel>>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	

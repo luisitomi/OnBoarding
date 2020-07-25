@@ -35,6 +35,7 @@ public class Constantes {
 	public static final String GETLISTSERVICE = "getListService";
 	public static final String GETLISTRECLAIM = "getListReclaim";
 	public static final String GETLISTSERVICEACTIVE = "getListServiceActive";
+	public static final String GETLISTSERVICENOTACTIVE = "getListServiceNotActive";
 	public static final String GETRECLAIMSTATUS = "getReclaimStatus";
 	public static final String GETNAMEUSER = "getNameUser";
 	public static final String GETNOTIFICATION = "getNotification";
@@ -55,11 +56,16 @@ public class Constantes {
 	public static final String GETLISTONU = "getListOnu";
 	public static final String GETLISTCOUNTONU = "getListCountOnu";
 	public static final String GETLISTACTIVATION = "getListActivation";
+	public static final String GETLISTONUSTATE = "getListOnuState";
+	public static final String GETLISTSERVICERANGE = "getListServiceRange";
+	public static final String GETLISTACTIVAATIONRANGE = "getListActivaationRange";
 	public static final String PATCHMANAGERBYID = "patchManagerById";
 	public static final String PATCHACTIVATIONSERVICE = "patchActivationService";
 	public static final String PATCHSTORAGEVALIDATE = "patchStorageValidate";
 	public static final String PATCHVOUCHERBYID = "patchVoucherById";
 	public static final String PATCHUPDATEPASSWORD = "patchUpdatePassword";
+	public static final String PATCHPASSWORDONU = "patchPasswordOnu";
+	public static final String PATCHACTIVATIONONU = "patchActivationOnu";
 	public static final String PUTPERSONBYID = "putPersonById";
 	public static final String PUTDIRECTIONBYID = "putDirectionById";
 	public static final String PUTCHANGEDIRECTIONBYID = "putChangeDirectionById";
@@ -71,6 +77,7 @@ public class Constantes {
 	public static final String PUTSAVEPROVIDE = "putSaveProvide";
 	public static final String PUTSAVEPRODUCT = "putSaveProduct";
 	public static final String PUTSTATUSONU = "putStatusOnu";
+	public static final String PUTUPDATEONU = "putUpdateOnu";
 	public static final String POSTPAYSERVICE = "postPayService";
 	public static final String POSTPAYSERVICEEXIT = "postPayServiceExit";
 	public static final String POSTPAYSERVICEDETAILDELETE = "postPayServiceDetailDelete";
@@ -85,6 +92,7 @@ public class Constantes {
 	public static final String POSTSAVEPROVIDE = "postSaveProvide";
 	public static final String POSTSAVEPRODUC = "postSaveProduc";
 	public static final String POSTREMISION = "postRemision";
+	public static final String POSTCREATEONU = "postCreateOnu";
 	public static final String DELETEDETAILCOUNT = "deleteDetailCount";
 	public static final String DELETEPAYSERVICE = "deletePayService";
 	public static final String DELETEPREINSTALLSALE = "deletePreInstallSale";

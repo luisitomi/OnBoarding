@@ -7,6 +7,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ModalDirective} from 'ngx-bootstrap/modal';
 import { ResponseModel } from '../../../models/personpay.model';
+import { SellerService } from '../../../services/saller.service';
 
 @Component({
   templateUrl: 'actividad.listado.component.html'
@@ -33,6 +34,8 @@ export class ListadoActividadComponent implements OnInit{
 
   value:number;
   valueId:number;
+  documentSearch:string;
+  ventaCondition:number;
 
   @ViewChild('userModal') public userModal: ModalDirective;
   @ViewChild('rptaModal') public rptaModal: ModalDirective;
@@ -41,7 +44,8 @@ export class ListadoActividadComponent implements OnInit{
     private router: Router,
     private UserService: UserService,
     private formBuilder: FormBuilder,
-    private toastr: ToastrService
+    private SellerService: SellerService,
+    private toastr: ToastrService,
   ) {
     this.router.events.subscribe(evt => {
       if (evt instanceof NavigationEnd) {
@@ -121,6 +125,44 @@ export class ListadoActividadComponent implements OnInit{
     }else{
       this.addNotiActive = false;
     }
+  }
+
+  seachDocment(){
+    if(this.documentSearch.length == 8 || this.documentSearch.length == 11){
+      if(this.documentSearch.length == 8){
+        let reg = {
+          dni:this.documentSearch
+        };
+        this.SellerService.recuperardni(reg.dni).subscribe(
+          (result: any) => {
+            this.formularioIntra.patchValue({
+              nombre: result.nombres + " " + result.apellidoPaterno + " " + result.apellidoMaterno
+            });
+            this.ventaCondition =  8;
+          }
+        )
+      }else{
+        let reg = {
+          ruc:this.documentSearch
+        };
+        this.SellerService.recuperarruc(reg).subscribe(
+          (result: any) => {
+            this.formularioIntra.patchValue({
+              nombre: result.nombre_o_razon_social
+            });
+            this.ventaCondition =  11;
+          }
+        )
+      }
+    }else{
+      this.toastr.warning(
+        "Documento necesita un valor de 8 o 11 carácteres",
+        AppConstants.TitleModal.WARNING_TITLE,
+        {closeButton: true}
+      );
+      return false;
+    }
+    
   }
 
   listado(){

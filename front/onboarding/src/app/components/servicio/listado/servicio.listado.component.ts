@@ -5,12 +5,14 @@ import { AppConstants } from '../../../shared/constants/app.constants';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ModalDirective} from 'ngx-bootstrap/modal';
-import { MaterialModel, PendingServiceModel, TecnicoModel, CountOnuMdel } from '../../../models/service.model';
+import { MaterialModel, PendingServiceModel, TecnicoModel, CountOnuMdel, ServiceViewModel } from '../../../models/service.model';
 import { ResponseModel } from '../../../models/personpay.model';
 import { OnuModel } from '../../../models/activation.model';
+import { DatePipe } from '@angular/common';
 
 @Component({
-  templateUrl: 'servicio.listado.component.html'
+  templateUrl: 'servicio.listado.component.html',
+  providers: [DatePipe]
 })
 
 export class ServicioComponent implements OnInit{
@@ -20,6 +22,7 @@ export class ServicioComponent implements OnInit{
   pnd:PendingServiceModel[];
   tecnico:TecnicoModel[];
   onu:OnuModel[];
+  serviceList:ServiceViewModel[];
 
   saveList = [];
 
@@ -37,6 +40,9 @@ export class ServicioComponent implements OnInit{
   nameOnu:string;
   itemnextIdOnu:number;
   onuId:number;
+  datei:string;
+  datef:string;
+  myDate = new Date();
 
   userActive:boolean = false;
   listActie:boolean = true;
@@ -66,12 +72,15 @@ export class ServicioComponent implements OnInit{
   currentPageS: number = 1;
   itemsPerPage: number = 3;
   currentPage: number = 1;
+  itemsPerPageV: number = 4;
+  currentPageV: number = 1;
 
   constructor(
     private router: Router,
     private ServiceService: ServiceService,
     private formBuilder: FormBuilder,
-    private toastr: ToastrService
+    private datePipe: DatePipe,
+    private toastr: ToastrService,
   ) {
     this.router.events.subscribe(evt => {
       if (evt instanceof NavigationEnd) {
@@ -84,6 +93,8 @@ export class ServicioComponent implements OnInit{
 
   ngOnInit() {
     this.onReturndata(0);
+    this.datei = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
+    this.datef = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
   }
 
   initFC() {
@@ -98,7 +109,7 @@ export class ServicioComponent implements OnInit{
       nombre: ['0', Validators.required]
     });
     this.formularioOnu = this.formBuilder.group({
-      nombre: ['0', Validators.required],
+      nombre: ['', Validators.required],
       descripcion: [''],
       status:['']
     });
@@ -179,7 +190,7 @@ export class ServicioComponent implements OnInit{
 
   }
 
-  saveData(){
+  saveData2(){
     if(this.saveList.length < 1 || this.anotacion == "" || this.anotacion == undefined){
       this.toastr.warning(
         AppConstants.MessageModal.REQUIRED_FIELDS_MESSAGE,
@@ -191,11 +202,11 @@ export class ServicioComponent implements OnInit{
 
     for(let itc = 0;itc < this.saveList.length ;itc++){
       if(itc + 1 == this.saveList.length){
-        this.ServiceService.guardarInstalacion(
+        this.ServiceService.guardarInstalacion2(
           this.itemdetalleId,
           this.itemnextId,
           parseInt(sessionStorage.getItem(AppConstants.Session.USERID)),
-          this.anotacion.toUpperCase(),
+          this.anotacion,
           this.saveList[itc].materialId,
           this.saveList[itc].cantidad
         ).subscribe(
@@ -239,26 +250,66 @@ export class ServicioComponent implements OnInit{
           this.itemdetalleId,
           this.itemnextId,
           parseInt(sessionStorage.getItem(AppConstants.Session.USERID)),
-          this.anotacion.toUpperCase(),
+          this.anotacion,
           this.saveList[itc].materialId,
           this.saveList[itc].cantidad
         ).subscribe(
-        (result: ResponseModel[]) => {
-           try{
-            if(result[0].id == 1){
-              
-            }else{
-              
-            }
-           }catch{
+        (results: any) => {
+           
+        },
+        error => {
             
-           }
-          },
-          error => {
-            
-        })
+        });
       }
     }
+  }
+
+  saveData(){
+    if(this.saveList.length < 1 || this.anotacion == "" || this.anotacion == undefined){
+      this.toastr.warning(
+        AppConstants.MessageModal.REQUIRED_FIELDS_MESSAGE,
+        AppConstants.TitleModal.WARNING_TITLE,
+        {closeButton: true}
+      );
+      return false;
+    }
+
+    for(let itc = 0;itc < this.saveList.length ;itc++){
+      if(itc + 1 == this.saveList.length){
+        this.ServiceService.guardarInstalacion(
+          this.itemdetalleId,
+          this.itemnextId,
+          parseInt(sessionStorage.getItem(AppConstants.Session.USERID)),
+          this.anotacion,
+          this.saveList[itc].materialId,
+          this.saveList[itc].cantidad
+        ).subscribe(
+          (result: ResponseModel[]) => {
+             try{
+             }catch{
+             }
+           },
+           error => {
+           })
+      }
+      else{
+        this.ServiceService.guardarInstalacion(
+          this.itemdetalleId,
+          this.itemnextId,
+          parseInt(sessionStorage.getItem(AppConstants.Session.USERID)),
+          this.anotacion,
+          this.saveList[itc].materialId,
+          this.saveList[itc].cantidad
+        ).subscribe(
+        (results: any) => {
+           
+        },
+        error => {
+            
+        });
+      }
+    }
+    this.saveData2();
   }
 
   envio(){
@@ -293,6 +344,7 @@ export class ServicioComponent implements OnInit{
     switch(id){
       case 0:
         this.listado();
+        this.lisadoview();
         this.listadoactive();
         this.initFC();
         this.listadopendientes(parseInt(sessionStorage.getItem(AppConstants.Session.USERID)));
@@ -314,6 +366,32 @@ export class ServicioComponent implements OnInit{
     this.ServiceService.listadomateriales().subscribe(
     (result: MaterialModel[]) => {
       this.materi = result
+    },
+    error => {
+    })
+  }
+
+  lisadoview(){
+    this.serviceList = [];
+    this.ServiceService.listarServiceRange(this.datei,this.datef).subscribe(
+    (result: ServiceViewModel[]) => {
+      this.serviceList = result
+      try{
+        if(result.length > 0){
+        }else{
+          this.toastr.warning(
+            AppConstants.MessageModal.DATA_EMPTY,
+            AppConstants.TitleModal.WARNING_TITLE,
+            {closeButton: true}
+          );
+        }
+      }catch{
+        this.toastr.warning(
+          AppConstants.MessageModal.DATA_EMPTY,
+          AppConstants.TitleModal.WARNING_TITLE,
+          {closeButton: true}
+        );
+      }
     },
     error => {
     })

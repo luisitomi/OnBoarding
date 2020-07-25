@@ -152,45 +152,72 @@
           </div>
         </tab>
         <tab *ngIf="userActive">
-          <div class="col-4 text-left">
-            <button class="btn btn-outline" style="background-color: mediumturquoise;" (click)="mateSaveModal.show()">
-              <i class="fa fa-plus" style="color: white;"></i> Añadir Material</button>
+          <ng-template tabHeading><i class="icon-energy"></i> Listado de Servicios &nbsp;</ng-template>
+          <div class="row" >
+            <div class="col-8">
+                <div class="row">
+                  <div class="col-4">
+                    <div class="form-group">
+                      <input class="form-control" [(ngModel)]="datei" name="datei"
+                                required
+                                id="inicio" type="date">
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="form-group">
+                      <input class="form-control" [(ngModel)]="datef" name="datef"
+                                required
+                                id="final" type="date">
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="form-group">
+                      <button type="button"  class="btn btn-info" (click)="lisadoview()">
+                        <i class="fa fa-search fa-md" style="color: red;"></i>
+                        BUSCAR
+                      </button>
+                    </div>
+                  </div>
+                </div>
+            </div>
           </div>
-          <br>
-          <ng-template tabHeading><i class="icon-energy"></i> Materiales &nbsp;</ng-template>
           <div class="row">
             <div class="col-12">
               <div class="card">
                 <div class="card-header">
-                  <i class="fa fa-align-justify" style="color: red;"></i> <span style="color: red;">LISTADO DE MATERIALES</span>
+                  <i class="fa fa-align-justify" style="color: red;"></i> <span style="color: red;">LISTADO DE ACTIVACIONES</span>
                 </div>
                 <div class="card-body">
                   <table class="table table-bordered">
                     <thead>
                       <tr class="t-head-style">
-                          <th class="text-center" style="background-color: mediumturquoise;" scope="col">Material</th>
-                          <th class="text-center" style="background-color: mediumturquoise;" scope="col">Acciones</th>
+                        <th class="text-center" style="background-color: mediumturquoise;" scope="col">Servicio</th>
+                        <th class="text-center" style="background-color: mediumturquoise;" scope="col">Documento</th>
+                        <th class="text-center" style="background-color: mediumturquoise;" scope="col">Código</th>
+                        <th class="text-center" style="background-color: mediumturquoise;" scope="col">Cliente</th>
+                        <th class="text-center" style="background-color: mediumturquoise;" scope="col">Dirección</th>
+                        <th class="text-center" style="background-color: mediumturquoise;" scope="col">Técnico</th>
+                        <th class="text-center" style="background-color: mediumturquoise;" scope="col">Fecha</th>
                       </tr>
                     </thead>
                     <tbody>
-                        <ng-container *ngFor="let item of materi
-                        | paginate: { itemsPerPage: itemsPerPageS, currentPage: currentPageS }; let i = index">
-                            <tr>
-                              <td class="align-middle text-center">{{ item.name }}</td>
-                              <td class="align-middle text-center">
-                                <div class="row justify-content-center">
-                                  <button id="{{item.id}}" type="button"  class="btn" (click)="abrir(item.id)">
-                                    <i class="fa fa-edit fa-lg" style="color: red;"></i>
-                                  </button>
-                                </div>
-                              </td>
-                            </tr>
-                        </ng-container>
-                    </tbody>
-                  </table>
-                  <pagination-controls class="my-pagination" (pageChange)="currentPageS = $event"autoHide="true" responsive="true"
-                    previousLabel="Anterior" nextLabel="Siguiente">
-                  </pagination-controls>
+                      <ng-container *ngFor="let item of serviceList
+                      | paginate: { itemsPerPage: itemsPerPageV, currentPage: currentPageV }; let i = index">
+                          <tr>
+                            <td class="align-middle text-center">{{ item.service }}</td>
+                            <td class="align-middle text-center">{{ item.document }}</td>
+                            <td class="align-middle text-center">{{ item.code }}</td>
+                            <td class="align-middle text-center">{{ item.client }}</td>
+                            <td class="align-middle text-center">{{ item.direction }}</td>
+                            <td class="align-middle text-center">{{ item.tecn }}</td>
+                            <td class="align-middle text-center">{{ item.fech }}</td>
+                          </tr>
+                      </ng-container>
+                  </tbody>
+                </table>
+                <pagination-controls class="my-pagination" (pageChange)="currentPageV = $event"autoHide="true" responsive="true"
+                  previousLabel="Anterior" nextLabel="Siguiente">
+                </pagination-controls>
                 </div>
               </div>
             </div>
@@ -321,7 +348,9 @@
             <div class="col-6">
               <div class="form-group">
                 <label for="descripcion">Descripción</label>
-                
+                <textarea rows="3" class="form-control form-control-sm" id="descripcion" maxlength="255" required
+                  formControlName="descripcion" style="font-weight:25%;" [ngClass]="{ 'is-invalid': submittedO && i.descripcion.errors }">
+                </textarea>
                 <div class="invalid-feedback"> Seleccione valor para descripción </div>
               </div>
             </div>
@@ -345,7 +374,7 @@
                 <label for="nombre">Onu</label>
                 <select class="form-control form-control-sm select-select" id="nombre" placeholder="Seleccione"
                       formControlName="nombre" [ngClass]="{ 'is-invalid': submittedO && i.nombre.errors }" required>
-                  <option select value="0">Seleccione</option>
+                  <option select value="">Seleccione</option>
                   <option *ngFor="let the of onu" [value]="the.id">
                     <p>{{the.name}}</p>
                   </option>

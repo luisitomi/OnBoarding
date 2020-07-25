@@ -1,48 +1,192 @@
 ﻿<div class="animated fadeIn">
   <div class="row">
     <div class="col-md-12 mb-4">
-      <div >
-        <div class="card">
-          <div class="card-header">
-            <i class="fa fa-align-justify" style="color: red;"></i> <span style="color: red;">LISTADO DE ACTIVACIONES</span>
+      <tabset>
+        <tab>
+          <ng-template tabHeading><i class="icon-list"></i> Activaciones &nbsp;</ng-template>
+          <div>
+            <div class="card">
+              <div class="card-header">
+                <i class="fa fa-align-justify" style="color: red;"></i> <span style="color: red;">LISTADO DE ACTIVACIONES</span>
+              </div>
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr class="t-head-style">
+                        <th class="text-center" style="background-color: mediumturquoise;" scope="col">Cliente</th>
+                        <th class="text-center" style="background-color: mediumturquoise;" scope="col">Dirección</th>
+                        <th class="text-center" style="background-color: mediumturquoise;" scope="col">Técnico</th>
+                        <th class="text-center" style="background-color: mediumturquoise;" scope="col">Serie</th>
+                        <th *ngIf="addNotiActive" class="text-center" style="background-color: mediumturquoise;" scope="col" >Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      <ng-container *ngFor="let item of activacion
+                      | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }; let i = index">
+                          <tr>
+                            <td class="align-middle text-center">{{ item.client }}</td>
+                            <td class="align-middle text-center">{{ item.direction }}</td>
+                            <td class="align-middle text-center">{{ item.tec }}</td>
+                            <td class="align-middle text-center">{{ item.serie }}</td>
+                            <td class="align-middle text-center" *ngIf="addNotiActive">
+                              <div class="row justify-content-center">
+                                <button id="{{item.id}}" type="button"  class="btn"
+                                  (click)="openModal(item.id)">
+                                  <i class="fa fa-hand-pointer-o fa-lg" style="color: red;"></i>
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                      </ng-container>
+                  </tbody>
+                </table>
+                <pagination-controls class="my-pagination" (pageChange)="currentPage = $event"autoHide="true" responsive="true"
+                  previousLabel="Anterior" nextLabel="Siguiente">
+                </pagination-controls>
+              </div>
+            </div>
           </div>
-          <div class="card-body">
-            <table class="table table-bordered">
-              <thead>
-                <tr class="t-head-style">
+        </tab>
+        <tab *ngIf="addNotiActive">
+          <ng-template tabHeading><i class="icon-list"></i> Mantenimiento de Onus &nbsp;</ng-template>
+          <div>
+            <div class="row">
+              <div class="col-4">
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <input class="form-control form-group-lg" [(ngModel)]="busqueda" maxlength="20" id="bb" name="bb" placeholder="Texto a a buscar" type="text">
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <button class="btn btn-outline" style="background-color: mediumturquoise;" (click)="newOnuModal()">
+                  <i class="fa fa-plus" style="color: white;"></i> Añadir Onu Nueva</button>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <i class="fa fa-align-justify" style="color: red;"></i> <span style="color: red;">LISTADO DE ONUS</span>
+              </div>
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr class="t-head-style">
+                        <th class="text-center" style="background-color: mediumturquoise;" scope="col">Serie</th>
+                        <th class="text-center" style="background-color: mediumturquoise;" scope="col">Mac</th>
+                        <th class="text-center" style="background-color: mediumturquoise;" scope="col">Nombre Wifi</th>
+                        <th class="text-center" style="background-color: mediumturquoise;" scope="col">Contraseña</th>
+                        <th class="text-center" style="background-color: mediumturquoise;" scope="col" >Acciones</th>
+                    </tr>
+                  </thead>
+                  <ng-container *ngFor="let item of onusview | filter: busqueda
+                      | paginate: { itemsPerPage: itemsPerPages, currentPage: currentPages }; let i = index">
+                          <tr>
+                            <td class="align-middle text-center">{{ item.serie }}</td>
+                            <td class="align-middle text-center">{{ item.mac }}</td>
+                            <td class="align-middle text-center">{{ item.ssid }}</td>
+                            <td class="align-middle text-center">{{ item.pass }}</td>
+                            <td class="align-middle text-center">
+                              <div class="row justify-content-center">
+                                <div *ngIf="item.activo == 2">
+                                  <span class="badge badge-success">Activo</span>
+                                </div>
+                                <div *ngIf="item.activo == 1">
+                                  <span class="badge badge-warning">Libre</span>
+                                </div>
+                                <div *ngIf="item.activo == 0">
+                                  <span class="badge badge-danger">Revisión</span>
+                                </div>
+                                <div *ngIf="item.activo == 0">
+                                  <button id="{{item.id}}" type="button"  class="btn"
+                                    (click)="activeOnu(item.id)">
+                                    <i class="fa fa-hand-pointer-o fa-lg" style="color: red;"></i>
+                                  </button>
+                                </div>
+                                <button id="{{item.id}}" type="button"  class="btn"
+                                  (click)="changeponu(item.id,item.serie,item.mac)">
+                                  <i class="fa fa-pencil fa-lg" style="color: blue;"></i>
+                                </button>
+                                <button id="{{item.id}}" type="button"  class="btn"
+                                  (click)="changepass(item.id,item.ssid,item.pass)">
+                                  <i class="fa fa-refresh fa-lg" style="color: green;"></i>
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                      </ng-container>
+                </table>
+                <pagination-controls class="my-pagination" (pageChange)="currentPages = $event"autoHide="true" responsive="true"
+                  previousLabel="Anterior" nextLabel="Siguiente">
+                </pagination-controls>
+              </div>
+            </div>
+          </div>
+        </tab>
+        <tab *ngIf="addNotiActive">
+          <ng-template tabHeading><i class="icon-list"></i> Listado de Activaciones &nbsp;</ng-template>
+          <div class="row" >
+            <div class="col-8">
+                <div class="row">
+                  <div class="col-4">
+                    <div class="form-group">
+                      <input class="form-control" [(ngModel)]="datei" name="datei"
+                                required
+                                id="inicio" type="date">
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="form-group">
+                      <input class="form-control" [(ngModel)]="datef" name="datef"
+                                required
+                                id="final" type="date">
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="form-group">
+                      <button type="button"  class="btn btn-info" (click)="lisadoview()">
+                        <i class="fa fa-search fa-md" style="color: red;"></i>
+                        BUSCAR
+                      </button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <i class="fa fa-align-justify" style="color: red;"></i> <span style="color: red;">LISTADO DE ACTIVACIONES</span>
+            </div>
+            <div class="card-body">
+              <table class="table table-bordered">
+                <thead>
+                  <tr class="t-head-style">
+                    <th class="text-center" style="background-color: mediumturquoise;" scope="col">Documento</th>
+                    <th class="text-center" style="background-color: mediumturquoise;" scope="col">Código</th>
                     <th class="text-center" style="background-color: mediumturquoise;" scope="col">Cliente</th>
                     <th class="text-center" style="background-color: mediumturquoise;" scope="col">Dirección</th>
-                    <th class="text-center" style="background-color: mediumturquoise;" scope="col">Técnico</th>
-                    <th class="text-center" style="background-color: mediumturquoise;" scope="col">Serie</th>
-                    <th *ngIf="addNotiActive" class="text-center" style="background-color: mediumturquoise;" scope="col" >Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                  <ng-container *ngFor="let item of activacion
-                  | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }; let i = index">
+                    <th class="text-center" style="background-color: mediumturquoise;" scope="col">Fecha</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let item of activacionList
+                  | paginate: { itemsPerPage: itemsPerPageV, currentPage: currentPageV }; let i = index">
                       <tr>
+                        <td class="align-middle text-center">{{ item.document }}</td>
+                        <td class="align-middle text-center">{{ item.code }}</td>
                         <td class="align-middle text-center">{{ item.client }}</td>
                         <td class="align-middle text-center">{{ item.direction }}</td>
-                        <td class="align-middle text-center">{{ item.tec }}</td>
-                        <td class="align-middle text-center">{{ item.serie }}</td>
-                        <td class="align-middle text-center" *ngIf="addNotiActive">
-                          <div class="row justify-content-center">
-                            <button id="{{item.id}}" type="button"  class="btn"
-                              (click)="openModal(item.id)">
-                              <i class="fa fa-hand-pointer-o fa-lg" style="color: red;"></i>
-                            </button>
-                          </div>
-                        </td>
+                        <td class="align-middle text-center">{{ item.fech }}</td>
                       </tr>
                   </ng-container>
               </tbody>
             </table>
-            <pagination-controls class="my-pagination" (pageChange)="currentPage = $event"autoHide="true" responsive="true"
+            <pagination-controls class="my-pagination" (pageChange)="currentPageV = $event"autoHide="true" responsive="true"
               previousLabel="Anterior" nextLabel="Siguiente">
             </pagination-controls>
+            </div>
           </div>
-        </div>
-      </div>
+        </tab>
+      </tabset>
     </div>
   </div>
 </div>
@@ -79,6 +223,141 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary ml-auto" (click)="rptaModal.hide()">CANCELAR</button>
         <button type="button" class="btn btn-success mr-auto" (click)="saveSolution()">GUARDAR</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div bsModal #editModal="bs-modal" class="modal fade" tabindex="-1" [config]="{backdrop: 'static'}" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Editar Onu</h4>
+        <button type="button" class="close" (click)="editModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form *ngIf="formularioOnu" [formGroup]="formularioOnu" autocomplete="offs" class="form-register-section">
+          <div asp-validation-summary="All" class="text-danger"></div>
+          <div class="row" >
+            <div class="col-6">
+              <div class="form-group">
+                <label for="serie">Serie</label>
+                <input type="text" class="form-control form-control-sm" id="serie" maxlength="30" [(ngModel)]="onuSerieM"
+                  formControlName="serie" [ngClass]="{ 'is-invalid': submittedO && j.serie.errors }"/>
+                <div class="invalid-feedback"> Escoga valor para serie </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label for="mac">Mac</label>
+                <input type="text" class="form-control form-control-sm" id="mac" maxlength="30" [(ngModel)]="onuMacM"
+                  formControlName="mac" [ngClass]="{ 'is-invalid': submittedO && j.mac.errors }"/>
+                <div class="invalid-feedback"> Escoga valor para mac </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary ml-auto" (click)="editModal.hide()">CANCELAR</button>
+        <button type="button" class="btn btn-success mr-auto" (click)="saveOnuM()">GUARDAR</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div bsModal #passModal="bs-modal" class="modal fade" tabindex="-1" [config]="{backdrop: 'static'}" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Editar Onu</h4>
+        <button type="button" class="close" (click)="passModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form *ngIf="formularioOnuChange" [formGroup]="formularioOnuChange" autocomplete="offs" class="form-register-section">
+          <div asp-validation-summary="All" class="text-danger"></div>
+          <div class="row" >
+            <div class="col-6">
+              <div class="form-group">
+                <label for="ssid">SSID</label>
+                <input type="text" class="form-control form-control-sm" id="ssid" maxlength="30" [(ngModel)]="onuSsidM"
+                  formControlName="ssid" [ngClass]="{ 'is-invalid': submittedP && k.ssid.errors }" disabled/>
+                <div class="invalid-feedback"> Escoga valor para ssid </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label for="password">Password </label>
+                <input type="text" class="form-control form-control-sm" id="password" maxlength="30" [(ngModel)]="onuSpassM"
+                  formControlName="password" [ngClass]="{ 'is-invalid': submittedP && k.password.errors }"/>
+                <div class="invalid-feedback"> Escoga valor para password </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary ml-auto" (click)="passModal.hide()">CANCELAR</button>
+        <button type="button" class="btn btn-success mr-auto" (click)="saveOnuChangeM()">GUARDAR</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div bsModal #newModal="bs-modal" class="modal fade" tabindex="-1" [config]="{backdrop: 'static'}" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Editar Onu</h4>
+        <button type="button" class="close" (click)="newModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form *ngIf="formularioOnuNew" [formGroup]="formularioOnuNew" autocomplete="offs" class="form-register-section">
+          <div asp-validation-summary="All" class="text-danger"></div>
+          <div class="row" >
+            <div class="col-6">
+              <div class="form-group">
+                <label for="serie">SERIE</label>
+                <input type="text" class="form-control form-control-sm" id="serie" maxlength="30"
+                  formControlName="serie" [ngClass]="{ 'is-invalid': submitted && k.serie.errors }"/>
+                <div class="invalid-feedback"> Escoga valor para serie </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label for="mac">MAC </label>
+                <input type="text" class="form-control form-control-sm" id="mac" maxlength="30"
+                  formControlName="mac" [ngClass]="{ 'is-invalid': submitted && k.mac.errors }"/>
+                <div class="invalid-feedback"> Escoga valor para mac </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" >
+            <div class="col-6">
+              <div class="form-group">
+                <label for="ssid">SSID</label>
+                <input type="text" class="form-control form-control-sm" id="ssid" maxlength="30"
+                  formControlName="ssid" [ngClass]="{ 'is-invalid': submitted && k.ssid.errors }"/>
+                <div class="invalid-feedback"> Escoga valor para ssid </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="form-group">
+                <label for="password">Password </label>
+                <input type="text" class="form-control form-control-sm" id="password" maxlength="30"
+                  formControlName="password" [ngClass]="{ 'is-invalid': submitted && k.password.errors }"/>
+                <div class="invalid-feedback"> Escoga valor para password </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary ml-auto" (click)="newModal.hide()">CANCELAR</button>
+        <button type="button" class="btn btn-success mr-auto" (click)="save()">GUARDAR</button>
       </div>
     </div>
   </div>

@@ -50,3 +50,13 @@ export class ReclaimPendingModel{
 export class CountOnuMdel{
 	id:number;
 }
+
+export class ServiceViewModel{
+	service:string;
+	document:string;
+	code:string;
+	client:string;
+	direction:string;
+	tecn:string;
+	fech:string;
+}

@@ -11,9 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dev.op.core.dto.ResponseModel;
 import com.dev.op.core.dto.vipchannel.getListReclaimModel;
 import com.dev.op.core.dto.vipchannel.getListServiceActiveModel;
+import com.dev.op.core.dto.vipchannel.getListServiceNotActiveModel;
 import com.dev.op.core.dto.vipchannel.getReclaimStatusModel;
 import com.dev.op.core.repository.vipchannel.jdbc.getListReclaimJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getListServiceActiveJdbcRepository;
+import com.dev.op.core.repository.vipchannel.jdbc.getListServiceNotActiveJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.getReclaimStatusJdbcRepository;
 import com.dev.op.core.repository.vipchannel.jdbc.postReclaimByIdJdbcRepository;
 import com.dev.op.core.service.vipchannel.AtencionService;
@@ -30,6 +32,10 @@ public class AtencionServiceImpl implements AtencionService{
 	@Autowired
 	@Qualifier("getListServiceActiveJdbcRepository")
 	private getListServiceActiveJdbcRepository getListServiceActiveJdbcRepository;
+	
+	@Autowired
+	@Qualifier("getListServiceNotActiveJdbcRepository")
+	private getListServiceNotActiveJdbcRepository getListServiceNotActiveJdbcRepository;
 	
 	@Autowired
 	@Qualifier("getReclaimStatusJdbcRepository")
@@ -112,6 +118,26 @@ public class AtencionServiceImpl implements AtencionService{
 			}
 			else {
 				return getReclaimStatus;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getListServiceNotActiveModel> getListServiceNotActive(String document, String code) {
+		List<getListServiceNotActiveModel> getListServiceNotActive = new ArrayList<getListServiceNotActiveModel>();
+		
+		try {
+			
+			getListServiceNotActive = getListServiceNotActiveJdbcRepository.getListServiceNotActive(document, code);
+			if(GenericUtil.isCollectionEmpty(getListServiceNotActive)) {
+				return null;
+			}
+			else {
+				return getListServiceNotActive;
 			}
 		}
 		catch(Exception e) {

@@ -255,6 +255,46 @@
             </div>
           </div>
         </tab>
+        <tab *ngIf="addNotiActiveViewInfo">
+          <ng-template tabHeading><i class="icon-list"></i> Onu &nbsp;</ng-template>
+          <div class="row">
+            <div class="col-4">
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <input class="form-control form-group-lg" [(ngModel)]="busqueda" maxlength="20" id="bb" name="bb" placeholder="Texto a a buscar" type="text">
+                </div>
+              </div>
+            </div>
+            <div class="col-4">
+              <button class="btn btn-outline" style="background-color: mediumturquoise;" (click)="newOnuModal()">
+                <i class="fa fa-plus" style="color: white;"></i> Añadir Onu Nueva</button>
+            </div>
+          </div>
+          <hr>
+          <div class="card">
+            <div class="card-header">
+              <i class="fa fa-align-justify" style="color: red;"></i> <span style="color: red;">LISTADO DE ONUS</span>
+            </div>
+            <div class="card-body">
+              <table class="table table-bordered">
+                <thead>
+                  <tr class="t-head-style">
+                      <th class="text-center" style="background-color: mediumturquoise;" scope="col">Serie</th>
+                  </tr>
+                </thead>
+                <ng-container *ngFor="let item of onusview | filter: busqueda
+                    | paginate: { itemsPerPage: itemsPerPageO, currentPage: currentPageO }; let i = index">
+                        <tr>
+                          <td class="align-middle text-center">{{ item.serie }}</td>
+                        </tr>
+                    </ng-container>
+              </table>
+              <pagination-controls class="my-pagination" (pageChange)="currentPageO = $event"autoHide="true" responsive="true"
+                previousLabel="Anterior" nextLabel="Siguiente">
+              </pagination-controls>
+            </div>
+          </div>
+        </tab>
       </tabset>
     </div>
   </div>
@@ -524,6 +564,37 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary ml-auto" (click)="ListModal.hide()">CANCELAR</button>
         <button type="button" class="btn btn-warning mr-auto" style="color: transparent;" (click)="ListModal.hide()">GUARDAR</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div bsModal #newModal="bs-modal" class="modal fade" tabindex="-1" [config]="{backdrop: 'static'}" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Editar Onu</h4>
+        <button type="button" class="close" (click)="newModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form *ngIf="formularioOnuNew" [formGroup]="formularioOnuNew" autocomplete="offs" class="form-register-section">
+          <div asp-validation-summary="All" class="text-danger"></div>
+          <div class="row" >
+            <div class="col-6">
+              <div class="form-group">
+                <label for="serie">SERIE</label>
+                <input type="text" class="form-control form-control-sm" id="serie" maxlength="30"
+                  formControlName="serie" [ngClass]="{ 'is-invalid': submitted && l.serie.errors }"/>
+                <div class="invalid-feedback"> Escoga valor para serie </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary ml-auto" (click)="newModal.hide()">CANCELAR</button>
+        <button type="button" class="btn btn-success mr-auto" (click)="save()">GUARDAR</button>
       </div>
     </div>
   </div>

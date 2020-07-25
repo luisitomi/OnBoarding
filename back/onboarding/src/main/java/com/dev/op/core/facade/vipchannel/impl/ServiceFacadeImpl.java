@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.dev.op.core.dto.ResponseModel;
 import com.dev.op.core.dto.vipchannel.getListReclaimServiceModel;
 import com.dev.op.core.dto.vipchannel.getListServicePendingModel;
+import com.dev.op.core.dto.vipchannel.getListServiceRangeModel;
 import com.dev.op.core.dto.vipchannel.getListTecniModel;
 import com.dev.op.core.dto.vipchannel.getMaterialAllModel;
 import com.dev.op.core.dto.vipchannel.getMaterialModel;
@@ -218,6 +219,26 @@ public class ServiceFacadeImpl implements ServiceFacade{
 			}
 			else {
 				return postServiceReclaim;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<getListServiceRangeModel> getListServiceRange(String datei, String datef) {
+		List<getListServiceRangeModel> getListServiceRange = new ArrayList<getListServiceRangeModel>();
+		
+		try {
+			
+			getListServiceRange = serviceService.getListServiceRange(datei, datef);
+			if(GenericUtil.isEmpty(getListServiceRange)) {
+				return null;
+			}
+			else {
+				return getListServiceRange;
 			}
 		}
 		catch(Exception e) {
